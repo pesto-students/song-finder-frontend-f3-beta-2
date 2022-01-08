@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles'
+import { Grid, Typography } from '@material-ui/core'
 const useStyles = makeStyles((theme) => ({
     root: {
         minHeight: '100vh',
@@ -7,15 +8,43 @@ const useStyles = makeStyles((theme) => ({
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         marginTop: "0px",
+
+    },
+    h1: {
+        color: "#FD1863",
+        fontSize: "10rem",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        marginRight: "-50%",
+        transform: `translate(-50%,-50%)`
+    },
+    h6: {
+        color: "#fff",
+        fontSize: "2.5rem",
+        position: "absolute",
+        top: "58%",
+        left: "50%",
+        marginRight: "-50%",
+        transform: `translate(-50%,-50%)`
     }
+
 }))
 
 const LandingPage = () => {
     const classes = useStyles()
     return (
         <div className={classes.root}>
-
-
+            <Grid container direction="column"
+                justifyContent="flex-end" align="center">
+                <Grid item>
+                    <Grid >
+                        <Typography variant="h1" component="h1" className={classes.h1}>IMMERSIS</Typography>
+                        <Typography variant="h6" component="h6" className={classes.h6}>Music, Videos and Lyrics all in
+                            one place</Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
         </div>
     )
 }
