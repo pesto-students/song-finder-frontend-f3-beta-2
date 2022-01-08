@@ -8,6 +8,13 @@ const useStyles = makeStyles((theme) => ({
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         marginTop: "0px",
+        [theme.breakpoints.down("md")]: {
+            backgroundPosition: "center center",
+            backgroundSize: 'cover',
+            backgroundRepeat: "no-repeat",
+
+
+        }
 
     },
     h1: {
@@ -17,7 +24,10 @@ const useStyles = makeStyles((theme) => ({
         top: "50%",
         left: "50%",
         marginRight: "-50%",
-        transform: `translate(-50%,-50%)`
+        transform: `translate(-50%,-50%)`,
+        [theme.breakpoints.down("sm")]: {
+            fontSize: "4.5rem"
+        }
     },
     h6: {
         color: "#fff",
@@ -26,7 +36,10 @@ const useStyles = makeStyles((theme) => ({
         top: "58%",
         left: "50%",
         marginRight: "-50%",
-        transform: `translate(-50%,-50%)`
+        transform: `translate(-50%,-50%)`,
+        [theme.breakpoints.down("sm")]: {
+            fontSize: "1.1rem"
+        }
     }
 
 }))
