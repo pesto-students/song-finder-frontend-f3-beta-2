@@ -1,5 +1,5 @@
 body{
-  font-family: 'Baloo Bhaijaan 2', cursive;
+  font-family: 'Baloo Bhaijaan 2', cursive !important;
 }
 .App {
   text-align: center;

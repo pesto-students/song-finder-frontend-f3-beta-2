@@ -1,4 +1,4 @@
-import { AppBar, Toolbar } from '@material-ui/core'
+import { AppBar, Button, InputBase, Toolbar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React from 'react'
 import logo from '../../assets/logo.png'
@@ -23,9 +23,22 @@ const useStyles = makeStyles((theme) => ({
 
     },
     Toolbar: {
+        display: "flex",
+        justifyContent: "space-between",
         backgroundColor: "#fff",
         borderBottom: "1px solid #C4C4C4"
+    },
+    LogInButton: {
+        color: "#FD1863",
+        fontSize: "1.5rem"
+
+    },
+    SignInButton: {
+        color: "#000036",
+        fontSize: "1.5rem"
+
     }
+
 }))
 
 const Navbar = () => {
@@ -36,6 +49,13 @@ const Navbar = () => {
             <AppBar>
                 <Toolbar className={classes.Toolbar} >
                     <img className={classes.logo} src={logo} alt='Immersis Logo' />
+                    <div>
+                        <InputBase placeholder="Seach..." />
+                    </div>
+                    <div >
+                        <Button size="medium" variant='text' className={classes.LogInButton}>Log In</Button>
+                        <Button size="medium" variant="text" className={classes.SignInButton}>Sign In</Button>
+                    </div>
                 </Toolbar>
             </AppBar>
 
