@@ -7,7 +7,7 @@ import Navbar from './components/UI/Navbar'
 import LandingPage from './components/UI/LandingPage'
 import Footer from './components/UI/Footer'
 import Login from './components/UI/Login'
-
+import { Routes, Route } from 'react-router-dom'
 function App() {
   const font = "'Baloo Bhaijaan 2', cursive;";
   const theme = createTheme({
@@ -18,9 +18,16 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Navbar />
-      <LandingPage />
+      <Routes>
+        <Route exact path='/' element={<LandingPage />
+        } />
+        <Route path="login" element={<Login />} />
+      </Routes>
       <Footer />
-      <Login />
+      {/* 
+     
+ 
+      <Login /> */}
     </ThemeProvider>
   );
 }

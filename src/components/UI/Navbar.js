@@ -2,7 +2,7 @@ import { AppBar, Button, InputBase, Toolbar } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
 import React from 'react'
 import logo from '../../assets/logo.png'
-
+import Link from '@mui/material/Link';
 const useStyles = makeStyles((theme) => ({
     logo: {
         display: "block",
@@ -53,8 +53,15 @@ const Navbar = () => {
                         <InputBase placeholder="Seach..." />
                     </div>
                     <div >
-                        <Button size="medium" variant='text' className={classes.LogInButton}>Log In</Button>
-                        <Button size="medium" variant="text" className={classes.SignInButton}>Sign In</Button>
+                        <Link href="/login" underline="none">
+
+                            <Button size="medium" variant='text' className={classes.LogInButton} >Log In</Button>
+                        </Link>
+                        <Link href="/signup" underline="none">
+
+                            <Button size="medium" variant="text" className={classes.SignInButton}>Sign In</Button>
+
+                        </Link>
                     </div>
                 </Toolbar>
             </AppBar>
