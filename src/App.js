@@ -6,6 +6,7 @@ import { createTheme } from '@material-ui/core'
 import Navbar from './components/UI/Navbar'
 import LandingPage from './components/UI/LandingPage'
 import Footer from './components/UI/Footer'
+import Login from './components/UI/Login'
 
 function App() {
   const font = "'Baloo Bhaijaan 2', cursive;";
@@ -19,6 +20,7 @@ function App() {
       <Navbar />
       <LandingPage />
       <Footer />
+      <Login />
     </ThemeProvider>
   );
 }
