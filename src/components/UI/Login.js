@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
             borderBottom: "2px solid #fd1863"
         },
         "& .MuiInput-underline:hover:before": {
-            borderBottom: "2px solid #fd1863 !important"
+            borderBottom: "2px solid rgba(253, 24, 99, .5) !important"
         }
     },
     Paper: {
@@ -35,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
     },
     h4: {
-        color: "#fd1863"
+        color: "#fd1863",
+        fontWeight: "700"
     },
     Avatar: {
         backgroundColor: "#fd1863 !important"
