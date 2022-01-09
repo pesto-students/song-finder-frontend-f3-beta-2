@@ -10,6 +10,15 @@ import Button from '@material-ui/core/Button';
 import { Link } from "@mui/material";
 import { margin } from '@mui/system';
 const useStyles = makeStyles((theme) => ({
+    inputRoot: {
+
+        "& .MuiInput-underline:after": {
+            borderBottom: "2px solid #fd1863"
+        },
+        "& .MuiInput-underline:hover:before": {
+            borderBottom: "2px solid #fd1863 !important"
+        }
+    },
     Paper: {
         padding: '30px 20px',
         width: 300,
@@ -28,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
     },
     label: {
         fontFamily: "'Baloo Da 2', cursive !important"
+    },
+    Link: {
+        color: "#fd1863 !important"
     }
 
 }))
@@ -47,12 +59,17 @@ const Login = () => {
                             <Typography variant="caption1">Please fill this form</Typography>
                         </Grid>
                         <form>
-                            <TextField fullWidth inputProps={{ style: { fontFamily: "'Baloo Da 2', cursive " } }}
-                                InputLabelProps={{ style: { fontFamily: "'Baloo Da 2', cursive" } }}
+                            <TextField className={classes.inputRoot} fullWidth
+                                inputProps={{ style: { fontFamily: "'Baloo Da 2', cursive " } }}
+                                InputLabelProps={{ style: { color: "#fd1863", fontFamily: "'Baloo Da 2', cursive" } }}
                                 label="Name" margin="normal" variant="standard"
                                 placeholder="Enter Your Name" />
-                            <TextField fullWidth label="Password" variant="standard" placeholder="Enter your Password"
-                                margin="normal" placeholder="Enter Your Password" inputProps={{ style: { fontFamily: "'Baloo Da 2', cursive " } }} InputLabelProps={{ style: { fontFamily: "'Baloo Da 2', cursive" } }} />
+                            <TextField className={classes.inputRoot}
+                                fullWidth label="Password" variant="standard"
+                                placeholder="Enter your Password"
+                                margin="normal"
+                                inputProps={{ style: { fontFamily: "'Baloo Da 2', cursive " } }}
+                                InputLabelProps={{ style: { color: "#fd1863", fontFamily: "'Baloo Da 2', cursive" } }} />
                             <FormControlLabel
                                 value="Remember Me"
                                 control={<Checkbox />}
@@ -62,10 +79,10 @@ const Login = () => {
                             <Button type="submit" className={classes.button} fullWidth={true} variant="contained" color="secondary"
                             >Log In</Button>
                             <Typography>
-                                <Link> Forgot Password?</Link>
+                                <Link color="#FF1700" underline="none" href="/forgotPassword" > Forgot Password?</Link>
                             </Typography>
                             <Typography >Don't you Have an Account?
-                                <Link href="#">
+                                <Link href="/signup" color="#000036" underline="none">
                                     Sign Up
                                 </Link>
                             </Typography>
@@ -76,7 +93,7 @@ const Login = () => {
                 </Grid>
 
             </Container>
-        </Box>
+        </Box >
 
     )
 }
