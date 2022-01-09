@@ -7,6 +7,7 @@ import Navbar from './components/UI/Navbar'
 import LandingPage from './components/UI/LandingPage'
 import Footer from './components/UI/Footer'
 import Login from './components/UI/Login'
+import SignUp from './components/UI/SignUp'
 import { Routes, Route } from 'react-router-dom'
 function App() {
   const font = "'Baloo Bhaijaan 2', cursive;";
@@ -22,6 +23,7 @@ function App() {
         <Route exact path='/' element={<LandingPage />
         } />
         <Route path="login" element={<Login />} />
+        <Route path="signup" element={<SignUp />} />
       </Routes>
       <Footer />
       {/* 
