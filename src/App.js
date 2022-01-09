@@ -8,6 +8,7 @@ import LandingPage from './components/UI/LandingPage'
 import Footer from './components/UI/Footer'
 import Login from './components/UI/Login'
 import SignUp from './components/UI/SignUp'
+import ForgotPassword from './components/UI/ForgotPassword'
 import { Routes, Route } from 'react-router-dom'
 function App() {
   const font = "'Baloo Bhaijaan 2', cursive;";
@@ -24,6 +25,7 @@ function App() {
         } />
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>
       <Footer />
       {/* 
