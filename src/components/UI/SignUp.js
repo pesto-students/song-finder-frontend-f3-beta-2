@@ -19,12 +19,10 @@ const useStyles = makeStyles((theme) => ({
             borderBottom: "2px solid #000036"
         },
         "& .MuiInput-underline:hover:before": {
-            borderBottom: "2px solid #000036 !important"
+            borderBottom: "2px solid rgba(0, 0, 54, .7) !important"
         }
     },
-    hover: {
 
-    },
     Paper: {
         padding: '30px 20px',
         width: 300,
@@ -43,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     h4: {
-        color: "#000036"
+        color: "#000036", fontWeight: "700"
     },
     Avatar: {
         backgroundColor: "#000036 !important"
@@ -70,7 +68,7 @@ const SignUp = () => {
                             {/* UserName Field */}
                             <TextField className={classes.inputRoot} fullWidth inputProps={{ style: { fontFamily: "'Baloo Da 2', cursive " } }}
                                 InputLabelProps={{ style: { color: "#000036", fontFamily: "'Baloo Da 2', cursive" } }}
-                                label="UserName" margin="normal" variant="standard"
+                                label="User Name" margin="normal" variant="standard"
                                 placeholder="Enter Your UserName" />
 
                             {/* Email field */}
