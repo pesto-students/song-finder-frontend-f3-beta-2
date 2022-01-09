@@ -48,7 +48,10 @@ const Navbar = () => {
 
             <AppBar>
                 <Toolbar className={classes.Toolbar} >
-                    <img className={classes.logo} src={logo} alt='Immersis Logo' />
+                    <Link href="/">
+                        <img className={classes.logo} src={logo} alt='Immersis Logo' />
+                    </Link>
+
                     <div>
                         <InputBase placeholder="Seach..." />
                     </div>
