@@ -1,22 +1,21 @@
-import { Container, FormControlLabel, Grid, Paper, Typography } from '@material-ui/core'
-
-import { makeStyles } from '@material-ui/styles'
-import Avatar from '@mui/material/Avatar';
-import LockIcon from '@mui/icons-material/Lock';
-import React from 'react'
-import { Box, TextField } from '@mui/material';
-import { Checkbox } from "@material-ui/core";
+import { Checkbox, Container, FormControlLabel, Grid, Paper, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import { Link } from "@mui/material";
-import { margin } from '@mui/system';
+import { makeStyles } from '@material-ui/styles';
+import LockIcon from '@mui/icons-material/Lock';
+import { Box, TextField } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import colors from '../../colors';
+
 const useStyles = makeStyles((theme) => ({
     inputRoot: {
 
         "& .MuiInput-underline:after": {
-            borderBottom: "2px solid #fd1863"
+            borderBottom: colors.border.borderBottom,
         },
         "& .MuiInput-underline:hover:before": {
-            borderBottom: "2px solid rgba(253, 24, 99, .5) !important"
+            borderBottom: colors.border.borderBottombefore,
         }
     },
     Paper: {
@@ -25,17 +24,17 @@ const useStyles = makeStyles((theme) => ({
         margin: "20px auto"
     },
     button: {
-        backgroundColor: "#fd1863",
-        color: "#fff",
+        backgroundColor: colors.background.primaryButton,
+        color: colors.fontColor.textColor,
         margin: "1rem 0",
         '&:hover': {
-            backgroundColor: 'rgba(253, 24, 99, .9) !important',
+            backgroundColor: colors.background.hoverButtonColor,
 
         },
 
     },
     h4: {
-        color: "#fd1863",
+        color: colors.h4.textColor,
         fontWeight: "700"
     },
     Avatar: {
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "'Baloo Da 2', cursive !important"
     },
     Link: {
-        color: "#fd1863 !important"
+        color: Link.linkColor
     }
 
 }))
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
     const classes = useStyles();
     return (
-        <Box sx={{ p: 1, mt: 10, mb: 5 }}>
+        <Box sx={{ p: 1, mt: 10, mb: 18 }}>
             <Container maxWidth="lg">
                 <Grid container>
                     <Paper elevation={20} className={classes.Paper} sx={{ p: 100 }} >
@@ -67,7 +66,7 @@ const Login = () => {
                         <form>
                             <TextField className={classes.inputRoot} fullWidth
                                 inputProps={{ style: { fontFamily: "'Baloo Da 2', cursive " } }}
-                                InputLabelProps={{ style: { color: "#fd1863", fontFamily: "'Baloo Da 2', cursive" } }}
+                                InputLabelProps={{ style: { color: "#000036", fontFamily: "'Baloo Da 2', cursive" } }}
                                 label="Name" margin="normal" variant="standard"
                                 placeholder="Enter Your Name" />
                             <TextField className={classes.inputRoot}
@@ -75,7 +74,7 @@ const Login = () => {
                                 placeholder="Enter your Password"
                                 margin="normal"
                                 inputProps={{ style: { fontFamily: "'Baloo Da 2', cursive " } }}
-                                InputLabelProps={{ style: { color: "#fd1863", fontFamily: "'Baloo Da 2', cursive" } }} />
+                                InputLabelProps={{ style: { color: "#000036", fontFamily: "'Baloo Da 2', cursive" } }} />
                             <FormControlLabel
                                 value="Remember Me"
                                 control={<Checkbox />}
@@ -85,10 +84,10 @@ const Login = () => {
                             <Button type="submit" className={classes.button} fullWidth={true} variant="contained" color="secondary"
                             >Log In</Button>
                             <Typography>
-                                <Link color="#FF1700" underline="none" href="/forgotPassword" > Forgot Password?</Link>
+                                <Link color="#FF1700" underline="none" to="/forgotPassword" > Forgot Password?</Link>
                             </Typography>
                             <Typography >Don't you Have an Account?
-                                <Link href="/signup" color="#000036" underline="none">
+                                <Link to={"/signup"} color="#000036" underline="none">
                                     Sign Up
                                 </Link>
                             </Typography>
