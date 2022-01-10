@@ -1,8 +1,8 @@
-import { AppBar, Button, InputBase, Toolbar } from '@material-ui/core'
-import { makeStyles } from '@material-ui/styles'
-import React from 'react'
-import logo from '../../assets/logo.png'
-import Link from '@mui/material/Link';
+import { AppBar, Button, InputBase, Toolbar } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../../assets/logo.png';
 const useStyles = makeStyles((theme) => ({
     logo: {
         display: "block",
@@ -35,8 +35,11 @@ const useStyles = makeStyles((theme) => ({
     },
     SignInButton: {
         color: "#000036",
-        fontSize: "1.5rem"
+        fontSize: "1.5rem",
 
+    },
+    Link: {
+        textDecoration: "none !important"
     }
 
 }))
@@ -48,19 +51,19 @@ const Navbar = () => {
 
             <AppBar>
                 <Toolbar className={classes.Toolbar} >
-                    <Link href="/">
+                    <Link to="/">
                         <img className={classes.logo} src={logo} alt='Immersis Logo' />
                     </Link>
 
                     <div>
-                        <InputBase placeholder="Seach..." />
+                        <InputBase placeholder="Search..." />
                     </div>
                     <div >
-                        <Link href="/login" underline="none">
+                        <Link to="/login" className={classes.Link}>
 
                             <Button size="medium" variant='text' className={classes.LogInButton} >Log In</Button>
                         </Link>
-                        <Link href="/signup" underline="none">
+                        <Link to="/signup" className={classes.Link}>
 
                             <Button size="medium" variant="text" className={classes.SignInButton}>Sign In</Button>
 
