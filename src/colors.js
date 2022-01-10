@@ -20,6 +20,21 @@ const colors = {
     Avatar: {
         color: "#fd1863"
 
+    },
+    primaryColor: {
+        color: "rgba(253, 24, 99, 1)"
+    },
+    secondaryColor: {
+        color: "rgba(0, 0, 54, 1)"
+    },
+    iconColor: {
+        background: "rgba(0, 0, 54, 1)",
+        color: "rgba(253, 24, 99, .8) "
+    },
+    iconHoverColor: {
+        background: "rgba(0, 0, 54, .8)",
+        color: "rgba(253, 24, 99, 1) "
+
     }
 }
 
