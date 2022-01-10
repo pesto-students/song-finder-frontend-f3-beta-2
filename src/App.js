@@ -12,6 +12,7 @@ import ForgotPassword from './components/UI/ForgotPassword'
 import Lyrics from './components/UI/Lyrics'
 import { Routes, Route } from 'react-router-dom'
 import Video from './components/UI/Video'
+import Search from './components/UI/Search'
 function App() {
   const font = "'Baloo Bhaijaan 2', cursive;";
   const theme = createTheme({
@@ -30,6 +31,8 @@ function App() {
         <Route path="forgotPassword" element={<ForgotPassword />} />
         <Route path="lyrics" element={<Lyrics />} />
         <Route path="/video" element={<Video embedId="rokGy0huYEA" />} />
+        <Route path="/search" element={<Search />} />
+
       </Routes>
       <Footer />
 
