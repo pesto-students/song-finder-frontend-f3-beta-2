@@ -12,21 +12,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import colors from '../../colors';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     Typography: {
         color: colors.primaryColor.color
     },
     icon: {
         backgroundColor: colors.iconColor.background,
         color: colors.iconColor.color,
-        margin: ".5rem",
-        "&:hover": {
+        margin: '.5rem',
+        '&:hover': {
             backgroundColor: colors.iconHoverColor.background,
             color: colors.iconHoverColor.color,
         }
     },
 
-}))
+}));
 
 const Search = () => {
     const classes = useStyles();
@@ -36,7 +36,7 @@ const Search = () => {
                 <Grid container >
                     <Box mb={5}  >
                         <Grid item >
-                            <Typography gutterBottom variant="h6" component="h6">Search Result for: "Rafta Rafta Sanam"</Typography>
+                            <Typography gutterBottom variant="h6" component="h6">Search Result for: &apos;Rafta Rafta Sanam&apos;</Typography>
                         </Grid>
 
                     </Box>
@@ -100,7 +100,7 @@ const Search = () => {
                 </Grid>
             </Container>
         </Box>
-    )
-}
+    );
+};
 
-export default Search
+export default Search;

@@ -8,25 +8,25 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import colors from '../../colors';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     inputRoot: {
 
-        "& .MuiInput-underline:after": {
+        '& .MuiInput-underline:after': {
             borderBottom: colors.border.borderBottom,
         },
-        "& .MuiInput-underline:hover:before": {
+        '& .MuiInput-underline:hover:before': {
             borderBottom: colors.border.borderBottombefore,
         }
     },
     Paper: {
         padding: '30px 20px',
         width: 300,
-        margin: "20px auto"
+        margin: '20px auto'
     },
     button: {
         backgroundColor: colors.background.primaryButton,
         color: colors.fontColor.textColor,
-        margin: "1rem 0",
+        margin: '1rem 0',
         '&:hover': {
             backgroundColor: colors.background.hoverButtonColor,
 
@@ -35,19 +35,19 @@ const useStyles = makeStyles((theme) => ({
     },
     h4: {
         color: colors.h4.textColor,
-        fontWeight: "700"
+        fontWeight: '700'
     },
     Avatar: {
-        backgroundColor: "#fd1863 !important"
+        backgroundColor: '#fd1863 !important'
     },
     label: {
-        fontFamily: "'Baloo Da 2', cursive !important"
+        fontFamily: '\'Baloo Da 2\', cursive !important'
     },
     Link: {
         color: Link.linkColor
     }
 
-}))
+}));
 
 const Login = () => {
     const classes = useStyles();
@@ -65,16 +65,16 @@ const Login = () => {
                         </Grid>
                         <form>
                             <TextField className={classes.inputRoot} fullWidth
-                                inputProps={{ style: { fontFamily: "'Baloo Da 2', cursive " } }}
-                                InputLabelProps={{ style: { color: "#000036", fontFamily: "'Baloo Da 2', cursive" } }}
+                                inputProps={{ style: { fontFamily: '\'Baloo Da 2\', cursive ' } }}
+                                InputLabelProps={{ style: { color: '#000036', fontFamily: '\'Baloo Da 2\', cursive' } }}
                                 label="Name" margin="normal" variant="standard"
                                 placeholder="Enter Your Name" />
                             <TextField className={classes.inputRoot}
                                 fullWidth label="Password" variant="standard"
                                 placeholder="Enter your Password"
                                 margin="normal"
-                                inputProps={{ style: { fontFamily: "'Baloo Da 2', cursive " } }}
-                                InputLabelProps={{ style: { color: "#000036", fontFamily: "'Baloo Da 2', cursive" } }} />
+                                inputProps={{ style: { fontFamily: '\'Baloo Da 2\', cursive ' } }}
+                                InputLabelProps={{ style: { color: '#000036', fontFamily: '\'Baloo Da 2\', cursive' } }} />
                             <FormControlLabel
                                 value="Remember Me"
                                 control={<Checkbox />}
@@ -86,8 +86,8 @@ const Login = () => {
                             <Typography>
                                 <Link color="#FF1700" underline="none" to="/forgotPassword" > Forgot Password?</Link>
                             </Typography>
-                            <Typography >Don't you Have an Account?
-                                <Link to={"/signup"} color="#000036" underline="none">
+                            <Typography >Don&apos;t you Have an Account?
+                                <Link to={'/signup'} color="#000036" underline="none">
                                     Sign Up
                                 </Link>
                             </Typography>
@@ -100,7 +100,7 @@ const Login = () => {
             </Container>
         </Box >
 
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

@@ -5,47 +5,47 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 const useStyles = makeStyles((theme) => ({
     logo: {
-        display: "block",
+        display: 'block',
 
-        [theme.breakpoints.up("sm")]: {
-            width: "12rem",
-            height: "3rem",
-            margin: "0.1rem",
-            padding: "0.3rem"
+        [theme.breakpoints.up('sm')]: {
+            width: '12rem',
+            height: '3rem',
+            margin: '0.1rem',
+            padding: '0.3rem'
 
         },
-        [theme.breakpoints.down("sm")]: {
-            width: "8em",
-            height: "2.5rem",
-            margin: "0"
+        [theme.breakpoints.down('sm')]: {
+            width: '8em',
+            height: '2.5rem',
+            margin: '0'
 
         }
 
     },
     Toolbar: {
-        display: "flex",
-        justifyContent: "space-between",
-        backgroundColor: "#fff",
-        borderBottom: "1px solid #C4C4C4"
+        display: 'flex',
+        justifyContent: 'space-between',
+        backgroundColor: '#fff',
+        borderBottom: '1px solid #C4C4C4'
     },
     LogInButton: {
-        color: "#FD1863",
-        fontSize: "1.5rem"
+        color: '#FD1863',
+        fontSize: '1.5rem'
 
     },
     SignInButton: {
-        color: "#000036",
-        fontSize: "1.5rem",
+        color: '#000036',
+        fontSize: '1.5rem',
 
     },
     Link: {
-        textDecoration: "none !important"
+        textDecoration: 'none !important'
     }
 
-}))
+}));
 
 const Navbar = () => {
-    const classes = useStyles()
+    const classes = useStyles();
     return (
         <React.Fragment>
 
@@ -73,6 +73,6 @@ const Navbar = () => {
             </AppBar>
 
         </React.Fragment>
-    )
-}
-export default Navbar
+    );
+};
+export default Navbar;

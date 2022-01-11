@@ -1,16 +1,16 @@
-import { CardHeader, Card, Container, Typography, Grid, Paper, CardActionArea, CardMedia, CardContent, MuiThemeProvider, Box } from '@material-ui/core'
-import React from 'react'
-import { makeStyles } from '@material-ui/styles'
-const useStyles = makeStyles((theme) => ({
+import { CardHeader, Card, Container, Typography, Grid, Paper, CardActionArea, CardMedia,CardContent,} from '@material-ui/core';
+import React from 'react';
+import { makeStyles } from '@material-ui/styles';
+const useStyles = makeStyles(() => ({
     title: {
-        color: "#fd1863",
+        color: '#fd1863',
 
     }
-}))
+}));
 
 
 const OurServiceCard = () => {
-    const classes = useStyles()
+    const classes = useStyles();
 
     return (
         <Container maxWidth="lg">
@@ -74,6 +74,6 @@ const OurServiceCard = () => {
 
 
 
-    )
-}
-export default OurServiceCard
+    );
+};
+export default OurServiceCard;

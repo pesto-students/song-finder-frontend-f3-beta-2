@@ -1,9 +1,9 @@
-import { Box, Container, Grid, Avatar, Card, CardMedia, CardContent } from '@material-ui/core'
-import { CardHeader, Typography } from '@mui/material'
+import { Avatar, Box, Card, CardContent, CardMedia, Container, Grid } from '@material-ui/core';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import CopyAllIcon from '@mui/icons-material/CopyAll';
+import { CardHeader, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import React from 'react'
+import React from 'react';
 
 
 const Lyrics = () => {
@@ -38,9 +38,9 @@ const Lyrics = () => {
                                     alt="Song Image"
                                 />
                                 <CardContent style={{
-                                    backgroundColor: 'rgba(0, 0, 54, 0.8)', fontSize: "10rem"
+                                    backgroundColor: 'rgba(0, 0, 54, 0.8)', fontSize: '10rem'
                                 }}>
-                                    <Typography gutterBottom variant="body1" style={{ color: "#fff" }}>
+                                    <Typography gutterBottom variant="body1" style={{ color: '#fff' }}>
                                         Rafta Rafta Wo Meri Hasti Ka Saman Ho Gaye
 
                                         Pehle Jaan Phir Jaan-e-jaan Phir Jaan-e-jaana Ho Gaye
@@ -81,6 +81,6 @@ const Lyrics = () => {
             </Container >
         </Box>
 
-    )
-}
-export default Lyrics
+    );
+};
+export default Lyrics;

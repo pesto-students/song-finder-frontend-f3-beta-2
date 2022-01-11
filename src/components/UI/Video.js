@@ -7,25 +7,25 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     // style for Mobile Responsive 
     videResponsive: {
-        overFlow: "hidden",
-        paddingBottom: " 56.25%",
-        position: "relative",
+        overFlow: 'hidden',
+        paddingBottom: ' 56.25%',
+        position: 'relative',
         height: 0,
-        "& iframe": {
+        '& iframe': {
             left: 0,
             top: 0,
-            height: "100%",
-            width: "100%",
-            position: "absolute"
+            height: '100%',
+            width: '100%',
+            position: 'absolute'
         }
     }
-}))
+}));
 
-const Video = ({ embedId }) => {
-    const classes = useStyles()
+const Video = () => {
+    const classes = useStyles();
     return (
         <Box mt={15} align="center">
             <Container maxWidth="md">
@@ -46,7 +46,7 @@ const Video = ({ embedId }) => {
 
                     <iframe width="853"
                         height="480"
-                        src={`https://www.youtube.com/embed/${embedId}`}
+                        src="https://www.youtube.com/embed/rokGy0huYEA"
                         frameBorder="0"
                         allow="accelerometer; autoplay;clipboard-write;encrypted-media;gyroscope;picture"
                         allowFullScreen
@@ -76,7 +76,7 @@ const Video = ({ embedId }) => {
             </Container>
         </Box>
 
-    )
-}
+    );
+};
 
-export default Video
+export default Video;

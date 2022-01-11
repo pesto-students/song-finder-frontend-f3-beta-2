@@ -1,24 +1,25 @@
-import { Grid, Typography } from '@material-ui/core'
-import React from 'react'
-import { makeStyles } from '@material-ui/styles'
-const useStyles = makeStyles((theme) => ({
+import { Grid, Typography } from '@material-ui/core';
+import React from 'react';
+import { makeStyles } from '@material-ui/styles';
+const useStyles = makeStyles(() => ({
     footer: {
-        backgroundColor: "#000036",
-        maxWidth: "100vw",
-        padding: "3rem",
-        marginTop: "3rem",
+        backgroundColor: '#000036',
+        maxWidth: '100vw',
+        padding: '3rem',
+        marginTop: '3rem',
 
     },
     Heading: {
-        color: "#fd1863",
+        color: '#fd1863',
+
 
     },
     link: {
-        color: "#fff",
-        fontSize: "1.5rem"
+        color: '#fff',
+        fontSize: '1.5rem'
     }
 
-}))
+}));
 const Footer = () => {
     const classes = useStyles();
     return (
@@ -27,7 +28,7 @@ const Footer = () => {
                 justifyContent="space-evenly"
                 alignItems="baseline" sm={12} >
                 <Grid item spacing={2}>
-                    <Grid container direction="column" style={{ "overFlowWrap": "break-word" }}>
+                    <Grid container direction="column" style={{ 'overFlowWrap': 'break-word' }}>
                         <Grid item className={classes.Heading} >
 
                             <Typography variant="h3">
@@ -104,7 +105,7 @@ const Footer = () => {
 
             </Grid>
         </footer >
-    )
-}
+    );
+};
 
-export default Footer
+export default Footer;

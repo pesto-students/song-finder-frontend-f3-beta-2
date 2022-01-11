@@ -1,60 +1,58 @@
-import { Container, FormControlLabel, Grid, Paper, Typography } from '@material-ui/core'
-
-import { makeStyles } from '@material-ui/styles'
-import Avatar from '@mui/material/Avatar';
-
-import React from 'react'
-import { Box, TextField } from '@mui/material';
-import { Checkbox } from "@material-ui/core";
+import { Container, Grid, Paper, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import { Link } from "@mui/material";
-import { margin } from '@mui/system';
+import { makeStyles } from '@material-ui/styles';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
-const useStyles = makeStyles((theme) => ({
+import { Box, TextField } from '@mui/material';
+import Avatar from '@mui/material/Avatar';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import colors from '../../colors';
+
+
+
+
+const useStyles = makeStyles(() => ({
     inputRoot: {
 
-        "& .MuiInput-underline:after": {
-            borderBottom: "2px solid #FF1700"
+        '& .MuiInput-underline:after': {
+            borderBottom:  colors.borderSecondary.borderBottom,
         },
-        "& .MuiInput-underline:hover:before": {
-            borderBottom: "2px solid rgba(255, 23, 0, .7) !important"
+        '& .MuiInput-underline:hover:before': {
+            borderBottom: colors.borderSecondary.borderBottombefore,
         }
     },
     Paper: {
         padding: '30px 20px',
         width: 300,
-        margin: "20px auto"
+        margin: '20px auto'
     },
     button: {
-        backgroundColor: "#FF1700",
-        color: "#fff",
-        margin: "1rem 0",
-        '&:hover': {
-            backgroundColor: 'rgba(255, 23, 0, .9) !important',
-
-        },
-
+        backgroundColor: colors.primaryColor.color,
+        color: '#fff',
+        margin: '1rem 0',
+        
     },
     h4: {
-        color: "#FF1700",
-        fontWeight: "700"
+        color: colors.h4.textColor,
+        fontWeight: '700'
     },
     Avatar: {
-        backgroundColor: "#FF1700 !important"
+        backgroundColor: colors.iconColorSecondary.background
     },
     label: {
-        fontFamily: "'Baloo Da 2', cursive !important"
+        fontFamily: '\'Baloo Da 2\', cursive !important'
     },
     Link: {
-        color: "#FF1700 !important"
+        color: colors.Link.linkColor,
+        textDecoration: 'none !important'
     }
 
-}))
+}));
 
 const ForgotPassword = () => {
     const classes = useStyles();
     return (
-        <Box sx={{ p: 1, mt: 15, mb: 20 }}>
+        <Box sx={{ p: 1, mt: 15, mb: 30 }}>
             <Container maxWidth="lg">
                 <Grid container>
                     <Paper elevation={20} className={classes.Paper} sx={{ p: 100 }} >
@@ -67,8 +65,8 @@ const ForgotPassword = () => {
                         </Grid>
                         <form>
                             <TextField className={classes.inputRoot} fullWidth
-                                inputProps={{ style: { fontFamily: "'Baloo Da 2', cursive ", } }}
-                                InputLabelProps={{ style: { color: "#FF1700", fontFamily: "'Baloo Da 2', cursive" } }}
+                                inputProps={{ style: { fontFamily: '\'Baloo Da 2\', cursive ', } }}
+                                InputLabelProps={{ style: { color: '#fd1863', fontFamily: '\'Baloo Da 2\', cursive' } }}
                                 label="Email" margin="normal" variant="standard"
                                 placeholder="Enter Your Registred Email" />
 
@@ -76,8 +74,8 @@ const ForgotPassword = () => {
                             <Button type="submit" className={classes.button} fullWidth={true} variant="contained" color="secondary"
                             >Send</Button>
 
-                            <Typography >Don't you Have an Account?
-                                <Link href="/signup" color="#000036" underline="none">
+                            <Typography>Don&apos;t you Have an Account?
+                                <Link to="/signup"  className={classes.Link} >
                                     Sign Up
                                 </Link>
                             </Typography>
@@ -90,7 +88,7 @@ const ForgotPassword = () => {
             </Container>
         </Box >
 
-    )
-}
+    );
+};
 
-export default ForgotPassword
+export default ForgotPassword;
