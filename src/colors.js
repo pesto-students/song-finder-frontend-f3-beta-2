@@ -22,6 +22,9 @@ const colors = {
     Link: {
         linkColor: 'rgba(0, 0, 54, 1)'
     },
+    LinkSecondary: {
+        linkColor: 'rgba(253, 24, 99, 1)'
+    },
     Avatar: {
         color: '#fd1863'
 
@@ -42,7 +45,7 @@ const colors = {
 
     },
     iconColorSecondary:{
-        background:'rgba(253, 24, 99, 1)',
+        background:'rgba(253, 24, 99, 1) !important',
 
     }
 };

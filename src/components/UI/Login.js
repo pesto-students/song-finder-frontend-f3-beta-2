@@ -38,13 +38,18 @@ const useStyles = makeStyles(() => ({
         fontWeight: '700'
     },
     Avatar: {
-        backgroundColor: '#fd1863 !important'
+        backgroundColor: colors.iconColorSecondary.background
     },
     label: {
         fontFamily: '\'Baloo Da 2\', cursive !important'
     },
     Link: {
-        color: Link.linkColor
+        color: colors.LinkSecondary.linkColor,
+        textDecoration: 'none !important'
+    },
+    LinkSignUp:{
+        color:colors.Link.linkColor,
+        textDecoration: 'none !important'
     }
 
 }));
@@ -84,10 +89,10 @@ const Login = () => {
                             <Button type="submit" className={classes.button} fullWidth={true} variant="contained" color="secondary"
                             >Log In</Button>
                             <Typography>
-                                <Link color="#FF1700" underline="none" to="/forgotPassword" > Forgot Password?</Link>
+                                <Link className={classes.Link} to="/forgotPassword" > Forgot Password?</Link>
                             </Typography>
                             <Typography >Don&apos;t you Have an Account?
-                                <Link to={'/signup'} color="#000036" underline="none">
+                                <Link to={'/signup'} className={classes.LinkSignUp}>
                                     Sign Up
                                 </Link>
                             </Typography>
