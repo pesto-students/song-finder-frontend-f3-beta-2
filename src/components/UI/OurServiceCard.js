@@ -1,9 +1,10 @@
 import { CardHeader, Card, Container, Typography, Grid, Paper, CardActionArea, CardMedia,CardContent,} from '@material-ui/core';
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import colors from '../../colors';
 const useStyles = makeStyles(() => ({
     title: {
-        color: '#fd1863',
+        color: colors.primaryColor.color,
 
     }
 }));
