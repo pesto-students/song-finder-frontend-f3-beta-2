@@ -47,6 +47,8 @@ const colors = {
     iconColorSecondary:{
         background:'rgba(253, 24, 99, 1) !important',
 
+    },whiteColor:{
+        color:'#fff'
     }
 };
 
