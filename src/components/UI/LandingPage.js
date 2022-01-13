@@ -2,10 +2,12 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid, Typography } from '@material-ui/core';
 import OurServiceCard from './OurServiceCard';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         minHeight: '100vh',
-        backgroundImage: 'linear-gradient(to right bottom,  rgba(0, 0, 54, 0.90),rgba(253, 24, 99, 0.80)), url(\'https://i.imgur.com/K3wMWeK.png\')',
+        backgroundImage:
+            "linear-gradient(to right bottom,  rgba(0, 0, 54, 0.90),rgba(253, 24, 99, 0.80)), url('https://i.imgur.com/K3wMWeK.png')",
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         marginTop: '0px',
@@ -13,11 +15,8 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('md')]: {
             backgroundPosition: 'center center',
             backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-
-
+            backgroundRepeat: 'no-repeat'
         }
-
     },
     h1: {
         color: '#FD1863 !important',
@@ -29,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
         transform: 'translate(-50%,-50%)',
         [theme.breakpoints.down('sm')]: {
             fontSize: '4.5rem'
-
         }
     },
     h6: {
@@ -45,30 +43,42 @@ const useStyles = makeStyles((theme) => ({
             fontSize: '1.1rem'
         }
     }
-
 }));
 
-const LandingPage = () => {
+function LandingPage() {
     const classes = useStyles();
     return (
-        <React.Fragment>
+        <>
             <div className={classes.root}>
-                <Grid container direction="column"
-                    justifyContent="flex-end" align="center">
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="flex-end"
+                    align="center"
+                >
                     <Grid item>
-                        <Grid >
-                            <Typography variant="h1" component="h1" className={classes.h1}>IMMERSIS</Typography>
-                            <Typography variant="h6" component="h6" className={classes.h6}>Music, Videos and Lyrics all in
-                                one place</Typography>
+                        <Grid>
+                            <Typography
+                                variant="h1"
+                                component="h1"
+                                className={classes.h1}
+                            >
+                                IMMERSIS
+                            </Typography>
+                            <Typography
+                                variant="h6"
+                                component="h6"
+                                className={classes.h6}
+                            >
+                                Music, Videos and Lyrics all in one place
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
             </div>
             <OurServiceCard />
-
-
-        </React.Fragment>
+        </>
     );
-};
+}
 
 export default LandingPage;

@@ -1,4 +1,11 @@
-import { Checkbox, Container, FormControlLabel, Grid, Paper, Typography } from '@material-ui/core';
+import {
+    Checkbox,
+    Container,
+    FormControlLabel,
+    Grid,
+    Paper,
+    Typography
+} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
 import LockIcon from '@mui/icons-material/Lock';
@@ -10,12 +17,11 @@ import colors from '../../colors';
 
 const useStyles = makeStyles(() => ({
     inputRoot: {
-
         '& .MuiInput-underline:after': {
-            borderBottom: colors.border.borderBottom,
+            borderBottom: colors.border.borderBottom
         },
         '& .MuiInput-underline:hover:before': {
-            borderBottom: colors.border.borderBottombefore,
+            borderBottom: colors.border.borderBottombefore
         }
     },
     Paper: {
@@ -28,10 +34,8 @@ const useStyles = makeStyles(() => ({
         color: colors.fontColor.textColor,
         margin: '1rem 0',
         '&:hover': {
-            backgroundColor: colors.background.hoverButtonColor,
-
-        },
-
+            backgroundColor: colors.background.hoverButtonColor
+        }
     },
     h4: {
         color: colors.h4.textColor,
@@ -41,71 +45,119 @@ const useStyles = makeStyles(() => ({
         backgroundColor: colors.iconColorSecondary.background
     },
     label: {
-        fontFamily: '\'Baloo Da 2\', cursive !important'
+        fontFamily: "'Baloo Da 2', cursive !important"
     },
     Link: {
         color: colors.LinkSecondary.linkColor,
         textDecoration: 'none !important'
     },
-    LinkSignUp:{
-        color:colors.Link.linkColor,
+    LinkSignUp: {
+        color: colors.Link.linkColor,
         textDecoration: 'none !important'
     }
-
 }));
 
-const Login = () => {
+function Login() {
     const classes = useStyles();
     return (
         <Box sx={{ p: 1, mt: 10, mb: 18 }}>
             <Container maxWidth="lg">
                 <Grid container>
-                    <Paper elevation={20} className={classes.Paper} sx={{ p: 100 }} >
+                    <Paper
+                        elevation={20}
+                        className={classes.Paper}
+                        sx={{ p: 100 }}
+                    >
                         <Grid align="center">
                             <Avatar className={classes.Avatar}>
                                 <LockIcon />
                             </Avatar>
-                            <Typography variant="h4" className={classes.h4}> Login</Typography>
-                            <Typography variant="caption1">Please fill this form</Typography>
+                            <Typography variant="h4" className={classes.h4}>
+                                {' '}
+                                Login
+                            </Typography>
+                            <Typography variant="caption1">
+                                Please fill this form
+                            </Typography>
                         </Grid>
                         <form>
-                            <TextField className={classes.inputRoot} fullWidth
-                                inputProps={{ style: { fontFamily: '\'Baloo Da 2\', cursive ' } }}
-                                InputLabelProps={{ style: { color: '#000036', fontFamily: '\'Baloo Da 2\', cursive' } }}
-                                label="Name" margin="normal" variant="standard"
-                                placeholder="Enter Your Name" />
-                            <TextField className={classes.inputRoot}
-                                fullWidth label="Password" variant="standard"
+                            <TextField
+                                className={classes.inputRoot}
+                                fullWidth
+                                inputProps={{
+                                    style: {
+                                        fontFamily: "'Baloo Da 2', cursive "
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        color: '#000036',
+                                        fontFamily: "'Baloo Da 2', cursive"
+                                    }
+                                }}
+                                label="Name"
+                                margin="normal"
+                                variant="standard"
+                                placeholder="Enter Your Name"
+                            />
+                            <TextField
+                                className={classes.inputRoot}
+                                fullWidth
+                                label="Password"
+                                variant="standard"
                                 placeholder="Enter your Password"
                                 margin="normal"
-                                inputProps={{ style: { fontFamily: '\'Baloo Da 2\', cursive ' } }}
-                                InputLabelProps={{ style: { color: '#000036', fontFamily: '\'Baloo Da 2\', cursive' } }} />
+                                inputProps={{
+                                    style: {
+                                        fontFamily: "'Baloo Da 2', cursive "
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        color: '#000036',
+                                        fontFamily: "'Baloo Da 2', cursive"
+                                    }
+                                }}
+                            />
                             <FormControlLabel
                                 value="Remember Me"
                                 control={<Checkbox />}
                                 label="Remember Me"
-                                labelPlacement='I accept Terms and Condition'
+                                labelPlacement="I accept Terms and Condition"
                             />
-                            <Button type="submit" className={classes.button} fullWidth={true} variant="contained" color="secondary"
-                            >Log In</Button>
+                            <Button
+                                type="submit"
+                                className={classes.button}
+                                fullWidth
+                                variant="contained"
+                                color="secondary"
+                            >
+                                Log In
+                            </Button>
                             <Typography>
-                                <Link className={classes.Link} to="/forgotPassword" > Forgot Password?</Link>
+                                <Link
+                                    className={classes.Link}
+                                    to="/forgotPassword"
+                                >
+                                    {' '}
+                                    Forgot Password?
+                                </Link>
                             </Typography>
-                            <Typography >Don&apos;t you Have an Account?
-                                <Link to={'/signup'} className={classes.LinkSignUp}>
+                            <Typography>
+                                Don&apos;t you Have an Account?
+                                <Link
+                                    to="/signup"
+                                    className={classes.LinkSignUp}
+                                >
                                     Sign Up
                                 </Link>
                             </Typography>
-
-
                         </form>
                     </Paper>
                 </Grid>
-
             </Container>
-        </Box >
-
+        </Box>
     );
-};
+}
 
 export default Login;
