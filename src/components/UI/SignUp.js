@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import LockIcon from '@mui/icons-material/Lock';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import colors from '../../colors';
 import React from 'react';
 
 
@@ -14,7 +15,7 @@ const useStyles = makeStyles(() => ({
     inputRoot: {
 
         '& .MuiInput-underline:after': {
-            borderBottom: '2px solid #000036'
+            borderBottom: `2px solid ${colors.secondColor}`
         },
         '& .MuiInput-underline:hover:before': {
             borderBottom: '2px solid rgba(0, 0, 54, .7) !important'

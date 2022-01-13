@@ -92,8 +92,6 @@ const Search = () => {
                                 </Grid>
                             </CardActions>
                         </Card>
-
-
                     </Grid>
 
 
