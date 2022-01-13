@@ -1,6 +1,13 @@
 import {
-    Box, Card, CardActionArea,
-    CardActions, CardContent, CardMedia, Grid, IconButton, Typography
+    Box,
+    Card,
+    CardActionArea,
+    CardActions,
+    CardContent,
+    CardMedia,
+    Grid,
+    IconButton,
+    Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
@@ -22,25 +29,28 @@ const useStyles = makeStyles(() => ({
         margin: '.5rem',
         '&:hover': {
             backgroundColor: colors.iconHoverColor.background,
-            color: colors.iconHoverColor.color,
+            color: colors.iconHoverColor.color
         }
-    },
-
+    }
 }));
 
-const Search = () => {
+function Search() {
     const classes = useStyles();
     return (
-        <Box mt={15} mb={30} >
+        <Box mt={15} mb={30}>
             <Container maxWidth="lg">
-                <Grid container >
-                    <Box mb={5}  >
-                        <Grid item >
-                            <Typography gutterBottom variant="h6" component="h6">Search Result for: &apos;Rafta Rafta Sanam&apos;</Typography>
+                <Grid container>
+                    <Box mb={5}>
+                        <Grid item>
+                            <Typography
+                                gutterBottom
+                                variant="h6"
+                                component="h6"
+                            >
+                                Search Result for: &apos;Rafta Rafta Sanam&apos;
+                            </Typography>
                         </Grid>
-
                     </Box>
-
                 </Grid>
 
                 <Grid container spacing={4}>
@@ -48,59 +58,71 @@ const Search = () => {
                         <Card>
                             <CardActionArea>
                                 <CardMedia
-                                    component="img" image="https://img.youtube.com/vi/B-J_PuEhyOM/maxresdefault.jpg" />
+                                    component="img"
+                                    image="https://img.youtube.com/vi/B-J_PuEhyOM/maxresdefault.jpg"
+                                />
 
                                 <CardContent>
-                                    <Typography variant="h5">Rafta Rafta Sanam</Typography>
-                                    <Typography className={classes.Typography} variant="caption1"> T Series  </Typography>
+                                    <Typography variant="h5">
+                                        Rafta Rafta Sanam
+                                    </Typography>
+                                    <Typography
+                                        className={classes.Typography}
+                                        variant="caption1"
+                                    >
+                                        {' '}
+                                        T Series{' '}
+                                    </Typography>
                                 </CardContent>
                             </CardActionArea>
                             <Divider />
-                            <CardActions >
-                                <Grid container direction="row"
+                            <CardActions>
+                                <Grid
+                                    container
+                                    direction="row"
                                     justifyContent="space-evenly"
-                                    alignItems="baseline">
+                                    alignItems="baseline"
+                                >
                                     <Grid item>
-
-
-                                        <Tooltip className={classes.Tooltip} arrow title="Lyrics">
+                                        <Tooltip
+                                            className={classes.Tooltip}
+                                            arrow
+                                            title="Lyrics"
+                                        >
                                             <Link to="/lyrics">
-                                                <IconButton className={classes.icon}>
+                                                <IconButton
+                                                    className={classes.icon}
+                                                >
                                                     <ReceiptTwoToneIcon />
                                                 </IconButton>
                                             </Link>
-
-
                                         </Tooltip>
 
-
                                         <Tooltip arrow title="Audio">
-                                            <IconButton className={classes.icon} >
+                                            <IconButton
+                                                className={classes.icon}
+                                            >
                                                 <MusicNoteIcon />
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip arrow title="Video">
                                             <Link to="/video">
-                                                <IconButton className={classes.icon}>
+                                                <IconButton
+                                                    className={classes.icon}
+                                                >
                                                     <SwitchVideoTwoToneIcon />
                                                 </IconButton>
                                             </Link>
-
-
                                         </Tooltip>
                                     </Grid>
                                 </Grid>
                             </CardActions>
                         </Card>
-
-
                     </Grid>
-
-
                 </Grid>
             </Container>
         </Box>
     );
-};
+}
 
 export default Search;

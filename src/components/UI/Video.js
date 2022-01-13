@@ -1,4 +1,12 @@
-import { Avatar, Box, Card, CardActions, CardHeader, Container, Grid } from '@material-ui/core';
+import {
+    Avatar,
+    Box,
+    Card,
+    CardActions,
+    CardHeader,
+    Container,
+    Grid
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import ReceiptTwoToneIcon from '@mui/icons-material/ReceiptTwoTone';
@@ -8,7 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 import React from 'react';
 
 const useStyles = makeStyles(() => ({
-    // style for Mobile Responsive 
+    // style for Mobile Responsive
     videResponsive: {
         overFlow: 'hidden',
         paddingBottom: ' 56.25%',
@@ -24,7 +32,7 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const Video = () => {
+function Video() {
     const classes = useStyles();
     return (
         <Box mt={15} align="center">
@@ -35,16 +43,14 @@ const Video = () => {
                             <Avatar>
                                 <SwitchVideoTwoToneIcon />
                             </Avatar>
-
                         }
                         title="Rafta Rafta Sanam"
                         subheader="Atif Aslam"
-
                     />
                 </Card>
                 <div className={classes.videResponsive}>
-
-                    <iframe width="853"
+                    <iframe
+                        width="853"
                         height="480"
                         src="https://www.youtube.com/embed/rokGy0huYEA"
                         frameBorder="0"
@@ -53,9 +59,13 @@ const Video = () => {
                         title="Embedded Youtube"
                     />
                 </div>
-                <CardActions >
-                    <Grid container direction="row" justifyContent="space-evenly"
-                        alignItems="flex-start">
+                <CardActions>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="space-evenly"
+                        alignItems="flex-start"
+                    >
                         <Grid item>
                             <Tooltip title="Audio" arrow>
                                 <IconButton>
@@ -63,20 +73,16 @@ const Video = () => {
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Lyrics" arrow>
-                                <IconButton >
+                                <IconButton>
                                     <ReceiptTwoToneIcon />
                                 </IconButton>
                             </Tooltip>
                         </Grid>
                     </Grid>
-
                 </CardActions>
-
-
             </Container>
         </Box>
-
     );
-};
+}
 
 export default Video;

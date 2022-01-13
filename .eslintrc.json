@@ -2,11 +2,14 @@
     "env": {
         "browser": true,
         "es2021": true,
-        "jest": true
+        "jest": true,
+        "commonjs": true
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "prettier",
+        "airbnb"
     ],
     "settings": {
         "react":{
@@ -21,13 +24,24 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "prettier"
     ],
     "rules": {
-        "react/react-in-jsx-scope":"off",
-        "indent":["error",4],
-        "linebreak-style":["error","unix"],
-        "quotes":["error","single"],
-        "semi":["error","always"]
+        "import/prefer-default-export": "off",
+        "no-console": "off",
+        "prettier/prettier": "error",
+        "func-names": "off",
+        "indent": "off",
+        "no-underscore-dangle": "off",
+        "comma-dangle": "off",
+        "operator-linebreak": "off",
+        "arrow-body-style": "off",
+        "react/jsx-indent": "off",
+        "react/jsx-indent-props": "off",
+        "react/jsx-filename-extension": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "object-curly-newline": "off",
+        "react/jsx-wrap-multilines": "off"
     }
 }
