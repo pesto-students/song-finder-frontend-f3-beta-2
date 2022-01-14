@@ -2,6 +2,7 @@ import {
     Checkbox,
     Container,
     FormControlLabel,
+    FormHelperText,
     Grid,
     Paper,
     Typography
@@ -11,8 +12,10 @@ import { makeStyles } from '@material-ui/styles';
 import LockIcon from '@mui/icons-material/Lock';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import colors from '../../colors';
+import FormControl from '@mui/material/FormControl';
 import React from 'react';
+import { useForm } from 'react-hook-form';
+import colors from '../../colors';
 
 const useStyles = makeStyles(() => ({
     inputRoot: {
@@ -48,6 +51,10 @@ const useStyles = makeStyles(() => ({
 
 function SignUp() {
     const classes = useStyles();
+    const { register, handleSubmit, errors } = useForm();
+    const onSubmit = (data) => {
+        console.log(data);
+    };
     return (
         <Box sx={{ p: 1, mt: 10, mb: 5 }}>
             <Container maxWidth="lg">
@@ -69,7 +76,7 @@ function SignUp() {
                                 Please fill this form
                             </Typography>
                         </Grid>
-                        <form>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             {/* UserName Field */}
                             <TextField
                                 className={classes.inputRoot}
@@ -89,6 +96,12 @@ function SignUp() {
                                 margin="normal"
                                 variant="standard"
                                 placeholder="Enter Your UserName"
+                                name="UserName"
+                                inputRef={register({
+                                    required: 'User Name is Required'
+                                })}
+                                error={errors.UserName}
+                                helperText={errors.UserName?.message}
                             />
 
                             {/* Email field */}
@@ -110,6 +123,12 @@ function SignUp() {
                                 margin="normal"
                                 label="Email"
                                 placeholder="name@domain.com"
+                                name="Email"
+                                inputRef={register({
+                                    required: 'Email is Required'
+                                })}
+                                error={errors.Email}
+                                helperText={errors.Email?.message}
                             />
 
                             {/* Password Field */}
@@ -131,6 +150,12 @@ function SignUp() {
                                         fontFamily: "'Baloo Da 2', cursive"
                                     }
                                 }}
+                                name="Password"
+                                inputRef={register({
+                                    required: 'Password is Required'
+                                })}
+                                error={errors.Password}
+                                helperText={errors.Password?.message}
                             />
 
                             <TextField
@@ -151,13 +176,31 @@ function SignUp() {
                                 placeholder="Confirm Password"
                                 variant="standard"
                                 label="Confirm Password"
+                                name="ConfirmPassword"
+                                inputRef={register({
+                                    required: 'Confirm Password is required'
+                                })}
+                                error={errors.ConfirmPassword}
+                                helperText={errors.ConfirmPassword?.message}
                             />
-                            <FormControlLabel
-                                value=""
-                                control={<Checkbox />}
-                                label="I accept Terms and Condition"
-                                labelPlacement="I Accept Terms and Condition"
-                            />
+                            <FormControl error={Boolean(errors.tnc)}>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox
+                                            name="tnc"
+                                            inputRef={register({
+                                                required:
+                                                    'Please Agree Our Terms And Condition'
+                                            })}
+                                        />
+                                    }
+                                    label="I accept terms and condition"
+                                />
+                                <FormHelperText>
+                                    {errors.tnc?.message}
+                                </FormHelperText>
+                            </FormControl>
+
                             <Button
                                 type="submit"
                                 className={classes.button}
