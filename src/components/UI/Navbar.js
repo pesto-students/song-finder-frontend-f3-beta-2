@@ -1,8 +1,8 @@
 import { AppBar, Button, InputBase, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import ReorderIcon from '@mui/icons-material/Reorder';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ReorderIcon from '@mui/icons-material/Reorder';
 import logo from '../../assets/logo.png';
 import colors from '../../colors';
 
@@ -25,15 +25,15 @@ const useStyles = makeStyles((theme) => ({
     Toolbar: {
         display: 'flex',
         justifyContent: 'space-between',
-        backgroundColor: colors.whiteColor.color,
-        borderBottom: '1px solid #C4C4C4'
+        backgroundColor: colors.whiteColor,
+        borderBottom: `1px solid ${colors.greyWhite}`
     },
     LogInButton: {
-        color: colors.primaryColor.color,
+        color: colors.primaryColor,
         fontSize: '1.5rem'
     },
     SignInButton: {
-        color: colors.secondaryColor.color,
+        color: colors.secondaryColor,
         fontSize: '1.5rem'
     },
     Link: {
@@ -42,13 +42,13 @@ const useStyles = makeStyles((theme) => ({
     Search: {
         display: 'flex',
         alignItems: 'center',
-        background: colors.whiteColor.color,
-        borderBottom: '2px solid #000036',
+        background: colors.whiteColor,
+        borderBottom: `2px solid ${colors.secondaryColor}`,
         borderRadius: 1,
         width: '20%',
         alignContent: 'center',
         '&:hover': {
-            borderBottom: '1px solid #000036'
+            borderBottom: `1px solid ${colors.secondaryColor}`
         },
         [theme.breakpoints.down('sm')]: {
             display: (props) => (props.open ? 'flex' : 'none'),

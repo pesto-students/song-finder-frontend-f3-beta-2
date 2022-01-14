@@ -9,12 +9,10 @@ const colors = {
     border: {
         borderBottom: '2px solid rgba(0, 0, 54, .7)',
         borderBottombefore: '2px solid rgba(0, 0, 54, .5)'
-
     },
-    borderSecondary:{
+    borderSecondary: {
         borderBottom: '2px solid rgba(253, 24, 99, .700)',
         borderBottombefore: '2px solid rgba(253, 24, 99, 1)'
-
     },
     h4: {
         textColor: 'rgba(0, 0, 54, 1)'
@@ -27,14 +25,11 @@ const colors = {
     },
     Avatar: {
         color: '#fd1863'
+    },
+    primaryColor: 'rgba(253, 24, 99, 1)',
 
-    },
-    primaryColor: {
-        color: 'rgba(253, 24, 99, 1)'
-    },
-    secondaryColor: {
-        color: 'rgba(0, 0, 54, 1)'
-    },
+    secondaryColor: 'rgba(0, 0, 54, 1)',
+
     iconColor: {
         background: 'rgba(0, 0, 54, 1)',
         color: 'rgba(253, 24, 99, .8) '
@@ -42,14 +37,12 @@ const colors = {
     iconHoverColor: {
         background: 'rgba(0, 0, 54, .8)',
         color: 'rgba(253, 24, 99, 1) '
-
     },
-    iconColorSecondary:{
-        background:'rgba(253, 24, 99, 1) !important',
-
-    },whiteColor:{
-        color:'#fff'
-    }
+    iconColorSecondary: {
+        background: 'rgba(253, 24, 99, 1) !important'
+    },
+    whiteColor: '#fff',
+    greyWhite: '#C4C4C4'
 };
 
 export default colors;
