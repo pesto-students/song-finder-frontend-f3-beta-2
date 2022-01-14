@@ -12,8 +12,8 @@ import LockIcon from '@mui/icons-material/Lock';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import colors from '../../colors';
 
 const useStyles = makeStyles(() => ({
