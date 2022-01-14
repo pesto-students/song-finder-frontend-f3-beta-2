@@ -13,6 +13,7 @@ import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import colors from '../../colors';
 
 const useStyles = makeStyles(() => ({
@@ -30,7 +31,7 @@ const useStyles = makeStyles(() => ({
         margin: '20px auto'
     },
     button: {
-        backgroundColor: colors.background.primaryButton,
+        backgroundColor: colors.secondaryColor,
         color: colors.fontColor.textColor,
         margin: '1rem 0',
         '&:hover': {
@@ -59,6 +60,10 @@ const useStyles = makeStyles(() => ({
 
 function Login() {
     const classes = useStyles();
+    const { register, handleSubmit, errors } = useForm();
+    const onSubmit = (data) => {
+        console.log(data);
+    };
     return (
         <Box sx={{ p: 1, mt: 10, mb: 18 }}>
             <Container maxWidth="lg">
@@ -80,7 +85,7 @@ function Login() {
                                 Please fill this form
                             </Typography>
                         </Grid>
-                        <form>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             <TextField
                                 className={classes.inputRoot}
                                 fullWidth
@@ -91,14 +96,20 @@ function Login() {
                                 }}
                                 InputLabelProps={{
                                     style: {
-                                        color: '#000036',
+                                        color: colors.secondaryColor,
                                         fontFamily: "'Baloo Da 2', cursive"
                                     }
                                 }}
-                                label="Name"
+                                label="Email"
                                 margin="normal"
                                 variant="standard"
-                                placeholder="Enter Your Name"
+                                placeholder="Enter Your Registered Email"
+                                name="Email"
+                                inputRef={register({
+                                    required: 'Email Is Required'
+                                })}
+                                error={errors.Email}
+                                helperText={errors.Email?.message}
                             />
                             <TextField
                                 className={classes.inputRoot}
@@ -114,14 +125,25 @@ function Login() {
                                 }}
                                 InputLabelProps={{
                                     style: {
-                                        color: '#000036',
+                                        color: colors.secondaryColor,
                                         fontFamily: "'Baloo Da 2', cursive"
                                     }
                                 }}
+                                name="Password"
+                                inputRef={register({
+                                    required: 'Password Is Required'
+                                })}
+                                error={errors.Password}
+                                helperText={errors.Password?.message}
                             />
                             <FormControlLabel
-                                value="Remember Me"
-                                control={<Checkbox />}
+                                value=""
+                                control={
+                                    <Checkbox
+                                        name="RememberMe"
+                                        inputRef={register()}
+                                    />
+                                }
                                 label="Remember Me"
                                 labelPlacement="I accept Terms and Condition"
                             />
