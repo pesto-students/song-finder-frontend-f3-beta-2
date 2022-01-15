@@ -1,4 +1,5 @@
 import { Grid, Typography } from '@material-ui/core';
+import { useLocation } from 'react-router-dom';
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 
@@ -19,6 +20,11 @@ const useStyles = makeStyles(() => ({
 }));
 function Footer() {
     const classes = useStyles();
+    const location = useLocation();
+
+    if (location.pathname === '/login' || location.pathname === '/signup') {
+        return null;
+    }
     return (
         <footer className={classes.footer}>
             <Grid
