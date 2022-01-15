@@ -12,6 +12,8 @@ import LockIcon from '@mui/icons-material/Lock';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import colors from '../../colors';
 
 const useStyles = makeStyles(() => ({
     inputRoot: {
@@ -42,6 +44,10 @@ const useStyles = makeStyles(() => ({
     },
     Avatar: {
         backgroundColor: '#000036 !important'
+    },
+    LinkSignIn: {
+        color: colors.Link.linkColor,
+        textDecoration: 'none !important'
     }
 }));
 
@@ -166,6 +172,15 @@ function SignUp() {
                             >
                                 Sign Up
                             </Button>
+                            <Typography>
+                                Already Have an Account?
+                                <Link
+                                    to="/login"
+                                    className={classes.LinkSignIn}
+                                >
+                                    &nbsp;Log In
+                                </Link>
+                            </Typography>
                         </form>
                     </Paper>
                 </Grid>
