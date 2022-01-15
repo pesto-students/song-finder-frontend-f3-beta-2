@@ -54,9 +54,22 @@ function SignUp() {
     const { register, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
         console.log(data);
+        fetch('https://api-immersis.herokuapp.com/auth', {
+            method: 'POST',
+            body: JSON.stringify({
+                firstName: data.UserName,
+                lastName: 'Blaze',
+                email: data.Email,
+                password: data.Password,
+                confirmPassword: data.ConfirmPassword
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     };
     return (
-        <Box sx={{ p: 1, mt: 10, mb: 5 }}>
+        <Box sx={{ p: 1, mt: 10, mb: 5 }} className={classes.root}>
             <Container maxWidth="lg">
                 <Grid container>
                     <Paper

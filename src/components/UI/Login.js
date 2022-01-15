@@ -63,6 +63,16 @@ function Login() {
     const { register, handleSubmit, errors } = useForm();
     const onSubmit = (data) => {
         console.log(data);
+        fetch('https://reqres.in/api/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                email: data.Email,
+                password: data.Password
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     };
     return (
         <Box sx={{ p: 1, mt: 10, mb: 18 }}>
