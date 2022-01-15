@@ -118,7 +118,7 @@ function Search({ searchResults, dispatch }) {
     const query = params.get('q');
     console.log(query);
     if (query) {
-        useEffect(() => dispatch(fetchResult(query)), [query]);
+        useEffect(() => dispatch(fetchResult(query)), []);
     } else {
         useEffect(() => navigate('/'), []);
     }

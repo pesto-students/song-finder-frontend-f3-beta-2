@@ -3,7 +3,9 @@ import { makeStyles } from '@material-ui/styles';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import SearchIcon from '@mui/icons-material/Search';
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { fetchResult } from '../../utils/resource';
 import logo from '../../assets/logo.png';
 import colors from '../../colors';
 
@@ -78,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Navbar() {
+function Navbar({ dispatch }) {
     const classes = useStyles();
     const location = useLocation();
     const navigate = useNavigate();
@@ -86,6 +88,7 @@ function Navbar() {
 
     const search = (e) => {
         e.preventDefault();
+        if (location.pathname === '/search') dispatch(fetchResult(input));
         navigate({ pathname: 'search', search: `?q=${input}` });
     };
     if (location.pathname === '/login' || location.pathname === '/signup') {
@@ -153,4 +156,11 @@ function Navbar() {
         </AppBar>
     );
 }
-export default Navbar;
+
+function mapStateToProps(state) {
+    return { state };
+}
+
+const ConnectedNavbar = connect(mapStateToProps)(Navbar);
+
+export default ConnectedNavbar;
