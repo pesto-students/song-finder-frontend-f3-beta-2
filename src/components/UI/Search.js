@@ -13,13 +13,13 @@ import { makeStyles } from '@material-ui/styles';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import ReceiptTwoToneIcon from '@mui/icons-material/ReceiptTwoTone';
 import SwitchVideoTwoToneIcon from '@mui/icons-material/SwitchVideoTwoTone';
-import { Container, Tooltip, Skeleton } from '@mui/material';
+import { Container, Skeleton, Tooltip } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, useSearchParams, useNavigate } from 'react-router-dom';
-import { fetchResult } from '../../utils/resource';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import colors from '../../colors';
+import { fetchResult } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
     Typography: {
@@ -52,7 +52,8 @@ function Loading() {
 }
 
 function Results(props) {
-    const { image, title, artist } = props;
+    const { image, title, artist, id, trig } = props;
+    const { trigger } = trig;
     const classes = useStyles();
     return (
         <Grid item sm={3}>
@@ -93,16 +94,24 @@ function Results(props) {
                             </Tooltip>
 
                             <Tooltip arrow title="Audio">
-                                <IconButton className={classes.icon}>
+                                <IconButton
+                                    className={classes.icon}
+                                    id={id}
+                                    name="music"
+                                    onClick={trigger}
+                                >
                                     <MusicNoteIcon />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip arrow title="Video">
-                                <Link to="/video">
-                                    <IconButton className={classes.icon}>
-                                        <SwitchVideoTwoToneIcon />
-                                    </IconButton>
-                                </Link>
+                                <IconButton
+                                    className={classes.icon}
+                                    id={id}
+                                    name="video"
+                                    onClick={trigger}
+                                >
+                                    <SwitchVideoTwoToneIcon />
+                                </IconButton>
                             </Tooltip>
                         </Grid>
                     </Grid>
@@ -116,7 +125,20 @@ function Search({ searchResults, dispatch }) {
     const [params] = useSearchParams();
     const navigate = useNavigate();
     const query = params.get('q');
-    console.log(query);
+
+    function trigger(e) {
+        searchResults.data.forEach((elm) => {
+            if (elm.id.toString() === e.currentTarget.id) {
+                navigate({
+                    pathname: `/${e.currentTarget.name}`,
+                    search: `?title=${elm.title}&artist=${elm.artist}`
+                });
+                return true;
+            }
+            return true;
+        });
+    }
+
     if (query) {
         useEffect(() => dispatch(fetchResult(query)), []);
     } else {
@@ -152,9 +174,11 @@ function Search({ searchResults, dispatch }) {
                     ) : (
                         searchResults.data.map((element) => (
                             <Results
+                                id={element.id}
                                 title={element.title}
                                 artist={element.artist}
                                 image={element.trackImage}
+                                trig={{ trigger }}
                             />
                         ))
                     )}
