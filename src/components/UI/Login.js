@@ -6,14 +6,15 @@ import {
     Paper,
     Typography
 } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
 import LockIcon from '@mui/icons-material/Lock';
+import { LoadingButton } from '@mui/lab';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import axios from 'axios';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import colors from '../../colors';
 
 const useStyles = makeStyles(() => ({
@@ -31,8 +32,8 @@ const useStyles = makeStyles(() => ({
         margin: '20px auto'
     },
     button: {
-        backgroundColor: colors.secondaryColor,
-        color: colors.fontColor.textColor,
+        backgroundColor: `${colors.primaryColor} !important`,
+        color: colors.whiteColor,
         margin: '1rem 0',
         '&:hover': {
             backgroundColor: colors.background.hoverButtonColor
@@ -55,22 +56,30 @@ const useStyles = makeStyles(() => ({
     LinkSignUp: {
         color: colors.Link.linkColor,
         textDecoration: 'none !important'
+    },
+    message: {
+        color: colors.primaryColor
     }
 }));
 
 function Login() {
     const classes = useStyles();
+    const navigate = useNavigate();
     const { register, handleSubmit, errors } = useForm();
+    const baseURL = 'http://localhost:5000';
+    const [message, setmessage] = React.useState('');
+    const [loading, setloading] = React.useState(false);
     const onSubmit = (data) => {
-        console.log(data);
-        fetch('https://reqres.in/api/login', {
-            method: 'POST',
-            body: JSON.stringify({
-                email: data.Email,
-                password: data.Password
-            }),
-            headers: {
-                'Content-Type': 'application/json'
+        axios.post(`${baseURL}/auth/login`, data).then((res) => {
+            const Response = res.data;
+            if (Response.success) {
+                setloading(true);
+                setmessage(Response.message);
+                setTimeout(() => {
+                    navigate('/');
+                }, 6000);
+            } else {
+                setmessage(Response.message);
             }
         });
     };
@@ -91,8 +100,14 @@ function Login() {
                                 {' '}
                                 Login
                             </Typography>
-                            <Typography variant="caption1">
+                            <Typography variant="caption">
                                 Please fill this form
+                            </Typography>
+                            <Typography
+                                variant="body2"
+                                className={classes.message}
+                            >
+                                {message}
                             </Typography>
                         </Grid>
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -114,12 +129,12 @@ function Login() {
                                 margin="normal"
                                 variant="standard"
                                 placeholder="Enter Your Registered Email"
-                                name="Email"
+                                name="email"
                                 inputRef={register({
                                     required: 'Email Is Required'
                                 })}
-                                error={errors.Email}
-                                helperText={errors.Email?.message}
+                                error={errors.email}
+                                helperText={errors.email?.message}
                             />
                             <TextField
                                 className={classes.inputRoot}
@@ -139,12 +154,12 @@ function Login() {
                                         fontFamily: "'Baloo Da 2', cursive"
                                     }
                                 }}
-                                name="Password"
+                                name="password"
                                 inputRef={register({
                                     required: 'Password Is Required'
                                 })}
-                                error={errors.Password}
-                                helperText={errors.Password?.message}
+                                error={errors.password}
+                                helperText={errors.password?.message}
                             />
                             <FormControlLabel
                                 value=""
@@ -157,7 +172,18 @@ function Login() {
                                 label="Remember Me"
                                 labelPlacement="I accept Terms and Condition"
                             />
-                            <Button
+                            <LoadingButton
+                                loading={loading}
+                                type="submit"
+                                loadingPosition="start"
+                                variant="contained"
+                                color="secondary"
+                                fullWidth
+                                className={classes.button}
+                            >
+                                Log In
+                            </LoadingButton>
+                            {/* <Button
                                 type="submit"
                                 className={classes.button}
                                 fullWidth
@@ -165,7 +191,7 @@ function Login() {
                                 color="secondary"
                             >
                                 Log In
-                            </Button>
+                            </Button> */}
                             <Typography>
                                 <Link
                                     className={classes.Link}
