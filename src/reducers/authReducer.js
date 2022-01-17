@@ -12,4 +12,4 @@ function AuthReducer(
     }
 }
 
-exports.AuthReducer = AuthReducer;
+export { AuthReducer };

@@ -13,4 +13,4 @@ function ResultReducer(state = initialState, action = {}) {
     }
 }
 
-exports.ResultReducer = ResultReducer;
+export { ResultReducer };
