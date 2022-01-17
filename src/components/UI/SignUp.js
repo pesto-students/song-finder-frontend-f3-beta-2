@@ -9,11 +9,16 @@ import {
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
+import CloseIcon from '@mui/icons-material/Close';
 import LockIcon from '@mui/icons-material/Lock';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
+import axios from 'axios';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import colors from '../../colors';
 
@@ -23,7 +28,7 @@ const useStyles = makeStyles(() => ({
             borderBottom: `2px solid ${colors.secondColor}`
         },
         '& .MuiInput-underline:hover:before': {
-            borderBottom: '2px solid rgba(0, 0, 54, .7) !important'
+            borderBottom: `2px solid ${colors.secondColor} !important`
         }
     },
 
@@ -33,40 +38,72 @@ const useStyles = makeStyles(() => ({
         margin: '20px auto'
     },
     button: {
-        backgroundColor: '#000036',
-        color: '#fff',
+        backgroundColor: colors.secondaryColor,
+        color: colors.whiteColor,
         margin: '1rem 0',
         '&:hover': {
-            backgroundColor: 'rgba(0, 0, 54, .9) !important'
+            backgroundColor: `${colors.background.hoverButtonColor} !important`
         }
     },
     h4: {
-        color: '#000036',
+        color: colors.secondaryColor,
         fontWeight: '700'
     },
     Avatar: {
-        backgroundColor: '#000036 !important'
+        backgroundColor: `${colors.primaryColor} !important`
     }
 }));
 
 function SignUp() {
     const classes = useStyles();
     const { register, handleSubmit, errors } = useForm();
+    const [open, setOpen] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+    const navigate = useNavigate();
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+    const action = (
+        <>
+            <Button color="secondary" size="small" onClick={handleClose}>
+                UNDO
+            </Button>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </>
+    );
+
     const onSubmit = (data) => {
-        console.log(data);
-        fetch('https://api-immersis.herokuapp.com/auth', {
-            method: 'POST',
-            body: JSON.stringify({
-                firstName: data.UserName,
-                lastName: 'Blaze',
-                email: data.Email,
-                password: data.Password,
-                confirmPassword: data.ConfirmPassword
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        axios
+            .post('https://api-immersis.herokuapp.com/auth', data)
+            .then((res) => {
+                const Response = res.data;
+                console.log('Response is:', Response);
+                if (Response.success) {
+                    setOpen(true);
+                    setMessage(Response.message);
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 6000);
+                } else {
+                    setOpen(true);
+                    setMessage(Response.message);
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, 6000);
+                }
+            });
     };
     return (
         <Box sx={{ p: 1, mt: 10, mb: 5 }} className={classes.root}>
@@ -101,20 +138,47 @@ function SignUp() {
                                 }}
                                 InputLabelProps={{
                                     style: {
-                                        color: '#000036',
+                                        color: colors.secondaryColor,
                                         fontFamily: "'Baloo Da 2', cursive"
                                     }
                                 }}
-                                label="User Name"
+                                label="First Name"
                                 margin="normal"
                                 variant="standard"
                                 placeholder="Enter Your UserName"
-                                name="UserName"
+                                name="firstName"
                                 inputRef={register({
-                                    required: 'User Name is Required'
+                                    required: 'First Name is Required'
                                 })}
-                                error={errors.UserName}
-                                helperText={errors.UserName?.message}
+                                error={errors.firstName}
+                                helperText={errors.firstName?.message}
+                                type="text"
+                            />
+                            <TextField
+                                className={classes.inputRoot}
+                                fullWidth
+                                inputProps={{
+                                    style: {
+                                        fontFamily: "'Baloo Da 2', cursive "
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        color: colors.secondaryColor,
+                                        fontFamily: "'Baloo Da 2', cursive"
+                                    }
+                                }}
+                                label="Last Name"
+                                margin="normal"
+                                variant="standard"
+                                placeholder="Enter Your UserName"
+                                name="lastName"
+                                inputRef={register({
+                                    required: 'Last Name is Required'
+                                })}
+                                error={errors.lastName}
+                                helperText={errors.lastName?.message}
+                                type="text"
                             />
 
                             {/* Email field */}
@@ -128,7 +192,7 @@ function SignUp() {
                                 }}
                                 InputLabelProps={{
                                     style: {
-                                        color: '#000036',
+                                        color: colors.secondaryColor,
                                         fontFamily: "'Baloo Da 2', cursive"
                                     }
                                 }}
@@ -136,12 +200,13 @@ function SignUp() {
                                 margin="normal"
                                 label="Email"
                                 placeholder="name@domain.com"
-                                name="Email"
+                                name="email"
+                                type="email"
                                 inputRef={register({
                                     required: 'Email is Required'
                                 })}
-                                error={errors.Email}
-                                helperText={errors.Email?.message}
+                                error={errors.email}
+                                helperText={errors.email?.message}
                             />
 
                             {/* Password Field */}
@@ -159,16 +224,17 @@ function SignUp() {
                                 }}
                                 InputLabelProps={{
                                     style: {
-                                        color: '#000036',
+                                        color: colors.secondaryColor,
                                         fontFamily: "'Baloo Da 2', cursive"
                                     }
                                 }}
-                                name="Password"
+                                name="password"
                                 inputRef={register({
                                     required: 'Password is Required'
                                 })}
-                                error={errors.Password}
-                                helperText={errors.Password?.message}
+                                error={errors.password}
+                                helperText={errors.password?.message}
+                                type="password"
                             />
 
                             <TextField
@@ -181,7 +247,7 @@ function SignUp() {
                                 }}
                                 InputLabelProps={{
                                     style: {
-                                        color: '#000036',
+                                        color: colors.secondaryColor,
                                         fontFamily: "'Baloo Da 2', cursive"
                                     }
                                 }}
@@ -189,12 +255,13 @@ function SignUp() {
                                 placeholder="Confirm Password"
                                 variant="standard"
                                 label="Confirm Password"
-                                name="ConfirmPassword"
+                                name="confirmPassword"
                                 inputRef={register({
                                     required: 'Confirm Password is required'
                                 })}
-                                error={errors.ConfirmPassword}
-                                helperText={errors.ConfirmPassword?.message}
+                                error={errors.confirmPassword}
+                                helperText={errors.confirmPassword?.message}
+                                type="password"
                             />
                             <FormControl error={Boolean(errors.tnc)}>
                                 <FormControlLabel
@@ -226,6 +293,16 @@ function SignUp() {
                         </form>
                     </Paper>
                 </Grid>
+
+                <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    message={message}
+                    action={action}
+                    severity="success"
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                />
             </Container>
         </Box>
     );
