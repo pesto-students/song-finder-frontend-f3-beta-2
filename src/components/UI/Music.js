@@ -7,19 +7,19 @@ import {
     Grid
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import SwitchVideoTwoToneIcon from '@mui/icons-material/SwitchVideoTwoTone';
 import ReceiptTwoToneIcon from '@mui/icons-material/ReceiptTwoTone';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import ReactPlayer from 'react-player/youtube';
-import { fetchVideo } from '../../utils/resource';
+import ReactPlayer from 'react-player/soundcloud';
+import { fetchAudio } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
     // style for Mobile Responsive
-    videResponsive: {
+    audioResponsive: {
         overFlow: 'hidden',
         paddingBottom: ' 56.25%',
         position: 'relative',
@@ -34,19 +34,15 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-function VideoFrame({ videoId, title, artist }) {
+function AudioFrame({ audioURL, title, artist }) {
     const classes = useStyles();
     return (
         <Container maxWidth="md">
             <Card>
                 <CardHeader title={title} subheader={artist} />
             </Card>
-            <div className={classes.videResponsive}>
-                <ReactPlayer
-                    url={`https://www.youtube.com/watch?v=${videoId}`}
-                    height="50%"
-                    width="70%"
-                />
+            <div className={classes.audioResponsive}>
+                <ReactPlayer url={audioURL} height="50%" width="70%" />
             </div>
             <CardActions>
                 <Grid
@@ -56,9 +52,9 @@ function VideoFrame({ videoId, title, artist }) {
                     alignItems="flex-start"
                 >
                     <Grid item>
-                        <Tooltip title="Audio" arrow>
+                        <Tooltip title="Video" arrow>
                             <IconButton>
-                                <MusicNoteIcon />
+                                <SwitchVideoTwoToneIcon />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Lyrics" arrow>
@@ -73,27 +69,27 @@ function VideoFrame({ videoId, title, artist }) {
     );
 }
 
-function Video({ videoResult, dispatch }) {
+function Audio({ audioResult, dispatch }) {
     const navigate = useNavigate();
     const [params] = useSearchParams();
     const title = params.get('title');
     const artist = params.get('artist');
 
     if (title && artist) {
-        useEffect(() => dispatch(fetchVideo(`${title} ${artist}`)), []);
+        useEffect(() => dispatch(fetchAudio({ title, artist })), []);
     } else {
         useEffect(() => navigate('/'), []);
     }
 
     return (
         <Box mt={15} align="center">
-            {videoResult.loading ? (
+            {audioResult.loading ? (
                 <h3>Loading</h3>
-            ) : videoResult.error ? (
-                <h3>{videoResult.error}</h3>
+            ) : audioResult.error ? (
+                <h3>{audioResult.error}</h3>
             ) : (
-                <VideoFrame
-                    videoId={videoResult.id}
+                <AudioFrame
+                    audioURL={audioResult.url}
                     title={title}
                     artist={artist}
                 />
@@ -103,9 +99,9 @@ function Video({ videoResult, dispatch }) {
 }
 
 function mapStateToProps(state) {
-    return { videoResult: state.video };
+    return { audioResult: state.audio };
 }
 
-const ConnectedVideo = connect(mapStateToProps)(Video);
+const ConnectedAudio = connect(mapStateToProps)(Audio);
 
-export default ConnectedVideo;
+export default ConnectedAudio;

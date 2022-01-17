@@ -13,11 +13,13 @@ import { makeStyles } from '@material-ui/styles';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import ReceiptTwoToneIcon from '@mui/icons-material/ReceiptTwoTone';
 import SwitchVideoTwoToneIcon from '@mui/icons-material/SwitchVideoTwoTone';
-import { Container, Tooltip } from '@mui/material';
+import { Container, Skeleton, Tooltip } from '@mui/material';
 import Divider from '@mui/material/Divider';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import colors from '../../colors';
+import { fetchResult } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
     Typography: {
@@ -34,8 +36,114 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-function Search() {
+function Loading() {
+    return (
+        <>
+            {[...Array(12)].map(() => (
+                <Grid item sm={3}>
+                    <Skeleton variant="rectangular" height={120} width={250} />
+                    <Skeleton height={30} width={250} />
+                    <Skeleton width="50%" />
+                    <Skeleton variant="rectangular" height={30} width={250} />
+                </Grid>
+            ))}
+        </>
+    );
+}
+
+function Results(props) {
+    const { image, title, artist, id, trig } = props;
+    const { trigger } = trig;
     const classes = useStyles();
+    return (
+        <Grid item sm={3}>
+            <Card>
+                <CardActionArea>
+                    <CardMedia component="img" image={image} height="150" />
+
+                    <CardContent>
+                        <Typography variant="h5">{title}</Typography>
+                        <Typography
+                            className={classes.Typography}
+                            variant="caption1"
+                        >
+                            {' '}
+                            {artist}{' '}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+                <Divider />
+                <CardActions>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="space-evenly"
+                        alignItems="baseline"
+                    >
+                        <Grid item>
+                            <Tooltip
+                                className={classes.Tooltip}
+                                arrow
+                                title="Lyrics"
+                            >
+                                <Link to="/lyrics">
+                                    <IconButton className={classes.icon}>
+                                        <ReceiptTwoToneIcon />
+                                    </IconButton>
+                                </Link>
+                            </Tooltip>
+
+                            <Tooltip arrow title="Audio">
+                                <IconButton
+                                    className={classes.icon}
+                                    id={id}
+                                    name="music"
+                                    onClick={trigger}
+                                >
+                                    <MusicNoteIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip arrow title="Video">
+                                <IconButton
+                                    className={classes.icon}
+                                    id={id}
+                                    name="video"
+                                    onClick={trigger}
+                                >
+                                    <SwitchVideoTwoToneIcon />
+                                </IconButton>
+                            </Tooltip>
+                        </Grid>
+                    </Grid>
+                </CardActions>
+            </Card>
+        </Grid>
+    );
+}
+
+function Search({ searchResults, dispatch }) {
+    const [params] = useSearchParams();
+    const navigate = useNavigate();
+    const query = params.get('q');
+
+    function trigger(e) {
+        searchResults.data.forEach((elm) => {
+            if (elm.id.toString() === e.currentTarget.id) {
+                navigate({
+                    pathname: `/${e.currentTarget.name}`,
+                    search: `?title=${elm.title}&artist=${elm.artist}`
+                });
+                return true;
+            }
+            return true;
+        });
+    }
+
+    if (query) {
+        useEffect(() => dispatch(fetchResult(query)), []);
+    } else {
+        useEffect(() => navigate('/'), []);
+    }
     return (
         <Box mt={15} mb={30}>
             <Container maxWidth="lg">
@@ -47,82 +155,43 @@ function Search() {
                                 variant="h6"
                                 component="h6"
                             >
-                                Search Result for: &apos;Rafta Rafta Sanam&apos;
+                                Search Result for: &nbsp; &apos;{query}&apos;
                             </Typography>
                         </Grid>
                     </Box>
                 </Grid>
 
-                <Grid container spacing={4}>
-                    <Grid item sm={3}>
-                        <Card>
-                            <CardActionArea>
-                                <CardMedia
-                                    component="img"
-                                    image="https://img.youtube.com/vi/B-J_PuEhyOM/maxresdefault.jpg"
-                                />
-
-                                <CardContent>
-                                    <Typography variant="h5">
-                                        Rafta Rafta Sanam
-                                    </Typography>
-                                    <Typography
-                                        className={classes.Typography}
-                                        variant="caption1"
-                                    >
-                                        {' '}
-                                        T Series{' '}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
-                            <Divider />
-                            <CardActions>
-                                <Grid
-                                    container
-                                    direction="row"
-                                    justifyContent="space-evenly"
-                                    alignItems="baseline"
-                                >
-                                    <Grid item>
-                                        <Tooltip
-                                            className={classes.Tooltip}
-                                            arrow
-                                            title="Lyrics"
-                                        >
-                                            <Link to="/lyrics">
-                                                <IconButton
-                                                    className={classes.icon}
-                                                >
-                                                    <ReceiptTwoToneIcon />
-                                                </IconButton>
-                                            </Link>
-                                        </Tooltip>
-
-                                        <Tooltip arrow title="Audio">
-                                            <IconButton
-                                                className={classes.icon}
-                                            >
-                                                <MusicNoteIcon />
-                                            </IconButton>
-                                        </Tooltip>
-                                        <Tooltip arrow title="Video">
-                                            <Link to="/video">
-                                                <IconButton
-                                                    className={classes.icon}
-                                                >
-                                                    <SwitchVideoTwoToneIcon />
-                                                </IconButton>
-                                            </Link>
-                                        </Tooltip>
-                                    </Grid>
-                                </Grid>
-                            </CardActions>
-                        </Card>
-                    </Grid>
+                <Grid
+                    container
+                    spacing={4}
+                    justifyContent="center"
+                    alignItems="center"
+                >
+                    {searchResults.loading ? (
+                        <Loading />
+                    ) : searchResults.error ? (
+                        <h3>{searchResults.error}</h3>
+                    ) : (
+                        searchResults.data.map((element) => (
+                            <Results
+                                id={element.id}
+                                title={element.title}
+                                artist={element.artist}
+                                image={element.trackImage}
+                                trig={{ trigger }}
+                            />
+                        ))
+                    )}
                 </Grid>
             </Container>
         </Box>
     );
 }
 
-export default Search;
+function mapStateToProps(state) {
+    return { searchResults: state.result };
+}
+
+const ConnectedSearch = connect(mapStateToProps)(Search);
+
+export default ConnectedSearch;

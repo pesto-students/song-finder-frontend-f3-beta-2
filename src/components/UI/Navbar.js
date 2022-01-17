@@ -1,8 +1,11 @@
 import { AppBar, Button, InputBase, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import React from 'react';
-import { Link } from 'react-router-dom';
 import ReorderIcon from '@mui/icons-material/Reorder';
+import SearchIcon from '@mui/icons-material/Search';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { fetchResult } from '../../utils/resource';
 import logo from '../../assets/logo.png';
 import colors from '../../colors';
 
@@ -71,11 +74,38 @@ const useStyles = makeStyles((theme) => ({
             width: '1rem',
             height: '1rem'
         }
+    },
+    bar: {
+        borderBottom: '2px solid #000036'
     }
 }));
 
-function Navbar() {
+function Navbar({ dispatch }) {
     const classes = useStyles();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [input, setInput] = useState('');
+
+    const search = (e) => {
+        e.preventDefault();
+        if (location.pathname === '/search') dispatch(fetchResult(input));
+        navigate({ pathname: 'search', search: `?q=${input}` });
+    };
+    if (location.pathname === '/login' || location.pathname === '/signup') {
+        return (
+            <AppBar>
+                <Toolbar className={classes.Toolbar}>
+                    <Link to="/">
+                        <img
+                            className={classes.logo}
+                            src={logo}
+                            alt="Immersis Logo"
+                        />
+                    </Link>
+                </Toolbar>
+            </AppBar>
+        );
+    }
     return (
         <AppBar>
             <Toolbar className={classes.Toolbar}>
@@ -87,9 +117,18 @@ function Navbar() {
                     />
                 </Link>
 
-                <div className={classes.Search}>
-                    <InputBase placeholder="Search..." />
-                </div>
+                <form>
+                    <Button type="submit" onClick={search}>
+                        <SearchIcon />
+                    </Button>
+                    <InputBase
+                        placeholder="Search..."
+                        onChange={(e) => setInput(e.target.value)}
+                        width="80%"
+                        className={classes.bar}
+                    />
+                </form>
+
                 <div className={classes.Buttons}>
                     <Link to="/login" className={classes.Link}>
                         <Button
@@ -106,7 +145,7 @@ function Navbar() {
                             variant="text"
                             className={classes.SignInButton}
                         >
-                            Sign In
+                            Sign Up
                         </Button>
                     </Link>
                 </div>
@@ -117,4 +156,11 @@ function Navbar() {
         </AppBar>
     );
 }
-export default Navbar;
+
+function mapStateToProps(state) {
+    return { state };
+}
+
+const ConnectedNavbar = connect(mapStateToProps)(Navbar);
+
+export default ConnectedNavbar;
