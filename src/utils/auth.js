@@ -1,5 +1,4 @@
 const axios = require('axios');
-require('dotenv/config');
 
 const env = process.env.REACT_APP_ENV;
 const baseURL =

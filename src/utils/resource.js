@@ -1,5 +1,4 @@
 import axios from 'axios';
-import 'dotenv/config';
 
 const env = process.env.REACT_APP_ENV;
 const baseURL =
