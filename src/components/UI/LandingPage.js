@@ -5,14 +5,15 @@ import OurServiceCard from './OurServiceCard';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        minHeight: '100vh',
+        height: `${window.screen.height / 1.35}px`,
         backgroundImage:
             "linear-gradient(to right bottom,  rgba(0, 0, 54, 0.90),rgba(253, 24, 99, 0.80)), url('https://i.imgur.com/K3wMWeK.png')",
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         marginTop: '0px',
         marginBottom: '3rem',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
+            height: '100vh',
             backgroundPosition: 'center center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat'
@@ -22,25 +23,27 @@ const useStyles = makeStyles((theme) => ({
         color: '#FD1863 !important',
         fontSize: '10rem',
         position: 'absolute',
-        top: '50%',
+        top: `${window.screen.height / 1.85}px`,
         left: '50%',
         marginRight: '-50%',
         transform: 'translate(-50%,-50%)',
         [theme.breakpoints.down('sm')]: {
-            fontSize: '4.5rem'
+            fontSize: '4.5rem',
+            top: `${window.screen.height / 1.9}px`
         }
     },
     h6: {
         color: '#fff',
         fontSize: '2.5rem',
         position: 'absolute',
-        top: '58%',
+        top: `${window.screen.height / 1.6}px`,
         left: '50%',
 
         marginRight: '-50%',
         transform: 'translate(-50%,-50%)',
         [theme.breakpoints.down('sm')]: {
-            fontSize: '1.1rem'
+            fontSize: '1.1rem',
+            top: `${window.screen.height / 1.75}px`
         }
     }
 }));
