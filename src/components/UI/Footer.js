@@ -32,9 +32,9 @@ function Footer() {
                 direction="row"
                 justifyContent="space-evenly"
                 alignItems="baseline"
-                sm={12}
+                spacing={2}
             >
-                <Grid item spacing={2}>
+                <Grid item>
                     <Grid
                         container
                         direction="column"
@@ -55,7 +55,7 @@ function Footer() {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item spacing={2}>
+                <Grid item>
                     <Grid container direction="column">
                         <Grid item className={classes.Heading}>
                             <Typography variant="h3">Our Company</Typography>
@@ -86,7 +86,7 @@ function Footer() {
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid item spacing={2}>
+                <Grid item>
                     <Grid container direction="column">
                         <Grid item className={classes.Heading}>
                             <Typography variant="h3">Contact Us</Typography>
