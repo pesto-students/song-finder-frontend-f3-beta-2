@@ -9,12 +9,13 @@ import {
 import { makeStyles } from '@material-ui/styles';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import ReceiptTwoToneIcon from '@mui/icons-material/ReceiptTwoTone';
+import { Skeleton } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import React, { useEffect } from 'react';
+import ReactPlayer from 'react-player/youtube';
 import { connect } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import ReactPlayer from 'react-player/youtube';
 import { fetchVideo } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
@@ -34,12 +35,53 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-function VideoFrame({ videoId, title, artist }) {
+function Loading() {
     const classes = useStyles();
     return (
         <Container maxWidth="md">
+            <Skeleton width="30%" />
+            <Skeleton width="10%" />
+            <div className={classes.videResponsive}>
+                <Skeleton variant="rectangular" height="78vh" width="67vw" />
+                <CardActions>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="flex-start"
+                    >
+                        <Grid item>
+                            <Tooltip>
+                                <Skeleton
+                                    variant="circular"
+                                    height={40}
+                                    width={40}
+                                />
+                            </Tooltip>
+                        </Grid>
+                        <Grid item>
+                            <Tooltip>
+                                <Skeleton
+                                    variant="circular"
+                                    height={40}
+                                    width={40}
+                                />
+                            </Tooltip>
+                        </Grid>
+                    </Grid>
+                </CardActions>
+            </div>
+        </Container>
+    );
+}
+
+function VideoFrame({ videoId, artist, trig, titleName = '' }) {
+    const classes = useStyles();
+    const { trigger } = trig;
+    return (
+        <Container maxWidth="md">
             <Card>
-                <CardHeader title={title} subheader={artist} />
+                <CardHeader title={titleName} subheader={artist} />
             </Card>
             <div className={classes.videResponsive}>
                 <ReactPlayer
@@ -57,12 +99,12 @@ function VideoFrame({ videoId, title, artist }) {
                 >
                     <Grid item>
                         <Tooltip title="Audio" arrow>
-                            <IconButton>
+                            <IconButton name="music" onClick={trigger}>
                                 <MusicNoteIcon />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Lyrics" arrow>
-                            <IconButton>
+                            <IconButton name="lyrics" onClick={trigger}>
                                 <ReceiptTwoToneIcon />
                             </IconButton>
                         </Tooltip>
@@ -76,11 +118,18 @@ function VideoFrame({ videoId, title, artist }) {
 function Video({ videoResult, dispatch }) {
     const navigate = useNavigate();
     const [params] = useSearchParams();
-    const title = params.get('title');
+    const titleName = params.get('title');
     const artist = params.get('artist');
 
-    if (title && artist) {
-        useEffect(() => dispatch(fetchVideo(`${title} ${artist}`)), []);
+    function trigger(e) {
+        navigate({
+            pathname: `/${e.currentTarget.name}`,
+            search: `?title=${titleName}&artist=${artist}`
+        });
+    }
+
+    if (titleName && artist) {
+        useEffect(() => dispatch(fetchVideo(`${titleName} ${artist}`)), []);
     } else {
         useEffect(() => navigate('/'), []);
     }
@@ -88,14 +137,15 @@ function Video({ videoResult, dispatch }) {
     return (
         <Box mt={15} align="center">
             {videoResult.loading ? (
-                <h3>Loading</h3>
+                <Loading />
             ) : videoResult.error ? (
                 <h3>{videoResult.error}</h3>
             ) : (
                 <VideoFrame
                     videoId={videoResult.id}
-                    title={title}
+                    titleName={titleName}
                     artist={artist}
+                    trig={{ trigger }}
                 />
             )}
         </Box>
