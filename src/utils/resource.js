@@ -1,10 +1,6 @@
 import axios from 'axios';
 
-const env = process.env.REACT_APP_ENV;
-const baseURL =
-    env === 'server'
-        ? 'https://api-immersis.herokuapp.com'
-        : 'http://localhost:5000';
+const baseURL = 'https://api-immersis.herokuapp.com';
 
 const fetchResult = (query) => {
     return async (dispatch) => {
@@ -67,4 +63,25 @@ const fetchAudio = ({ title, artist }) => {
     };
 };
 
-export { fetchResult, fetchVideo, fetchAudio };
+const fetchLyrics = ({ title, artist }) => {
+    return async (dispatch) => {
+        dispatch({ type: 'FETCH_LYRICS_REQUEST' });
+
+        const options = {
+            url: `${baseURL}/resource/lyrics?title=${title}&artist=${artist}`,
+            method: 'GET'
+        };
+
+        try {
+            const resp = await axios(options);
+            dispatch({
+                type: 'FETCH_LYRICS_SUCCESS',
+                payload: resp.data
+            });
+        } catch (err) {
+            dispatch({ type: 'FETCH_LYRICS_ERROR', payload: err.message });
+        }
+    };
+};
+
+export { fetchResult, fetchVideo, fetchAudio, fetchLyrics };
