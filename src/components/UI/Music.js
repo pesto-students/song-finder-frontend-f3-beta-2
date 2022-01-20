@@ -7,14 +7,15 @@ import {
     Grid
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import SwitchVideoTwoToneIcon from '@mui/icons-material/SwitchVideoTwoTone';
 import ReceiptTwoToneIcon from '@mui/icons-material/ReceiptTwoTone';
+import SwitchVideoTwoToneIcon from '@mui/icons-material/SwitchVideoTwoTone';
+import { Skeleton } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import React, { useEffect } from 'react';
+import ReactPlayer from 'react-player/soundcloud';
 import { connect } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import ReactPlayer from 'react-player/soundcloud';
 import { fetchAudio } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
@@ -34,15 +35,56 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-function AudioFrame({ audioURL, title, artist }) {
+function Loading() {
     const classes = useStyles();
     return (
         <Container maxWidth="md">
+            <Skeleton width="30%" />
+            <Skeleton width="10%" />
+            <div className={classes.audioResponsive}>
+                <Skeleton variant="rectangular" height="78vh" width="67vw" />
+                <CardActions>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="flex-start"
+                    >
+                        <Grid item>
+                            <Tooltip>
+                                <Skeleton
+                                    variant="circular"
+                                    height={40}
+                                    width={40}
+                                />
+                            </Tooltip>
+                        </Grid>
+                        <Grid item>
+                            <Tooltip>
+                                <Skeleton
+                                    variant="circular"
+                                    height={40}
+                                    width={40}
+                                />
+                            </Tooltip>
+                        </Grid>
+                    </Grid>
+                </CardActions>
+            </div>
+        </Container>
+    );
+}
+
+function AudioFrame({ audioURL, artist, trig, titleName = '' }) {
+    const classes = useStyles();
+    const { trigger } = trig;
+    return (
+        <Container maxWidth="md">
             <Card>
-                <CardHeader title={title} subheader={artist} />
+                <CardHeader title={titleName} subheader={artist} />
             </Card>
             <div className={classes.audioResponsive}>
-                <ReactPlayer url={audioURL} height="50%" width="70%" />
+                <ReactPlayer url={audioURL} />
             </div>
             <CardActions>
                 <Grid
@@ -53,12 +95,12 @@ function AudioFrame({ audioURL, title, artist }) {
                 >
                     <Grid item>
                         <Tooltip title="Video" arrow>
-                            <IconButton>
+                            <IconButton name="video" onClick={trigger}>
                                 <SwitchVideoTwoToneIcon />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Lyrics" arrow>
-                            <IconButton>
+                            <IconButton name="lyrics" onClick={trigger}>
                                 <ReceiptTwoToneIcon />
                             </IconButton>
                         </Tooltip>
@@ -72,11 +114,18 @@ function AudioFrame({ audioURL, title, artist }) {
 function Audio({ audioResult, dispatch }) {
     const navigate = useNavigate();
     const [params] = useSearchParams();
-    const title = params.get('title');
+    const titleName = params.get('title');
     const artist = params.get('artist');
 
-    if (title && artist) {
-        useEffect(() => dispatch(fetchAudio({ title, artist })), []);
+    function trigger(e) {
+        navigate({
+            pathname: `/${e.currentTarget.name}`,
+            search: `?title=${titleName}&artist=${artist}`
+        });
+    }
+
+    if (titleName && artist) {
+        useEffect(() => dispatch(fetchAudio({ title: titleName, artist })), []);
     } else {
         useEffect(() => navigate('/'), []);
     }
@@ -84,14 +133,15 @@ function Audio({ audioResult, dispatch }) {
     return (
         <Box mt={15} align="center">
             {audioResult.loading ? (
-                <h3>Loading</h3>
+                <Loading />
             ) : audioResult.error ? (
                 <h3>{audioResult.error}</h3>
             ) : (
                 <AudioFrame
                     audioURL={audioResult.url}
-                    title={title}
+                    titleName={titleName}
                     artist={artist}
+                    trig={{ trigger }}
                 />
             )}
         </Box>
