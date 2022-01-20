@@ -11,10 +11,10 @@ import colors from '../../colors';
 const useStyles = makeStyles(() => ({
     inputRoot: {
         '& .MuiInput-underline:after': {
-            borderBottom: colors.borderSecondary.borderBottom
+            borderBottom: colors.border.borderBottom
         },
         '& .MuiInput-underline:hover:before': {
-            borderBottom: colors.borderSecondary.borderBottombefore
+            borderBottom: colors.border.borderBottombefore
         }
     },
     Paper: {
@@ -23,9 +23,12 @@ const useStyles = makeStyles(() => ({
         margin: '20px auto'
     },
     button: {
-        backgroundColor: colors.primaryColor.color,
-        color: '#fff',
-        margin: '1rem 0'
+        backgroundColor: colors.secondaryColor,
+        color: colors.whiteColor,
+        margin: '1rem 0',
+        '&:hover': {
+            backgroundColor: colors.background.hoverButtonColor
+        }
     },
     h4: {
         color: colors.h4.textColor,
@@ -77,7 +80,7 @@ function ForgotPassword() {
                                 }}
                                 InputLabelProps={{
                                     style: {
-                                        color: '#fd1863',
+                                        color: colors.secondaryColor,
                                         fontFamily: "'Baloo Da 2', cursive"
                                     }
                                 }}
