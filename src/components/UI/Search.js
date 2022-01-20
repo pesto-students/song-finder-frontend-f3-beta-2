@@ -17,7 +17,7 @@ import { Container, Skeleton, Tooltip } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import colors from '../../colors';
 import { fetchResult } from '../../utils/resource';
 
@@ -52,9 +52,10 @@ function Loading() {
 }
 
 function Results(props) {
-    const { image, title, artist, id, trig } = props;
+    const { image, artist, id, trig, titleName = '' } = props;
     const { trigger } = trig;
     const classes = useStyles();
+
     return (
         <Grid item sm={3}>
             <Card>
@@ -62,10 +63,19 @@ function Results(props) {
                     <CardMedia component="img" image={image} height="150" />
 
                     <CardContent>
-                        <Typography variant="h5">{title}</Typography>
+                        <Tooltip
+                            className={classes.Tooltip}
+                            arrow
+                            title={titleName}
+                        >
+                            <Typography variant="h5" noWrap>
+                                {titleName}
+                            </Typography>
+                        </Tooltip>
                         <Typography
                             className={classes.Typography}
-                            variant="caption1"
+                            variant="caption"
+                            noWrap
                         >
                             {' '}
                             {artist}{' '}
@@ -86,11 +96,14 @@ function Results(props) {
                                 arrow
                                 title="Lyrics"
                             >
-                                <Link to="/lyrics">
-                                    <IconButton className={classes.icon}>
-                                        <ReceiptTwoToneIcon />
-                                    </IconButton>
-                                </Link>
+                                <IconButton
+                                    className={classes.icon}
+                                    id={id}
+                                    name="lyrics"
+                                    onClick={trigger}
+                                >
+                                    <ReceiptTwoToneIcon />
+                                </IconButton>
                             </Tooltip>
 
                             <Tooltip arrow title="Audio">
@@ -175,7 +188,7 @@ function Search({ searchResults, dispatch }) {
                         searchResults.data.map((element) => (
                             <Results
                                 id={element.id}
-                                title={element.title}
+                                titleName={element.title}
                                 artist={element.artist}
                                 image={element.trackImage}
                                 trig={{ trigger }}
