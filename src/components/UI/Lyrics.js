@@ -24,9 +24,7 @@ import { fetchLyrics } from '../../utils/resource';
 const useStyles = makeStyles(() => ({
     // style for Mobile Responsive
     linkDiv: {
-        color: 'red',
-        position: 'relative',
-        left: '16.45%'
+        color: 'red'
     },
     resultLink: {
         color: 'red'
@@ -37,9 +35,20 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Loading() {
+    const classes = useStyles();
     return (
         <Grid item xs={8} md={8} lg={8}>
-            <Box>
+            {localStorage.getItem('recent') ? (
+                <Link
+                    to={`/search?q=${localStorage.getItem('recent')}`}
+                    className={classes.resultLink}
+                >
+                    <div className={classes.linkDiv}>
+                        <Typography>Back to Results</Typography>
+                    </div>
+                </Link>
+            ) : null}
+            <Box justifyContent="center">
                 <Card variant="outlined">
                     <div>
                         <Skeleton width="30%" />
@@ -89,10 +98,21 @@ function Loading() {
 }
 
 function SongLyrics({ artist, image, lyrics, trig, titleName = '' }) {
+    const classes = useStyles();
     const { trigger } = trig;
     return (
         <Grid item xs={8} md={8} lg={8}>
-            <Box>
+            {localStorage.getItem('recent') ? (
+                <Link
+                    to={`/search?q=${localStorage.getItem('recent')}`}
+                    className={classes.resultLink}
+                >
+                    <div className={classes.linkDiv}>
+                        <Typography>Back to Results</Typography>
+                    </div>
+                </Link>
+            ) : null}
+            <Box justifyContent="center">
                 <Card variant="outlined">
                     <CardHeader
                         avatar={
@@ -184,16 +204,6 @@ function Lyrics({ lyricsResult, dispatch }) {
     return (
         <Box mt={15}>
             <Container maxWidth="lg">
-                {localStorage.getItem('recent') ? (
-                    <Link
-                        to={`/search?q=${localStorage.getItem('recent')}`}
-                        className={classes.resultLink}
-                    >
-                        <div className={classes.linkDiv}>
-                            <Typography>Back to Results</Typography>
-                        </div>
-                    </Link>
-                ) : null}
                 <Grid
                     container
                     direction="row"
@@ -203,7 +213,9 @@ function Lyrics({ lyricsResult, dispatch }) {
                     {lyricsResult.loading ? (
                         <Loading />
                     ) : lyricsResult.error ? (
-                        <h3>{lyricsResult.error}</h3>
+                        <div className={classes.ta}>
+                            <h3>{lyricsResult.error}</h3>
+                        </div>
                     ) : (
                         <SongLyrics
                             titleName={titleName}

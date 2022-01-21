@@ -35,9 +35,7 @@ const useStyles = makeStyles(() => ({
         }
     },
     linkDiv: {
-        color: 'red',
-        position: 'relative',
-        left: '16.45%'
+        color: 'red'
     },
     resultLink: {
         color: 'red'
@@ -127,6 +125,7 @@ function VideoFrame({ videoId, artist, trig, titleName = '' }) {
                         url={`https://www.youtube.com/watch?v=${videoId}`}
                         height="50%"
                         width="70%"
+                        controls
                     />
                 </div>
                 <CardActions>
@@ -176,21 +175,13 @@ function Video({ videoResult, dispatch }) {
     }
 
     return (
-        <Box mt={15}>
-            {localStorage.getItem('recent') ? (
-                <Link
-                    to={`/search?q=${localStorage.getItem('recent')}`}
-                    className={classes.resultLink}
-                >
-                    <div className={classes.linkDiv}>
-                        <Typography>Back to Results</Typography>
-                    </div>
-                </Link>
-            ) : null}
+        <Box mt={15} sx={{ overflowX: 'hidden' }}>
             {videoResult.loading ? (
                 <Loading />
             ) : videoResult.error ? (
-                <h3>{videoResult.error}</h3>
+                <div className={classes.ta}>
+                    <h3>{videoResult.error}</h3>
+                </div>
             ) : (
                 <VideoFrame
                     videoId={videoResult.id}

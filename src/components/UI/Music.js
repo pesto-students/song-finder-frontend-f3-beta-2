@@ -150,6 +150,7 @@ function AudioFrame({ audioURL, artist, trig, titleName = '' }) {
 }
 
 function Audio({ audioResult, dispatch }) {
+    const classes = useStyles();
     const navigate = useNavigate();
     const [params] = useSearchParams();
     const titleName = params.get('title');
@@ -169,11 +170,13 @@ function Audio({ audioResult, dispatch }) {
     }
 
     return (
-        <Box mt={15}>
+        <Box mt={15} sx={{ overflowX: 'hidden' }}>
             {audioResult.loading ? (
                 <Loading />
             ) : audioResult.error ? (
-                <h3>{audioResult.error}</h3>
+                <div className={classes.ta}>
+                    <h3>{audioResult.error}</h3>
+                </div>
             ) : (
                 <AudioFrame
                     audioURL={audioResult.url}
