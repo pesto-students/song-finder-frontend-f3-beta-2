@@ -17,7 +17,7 @@ import colors from '../../colors';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: `${window.screen.height}px`,
+        height: `${window.screen.availHeight}px`,
         backgroundImage:
             "linear-gradient(to right bottom,  rgba(0, 0, 54, 0.90),rgba(253, 24, 99, 0.80)), url('https://i.imgur.com/K3wMWeK.png')",
         backgroundRepeat: 'no-repeat',
@@ -69,7 +69,7 @@ function SignUp() {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <Box sx={{ position: 'relative', top: '14%' }}>
+            <Box sx={{ position: 'relative', top: '12%' }}>
                 <Container maxWidth="lg">
                     <Grid container>
                         <Paper

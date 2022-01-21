@@ -31,7 +31,7 @@ function Loading() {
                     </div>
                     <Skeleton
                         variant="rectangular"
-                        height="250vh"
+                        height="30vh"
                         width="60vw"
                     />
                     <CardContent
@@ -40,11 +40,7 @@ function Loading() {
                             textAlign: 'center'
                         }}
                     >
-                        <Skeleton
-                            variant="rectangular"
-                            height="100%"
-                            width="100%"
-                        />
+                        <Skeleton variant="rectangular" height="50vh" />
                     </CardContent>
                 </Card>
                 <CardActions>
