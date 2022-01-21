@@ -9,6 +9,7 @@ import {
     Grid,
     Tooltip
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import CopyAllIcon from '@mui/icons-material/CopyAll';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
@@ -17,23 +18,34 @@ import { CardHeader, Skeleton, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchLyrics } from '../../utils/resource';
+
+const useStyles = makeStyles(() => ({
+    // style for Mobile Responsive
+    linkDiv: {
+        color: 'red',
+        position: 'relative',
+        left: '16.45%'
+    },
+    resultLink: {
+        color: 'red'
+    },
+    ta: {
+        textAlign: 'center'
+    }
+}));
 
 function Loading() {
     return (
-        <Grid item xs={12} md={6} lg={6}>
-            <Box pt={3}>
+        <Grid item xs={8} md={8} lg={8}>
+            <Box>
                 <Card variant="outlined">
                     <div>
                         <Skeleton width="30%" />
                         <Skeleton width="10%" />
                     </div>
-                    <Skeleton
-                        variant="rectangular"
-                        height="30vh"
-                        width="60vw"
-                    />
+                    <Skeleton variant="rectangular" height="30vh" />
                     <CardContent
                         style={{
                             fontSize: '10rem',
@@ -79,8 +91,8 @@ function Loading() {
 function SongLyrics({ artist, image, lyrics, trig, titleName = '' }) {
     const { trigger } = trig;
     return (
-        <Grid item xs={12} md={6} lg={6}>
-            <Box pt={3}>
+        <Grid item xs={8} md={8} lg={8}>
+            <Box>
                 <Card variant="outlined">
                     <CardHeader
                         avatar={
@@ -98,7 +110,6 @@ function SongLyrics({ artist, image, lyrics, trig, titleName = '' }) {
                     />
                     <CardMedia
                         component="img"
-                        width="60vw"
                         height="250vh"
                         image={image}
                         alt="Song Image"
@@ -147,6 +158,7 @@ function SongLyrics({ artist, image, lyrics, trig, titleName = '' }) {
 }
 
 function Lyrics({ lyricsResult, dispatch }) {
+    const classes = useStyles();
     const [params] = useSearchParams();
     const navigate = useNavigate();
 
@@ -172,6 +184,16 @@ function Lyrics({ lyricsResult, dispatch }) {
     return (
         <Box mt={15}>
             <Container maxWidth="lg">
+                {localStorage.getItem('recent') ? (
+                    <Link
+                        to={`/search?q=${localStorage.getItem('recent')}`}
+                        className={classes.resultLink}
+                    >
+                        <div className={classes.linkDiv}>
+                            <Typography>Back to Results</Typography>
+                        </div>
+                    </Link>
+                ) : null}
                 <Grid
                     container
                     direction="row"

@@ -4,7 +4,8 @@ import {
     CardActions,
     CardHeader,
     Container,
-    Grid
+    Grid,
+    Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
@@ -15,7 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 import React, { useEffect } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import { connect } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchVideo } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
@@ -32,6 +33,17 @@ const useStyles = makeStyles(() => ({
             width: '100%',
             position: 'absolute'
         }
+    },
+    linkDiv: {
+        color: 'red',
+        position: 'relative',
+        left: '16.45%'
+    },
+    resultLink: {
+        color: 'red'
+    },
+    ta: {
+        textAlign: 'center'
     }
 }));
 
@@ -39,37 +51,53 @@ function Loading() {
     const classes = useStyles();
     return (
         <Container maxWidth="md">
-            <Skeleton width="30%" />
-            <Skeleton width="10%" />
-            <div className={classes.videResponsive}>
-                <Skeleton variant="rectangular" height="78vh" width="67vw" />
-                <CardActions>
-                    <Grid
-                        container
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="flex-start"
-                    >
-                        <Grid item>
-                            <Tooltip>
-                                <Skeleton
-                                    variant="circular"
-                                    height={40}
-                                    width={40}
-                                />
-                            </Tooltip>
+            {localStorage.getItem('recent') ? (
+                <Link
+                    to={`/search?q=${localStorage.getItem('recent')}`}
+                    className={classes.resultLink}
+                >
+                    <div className={classes.linkDiv}>
+                        <Typography>Back to Results</Typography>
+                    </div>
+                </Link>
+            ) : null}
+            <div className={classes.ta}>
+                <Skeleton width="30%" />
+                <Skeleton width="10%" />
+                <div className={classes.videResponsive}>
+                    <Skeleton
+                        variant="rectangular"
+                        height="78vh"
+                        width="67vw"
+                    />
+                    <CardActions>
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="flex-start"
+                        >
+                            <Grid item>
+                                <Tooltip>
+                                    <Skeleton
+                                        variant="circular"
+                                        height={40}
+                                        width={40}
+                                    />
+                                </Tooltip>
+                            </Grid>
+                            <Grid item>
+                                <Tooltip>
+                                    <Skeleton
+                                        variant="circular"
+                                        height={40}
+                                        width={40}
+                                    />
+                                </Tooltip>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Tooltip>
-                                <Skeleton
-                                    variant="circular"
-                                    height={40}
-                                    width={40}
-                                />
-                            </Tooltip>
-                        </Grid>
-                    </Grid>
-                </CardActions>
+                    </CardActions>
+                </div>
             </div>
         </Container>
     );
@@ -80,42 +108,55 @@ function VideoFrame({ videoId, artist, trig, titleName = '' }) {
     const { trigger } = trig;
     return (
         <Container maxWidth="md">
-            <Card>
-                <CardHeader title={titleName} subheader={artist} />
-            </Card>
-            <div className={classes.videResponsive}>
-                <ReactPlayer
-                    url={`https://www.youtube.com/watch?v=${videoId}`}
-                    height="50%"
-                    width="70%"
-                />
-            </div>
-            <CardActions>
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="space-evenly"
-                    alignItems="flex-start"
+            {localStorage.getItem('recent') ? (
+                <Link
+                    to={`/search?q=${localStorage.getItem('recent')}`}
+                    className={classes.resultLink}
                 >
-                    <Grid item>
-                        <Tooltip title="Audio" arrow>
-                            <IconButton name="music" onClick={trigger}>
-                                <MusicNoteIcon />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Lyrics" arrow>
-                            <IconButton name="lyrics" onClick={trigger}>
-                                <ReceiptTwoToneIcon />
-                            </IconButton>
-                        </Tooltip>
+                    <div className={classes.linkDiv}>
+                        <Typography>Back to Results</Typography>
+                    </div>
+                </Link>
+            ) : null}
+            <div className={classes.ta}>
+                <Card>
+                    <CardHeader title={titleName} subheader={artist} />
+                </Card>
+                <div className={classes.videResponsive}>
+                    <ReactPlayer
+                        url={`https://www.youtube.com/watch?v=${videoId}`}
+                        height="50%"
+                        width="70%"
+                    />
+                </div>
+                <CardActions>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="space-evenly"
+                        alignItems="flex-start"
+                    >
+                        <Grid item>
+                            <Tooltip title="Audio" arrow>
+                                <IconButton name="music" onClick={trigger}>
+                                    <MusicNoteIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Lyrics" arrow>
+                                <IconButton name="lyrics" onClick={trigger}>
+                                    <ReceiptTwoToneIcon />
+                                </IconButton>
+                            </Tooltip>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </CardActions>
+                </CardActions>
+            </div>
         </Container>
     );
 }
 
 function Video({ videoResult, dispatch }) {
+    const classes = useStyles();
     const navigate = useNavigate();
     const [params] = useSearchParams();
     const titleName = params.get('title');
@@ -135,7 +176,17 @@ function Video({ videoResult, dispatch }) {
     }
 
     return (
-        <Box mt={15} align="center">
+        <Box mt={15}>
+            {localStorage.getItem('recent') ? (
+                <Link
+                    to={`/search?q=${localStorage.getItem('recent')}`}
+                    className={classes.resultLink}
+                >
+                    <div className={classes.linkDiv}>
+                        <Typography>Back to Results</Typography>
+                    </div>
+                </Link>
+            ) : null}
             {videoResult.loading ? (
                 <Loading />
             ) : videoResult.error ? (

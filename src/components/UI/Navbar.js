@@ -88,6 +88,7 @@ function Navbar({ dispatch }) {
 
     const search = (e) => {
         e.preventDefault();
+        localStorage.setItem('recent', input);
         if (location.pathname === '/search') dispatch(fetchResult(input));
         navigate({ pathname: 'search', search: `?q=${input}` });
     };

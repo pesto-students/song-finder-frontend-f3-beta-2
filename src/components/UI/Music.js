@@ -4,7 +4,8 @@ import {
     CardActions,
     CardHeader,
     Container,
-    Grid
+    Grid,
+    Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import ReceiptTwoToneIcon from '@mui/icons-material/ReceiptTwoTone';
@@ -15,7 +16,7 @@ import Tooltip from '@mui/material/Tooltip';
 import React, { useEffect } from 'react';
 import ReactPlayer from 'react-player/soundcloud';
 import { connect } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { fetchAudio } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
@@ -32,6 +33,15 @@ const useStyles = makeStyles(() => ({
             width: '100%',
             position: 'absolute'
         }
+    },
+    linkDiv: {
+        color: 'red'
+    },
+    resultLink: {
+        color: 'red'
+    },
+    ta: {
+        textAlign: 'center'
     }
 }));
 
@@ -39,37 +49,53 @@ function Loading() {
     const classes = useStyles();
     return (
         <Container maxWidth="md">
-            <Skeleton width="30%" />
-            <Skeleton width="10%" />
-            <div className={classes.audioResponsive}>
-                <Skeleton variant="rectangular" height="78vh" width="67vw" />
-                <CardActions>
-                    <Grid
-                        container
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="flex-start"
-                    >
-                        <Grid item>
-                            <Tooltip>
-                                <Skeleton
-                                    variant="circular"
-                                    height={40}
-                                    width={40}
-                                />
-                            </Tooltip>
+            {localStorage.getItem('recent') ? (
+                <Link
+                    to={`/search?q=${localStorage.getItem('recent')}`}
+                    className={classes.resultLink}
+                >
+                    <div className={classes.linkDiv}>
+                        <Typography>Back to Results</Typography>
+                    </div>
+                </Link>
+            ) : null}
+            <div className={classes.ta}>
+                <Skeleton width="30%" />
+                <Skeleton width="10%" />
+                <div className={classes.audioResponsive}>
+                    <Skeleton
+                        variant="rectangular"
+                        height="78vh"
+                        width="67vw"
+                    />
+                    <CardActions>
+                        <Grid
+                            container
+                            direction="row"
+                            justifyContent="center"
+                            alignItems="flex-start"
+                        >
+                            <Grid item>
+                                <Tooltip>
+                                    <Skeleton
+                                        variant="circular"
+                                        height={40}
+                                        width={40}
+                                    />
+                                </Tooltip>
+                            </Grid>
+                            <Grid item>
+                                <Tooltip>
+                                    <Skeleton
+                                        variant="circular"
+                                        height={40}
+                                        width={40}
+                                    />
+                                </Tooltip>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Tooltip>
-                                <Skeleton
-                                    variant="circular"
-                                    height={40}
-                                    width={40}
-                                />
-                            </Tooltip>
-                        </Grid>
-                    </Grid>
-                </CardActions>
+                    </CardActions>
+                </div>
             </div>
         </Container>
     );
@@ -80,33 +106,45 @@ function AudioFrame({ audioURL, artist, trig, titleName = '' }) {
     const { trigger } = trig;
     return (
         <Container maxWidth="md">
-            <Card>
-                <CardHeader title={titleName} subheader={artist} />
-            </Card>
-            <div className={classes.audioResponsive}>
-                <ReactPlayer url={audioURL} />
-            </div>
-            <CardActions>
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="space-evenly"
-                    alignItems="flex-start"
+            {localStorage.getItem('recent') ? (
+                <Link
+                    to={`/search?q=${localStorage.getItem('recent')}`}
+                    className={classes.resultLink}
                 >
-                    <Grid item>
-                        <Tooltip title="Video" arrow>
-                            <IconButton name="video" onClick={trigger}>
-                                <SwitchVideoTwoToneIcon />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Lyrics" arrow>
-                            <IconButton name="lyrics" onClick={trigger}>
-                                <ReceiptTwoToneIcon />
-                            </IconButton>
-                        </Tooltip>
+                    <div className={classes.linkDiv}>
+                        <Typography>Back to Results</Typography>
+                    </div>
+                </Link>
+            ) : null}
+            <div className={classes.ta}>
+                <Card>
+                    <CardHeader title={titleName} subheader={artist} />
+                </Card>
+                <div className={classes.audioResponsive}>
+                    <ReactPlayer url={audioURL} />
+                </div>
+                <CardActions>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="space-evenly"
+                        alignItems="flex-start"
+                    >
+                        <Grid item>
+                            <Tooltip title="Video" arrow>
+                                <IconButton name="video" onClick={trigger}>
+                                    <SwitchVideoTwoToneIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Lyrics" arrow>
+                                <IconButton name="lyrics" onClick={trigger}>
+                                    <ReceiptTwoToneIcon />
+                                </IconButton>
+                            </Tooltip>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </CardActions>
+                </CardActions>
+            </div>
         </Container>
     );
 }
@@ -131,7 +169,7 @@ function Audio({ audioResult, dispatch }) {
     }
 
     return (
-        <Box mt={15} align="center">
+        <Box mt={15}>
             {audioResult.loading ? (
                 <Loading />
             ) : audioResult.error ? (
