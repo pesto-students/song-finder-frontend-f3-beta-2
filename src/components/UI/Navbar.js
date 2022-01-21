@@ -88,10 +88,15 @@ function Navbar({ dispatch }) {
 
     const search = (e) => {
         e.preventDefault();
+        localStorage.setItem('recent', input);
         if (location.pathname === '/search') dispatch(fetchResult(input));
         navigate({ pathname: 'search', search: `?q=${input}` });
     };
-    if (location.pathname === '/login' || location.pathname === '/signup') {
+    if (
+        location.pathname === '/login' ||
+        location.pathname === '/signup' ||
+        location.pathname === '/forgotPassword'
+    ) {
         return (
             <AppBar>
                 <Toolbar className={classes.Toolbar}>

@@ -22,7 +22,11 @@ function Footer() {
     const classes = useStyles();
     const location = useLocation();
 
-    if (location.pathname === '/login' || location.pathname === '/signup') {
+    if (
+        location.pathname === '/login' ||
+        location.pathname === '/signup' ||
+        location.pathname === '/forgotPassword'
+    ) {
         return null;
     }
     return (
