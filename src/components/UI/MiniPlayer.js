@@ -1,10 +1,11 @@
 import { makeStyles } from '@material-ui/styles';
-import ReactPlayer from 'react-player/soundcloud';
 import { Card, CardHeader, Skeleton } from '@mui/material';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Paper from '@mui/material/Paper';
 import React from 'react';
+import ReactPlayer from 'react-player/soundcloud';
 import { connect } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     playerWrapper: {
@@ -103,7 +104,17 @@ function Error() {
 }
 
 function MinPLayer({ currentAudio }) {
+    const location = useLocation();
     let elm;
+
+    if (
+        location.pathname === '/login' ||
+        location.pathname === '/signup' ||
+        location.pathname === '/forgotPassword'
+    ) {
+        return null;
+    }
+
     if (currentAudio.loading) {
         elm = <Loading />;
     } else if (currentAudio.error) {
