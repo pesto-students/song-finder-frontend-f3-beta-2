@@ -19,7 +19,7 @@ import IconButton from '@mui/material/IconButton';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { fetchLyrics } from '../../utils/resource';
+import { fetchLyrics, fetchAudio } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
     // style for Mobile Responsive
@@ -97,7 +97,14 @@ function Loading() {
     );
 }
 
-function SongLyrics({ artist, image, lyrics, trig, titleName = '' }) {
+function SongLyrics({
+    artist,
+    image,
+    lyrics,
+    trig,
+    audioTrigger,
+    titleName = ''
+}) {
     const classes = useStyles();
     const { trigger } = trig;
     return (
@@ -165,7 +172,7 @@ function SongLyrics({ artist, image, lyrics, trig, titleName = '' }) {
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Audio" arrow>
-                                <IconButton name="music" onClick={trigger}>
+                                <IconButton name="music" onClick={audioTrigger}>
                                     <MusicNoteIcon />
                                 </IconButton>
                             </Tooltip>
@@ -184,6 +191,10 @@ function Lyrics({ lyricsResult, dispatch }) {
 
     const titleName = params.get('title');
     const artist = params.get('artist');
+
+    const audioTrigger = () => {
+        dispatch(fetchAudio({ title: titleName, artist }));
+    };
 
     function trigger(e) {
         navigate({
@@ -223,6 +234,7 @@ function Lyrics({ lyricsResult, dispatch }) {
                             image={lyricsResult.obj.image}
                             lyrics={lyricsResult.obj.lyrics}
                             trig={{ trigger }}
+                            audioTrigger={audioTrigger}
                         />
                     )}
                 </Grid>

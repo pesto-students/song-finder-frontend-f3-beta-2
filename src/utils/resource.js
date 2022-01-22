@@ -53,6 +53,7 @@ const fetchAudio = ({ title, artist }) => {
 
         try {
             const resp = await axios(options);
+            localStorage.setItem('audio', resp.data.url);
             dispatch({
                 type: 'FETCH_AUDIO_SUCCESS',
                 payload: resp.data.url
