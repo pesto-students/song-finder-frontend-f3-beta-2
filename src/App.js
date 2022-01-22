@@ -12,8 +12,8 @@ import ForgotPassword from './components/UI/ForgotPassword';
 import Lyrics from './components/UI/Lyrics';
 import Video from './components/UI/Video';
 import Search from './components/UI/Search';
-import Music from './components/UI/Music';
 import History from './components/UI/History';
+import { MinPLayer } from './components/UI/MiniPlayer';
 
 function App() {
     const font = "'Baloo Bhaijaan 2', cursive;";
@@ -31,11 +31,11 @@ function App() {
                 <Route path="signup" element={<SignUp />} />
                 <Route path="forgotPassword" element={<ForgotPassword />} />
                 <Route path="lyrics" element={<Lyrics />} />
-                <Route path="music" element={<Music />} />
                 <Route path="video" element={<Video />} />
                 <Route path="search" element={<Search />} />
                 <Route path="history" element={<History />} />
             </Routes>
+            <MinPLayer />
             <Footer />
         </ThemeProvider>
     );
