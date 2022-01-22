@@ -19,7 +19,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import colors from '../../colors';
-import { fetchResult } from '../../utils/resource';
+import { fetchResult, fetchAudio } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
     Typography: {
@@ -52,14 +52,14 @@ function Loading() {
 }
 
 function Results(props) {
-    const { image, artist, id, trig, titleName = '' } = props;
+    const { image, artist, id, trig, audioTrigger, titleName = '' } = props;
     const { trigger } = trig;
     const classes = useStyles();
 
     return (
         <Grid item sm={3}>
             <Card>
-                <CardActionArea>
+                <CardActionArea id={id} name="video" onClick={trigger}>
                     <CardMedia component="img" image={image} height="150" />
 
                     <CardContent>
@@ -111,7 +111,7 @@ function Results(props) {
                                     className={classes.icon}
                                     id={id}
                                     name="music"
-                                    onClick={trigger}
+                                    onClick={audioTrigger}
                                 >
                                     <MusicNoteIcon />
                                 </IconButton>
@@ -138,6 +138,14 @@ function Search({ searchResults, dispatch }) {
     const [params] = useSearchParams();
     const navigate = useNavigate();
     const query = params.get('q');
+
+    const audioTrigger = (e) => {
+        searchResults.data.forEach((elm) => {
+            if (elm.id.toString() === e.currentTarget.id) {
+                dispatch(fetchAudio({ title: elm.title, artist: elm.artist }));
+            }
+        });
+    };
 
     function trigger(e) {
         searchResults.data.forEach((elm) => {
@@ -192,6 +200,7 @@ function Search({ searchResults, dispatch }) {
                                 artist={element.artist}
                                 image={element.trackImage}
                                 trig={{ trigger }}
+                                audioTrigger={audioTrigger}
                             />
                         ))
                     )}

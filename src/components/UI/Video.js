@@ -17,7 +17,7 @@ import React, { useEffect } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import { connect } from 'react-redux';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { fetchVideo } from '../../utils/resource';
+import { fetchVideo, fetchAudio } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
     // style for Mobile Responsive
@@ -101,7 +101,7 @@ function Loading() {
     );
 }
 
-function VideoFrame({ videoId, artist, trig, titleName = '' }) {
+function VideoFrame({ videoId, artist, trig, audioTrigger, titleName = '' }) {
     const classes = useStyles();
     const { trigger } = trig;
     return (
@@ -137,7 +137,7 @@ function VideoFrame({ videoId, artist, trig, titleName = '' }) {
                     >
                         <Grid item>
                             <Tooltip title="Audio" arrow>
-                                <IconButton name="music" onClick={trigger}>
+                                <IconButton name="music" onClick={audioTrigger}>
                                     <MusicNoteIcon />
                                 </IconButton>
                             </Tooltip>
@@ -160,6 +160,10 @@ function Video({ videoResult, dispatch }) {
     const [params] = useSearchParams();
     const titleName = params.get('title');
     const artist = params.get('artist');
+
+    const audioTrigger = () => {
+        dispatch(fetchAudio({ title: titleName, artist }));
+    };
 
     function trigger(e) {
         navigate({
@@ -188,6 +192,7 @@ function Video({ videoResult, dispatch }) {
                     titleName={titleName}
                     artist={artist}
                     trig={{ trigger }}
+                    audioTrigger={audioTrigger}
                 />
             )}
         </Box>
