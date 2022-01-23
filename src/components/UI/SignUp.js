@@ -31,7 +31,6 @@ const useStyles = makeStyles(() => ({
             borderBottom: `2px solid ${colors.secondColor} !important`
         }
     },
-
     Paper: {
         padding: '30px 20px',
         width: 300,
@@ -83,27 +82,24 @@ function SignUp() {
             </IconButton>
         </>
     );
-
+    const baseURL = 'http://localhost:5000/auth';
     const onSubmit = (data) => {
-        axios
-            .post('https://api-immersis.herokuapp.com/auth', data)
-            .then((res) => {
-                const Response = res.data;
-                console.log('Response is:', Response);
-                if (Response.success) {
-                    setOpen(true);
-                    setMessage(Response.message);
-                    setTimeout(() => {
-                        navigate('/login');
-                    }, 6000);
-                } else {
-                    setOpen(true);
-                    setMessage(Response.message);
-                    setTimeout(() => {
-                        navigate('/login');
-                    }, 6000);
-                }
-            });
+        axios.post(baseURL, data).then((res) => {
+            const Response = res.data;
+            if (Response.success) {
+                setOpen(true);
+                setMessage(Response.message);
+                setTimeout(() => {
+                    navigate('/login');
+                }, 6000);
+            } else {
+                setOpen(true);
+                setMessage(Response.message);
+                setTimeout(() => {
+                    navigate('/login');
+                }, 6000);
+            }
+        });
     };
     return (
         <Box sx={{ p: 1, mt: 10, mb: 5 }} className={classes.root}>
