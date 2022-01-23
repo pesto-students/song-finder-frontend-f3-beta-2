@@ -1,13 +1,16 @@
 import { AppBar, Button, InputBase, Toolbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import ReorderIcon from '@mui/icons-material/Reorder';
+import SearchIcon from '@mui/icons-material/Search';
 import { Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Fade from '@mui/material/Fade';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { fetchResult } from '../../utils/resource';
 import logo from '../../assets/logo.png';
 import colors from '../../colors';
 
@@ -98,17 +101,38 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     bar: {
-        borderBottom: '2px solid #000036'
+        border: `2px solid ${colors.searchColor}`,
+        width: '50%',
+        padding: '0 2%'
+    },
+    searchForm: {
+        width: '50vw',
+        marginLeft: '18%'
+    },
+    iconSubmit: {
+        backgroundColor: '#A0A0A0',
+        borderRadius: 0,
+        '&:hover': {
+            backgroundColor: '#A0A0A0',
+            borderRadius: 0
+        }
     }
 }));
 
 function Navbar({ dispatch }) {
     const classes = useStyles();
     const navigate = useNavigate();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    console.log('Anchor is', anchorEl);
+    const location = useLocation();
+    const [input, setInput] = useState('');
+    const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    console.log('Open is', open);
+
+    const search = (e) => {
+        e.preventDefault();
+        localStorage.setItem('recent', input);
+        if (location.pathname === '/search') dispatch(fetchResult(input));
+        navigate({ pathname: 'search', search: `?q=${input}` });
+    };
     const handleClick = (event) => {
         console.log(anchorEl);
         setAnchorEl(event.currentTarget);
@@ -121,6 +145,26 @@ function Navbar({ dispatch }) {
         navigate('/login');
     };
 
+    if (
+        location.pathname === '/login' ||
+        location.pathname === '/signup' ||
+        location.pathname === '/forgotPassword'
+    ) {
+        return (
+            <AppBar>
+                <Toolbar className={classes.Toolbar}>
+                    <Link to="/">
+                        <img
+                            className={classes.logo}
+                            src={logo}
+                            alt="Immersis Logo"
+                        />
+                    </Link>
+                </Toolbar>
+            </AppBar>
+        );
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar>
@@ -132,9 +176,24 @@ function Navbar({ dispatch }) {
                             alt="Immersis Logo"
                         />
                     </Link>
-                    <div className={classes.Search}>
-                        <InputBase placeholder="Search..." />
+
+                    <div>
+                        <form className={classes.searchForm}>
+                            <InputBase
+                                placeholder="Search..."
+                                onChange={(e) => setInput(e.target.value)}
+                                className={classes.bar}
+                            />
+                            <Button
+                                type="submit"
+                                className={classes.iconSubmit}
+                                onClick={search}
+                            >
+                                <SearchIcon />
+                            </Button>
+                        </form>
                     </div>
+
                     {localStorage.getItem('loggedin') === 'true' ? (
                         <>
                             <Button

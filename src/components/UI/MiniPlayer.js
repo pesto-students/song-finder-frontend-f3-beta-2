@@ -77,7 +77,7 @@ function Audio() {
                     controls
                     playing
                     height={110}
-                    width="98.9vw"
+                    width="100vw"
                     url={localStorage.getItem('audio')}
                 />
             </BottomNavigation>

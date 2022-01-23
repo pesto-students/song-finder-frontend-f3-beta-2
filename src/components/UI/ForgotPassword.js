@@ -10,13 +10,17 @@ import colors from '../../colors';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         height: `${window.screen.availHeight}px`,
         backgroundImage:
             "linear-gradient(to right bottom,  rgba(0, 0, 54, 0.90),rgba(253, 24, 99, 0.80)), url('https://i.imgur.com/K3wMWeK.png')",
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        marginTop: '0px',
+        marginTop: '64px',
         [theme.breakpoints.down('sm')]: {
+            marginTop: '55px',
             height: '100vh',
             backgroundPosition: 'center center',
             backgroundSize: 'cover',
@@ -63,46 +67,47 @@ const useStyles = makeStyles((theme) => ({
 function ForgotPassword() {
     const classes = useStyles();
     return (
-        <Box sx={{ p: 1, mt: 15, mb: 30 }}>
-            <Container maxWidth="lg">
-                <Grid container>
-                    <Paper
-                        elevation={20}
-                        className={classes.Paper}
-                        sx={{ p: 100 }}
-                    >
-                        <Grid align="center">
-                            <Avatar className={classes.Avatar}>
-                                <LockOpenIcon />
-                            </Avatar>
-                            <Typography variant="h4" className={classes.h4}>
-                                {' '}
-                                Forgot Passsword
-                            </Typography>
-                            <Typography variant="caption1">
-                                Please fill this form
-                            </Typography>
-                        </Grid>
-                        <form>
-                            <TextField
-                                className={classes.inputRoot}
-                                fullWidth
-                                inputProps={{
-                                    style: {
-                                        fontFamily: "'Baloo Da 2', cursive "
-                                    }
-                                }}
-                                InputLabelProps={{
-                                    style: {
-                                        color: colors.secondaryColor,
-                                        fontFamily: "'Baloo Da 2', cursive"
-                                    }
-                                }}
-                                label="Email"
-                                margin="normal"
-                                variant="standard"
-                                placeholder="Enter Your Registred Email"
-                            />
+        <div className={classes.root}>
+            <Box>
+                <Container maxWidth="lg">
+                    <Grid container>
+                        <Paper
+                            elevation={20}
+                            className={classes.Paper}
+                            sx={{ p: 100 }}
+                        >
+                            <Grid align="center">
+                                <Avatar className={classes.Avatar}>
+                                    <LockOpenIcon />
+                                </Avatar>
+                                <Typography variant="h4" className={classes.h4}>
+                                    {' '}
+                                    Forgot Passsword
+                                </Typography>
+                                <Typography variant="caption1">
+                                    Please fill this form
+                                </Typography>
+                            </Grid>
+                            <form>
+                                <TextField
+                                    className={classes.inputRoot}
+                                    fullWidth
+                                    inputProps={{
+                                        style: {
+                                            fontFamily: "'Baloo Da 2', cursive "
+                                        }
+                                    }}
+                                    InputLabelProps={{
+                                        style: {
+                                            color: colors.secondaryColor,
+                                            fontFamily: "'Baloo Da 2', cursive"
+                                        }
+                                    }}
+                                    label="Email"
+                                    margin="normal"
+                                    variant="standard"
+                                    placeholder="Enter Your Registred Email"
+                                />
 
                                 <Button
                                     type="submit"
@@ -125,6 +130,7 @@ function ForgotPassword() {
                     </Grid>
                 </Container>
             </Box>
+        </div>
     );
 }
 

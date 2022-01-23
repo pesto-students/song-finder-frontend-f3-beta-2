@@ -18,19 +18,23 @@ import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import axios from 'axios';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import colors from '../../colors';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: `${window.screen.availHeight}px`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: `${window.screen.height}px`,
         backgroundImage:
             "linear-gradient(to right bottom,  rgba(0, 0, 54, 0.90),rgba(253, 24, 99, 0.80)), url('https://i.imgur.com/K3wMWeK.png')",
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        marginTop: '0px',
+        marginTop: '64px',
         [theme.breakpoints.down('sm')]: {
+            marginTop: '55px',
             height: '100vh',
             backgroundPosition: 'center center',
             backgroundSize: 'cover',
@@ -48,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     Paper: {
         padding: '30px 20px',
         width: 300,
-        margin: '20px auto'
+        margin: 'auto'
     },
     button: {
         backgroundColor: colors.secondaryColor,
@@ -64,6 +68,10 @@ const useStyles = makeStyles((theme) => ({
     },
     Avatar: {
         backgroundColor: `${colors.primaryColor} !important`
+    },
+    LinkSignIn: {
+        color: colors.Link.linkColor,
+        textDecoration: 'none !important'
     }
 }));
 
@@ -116,205 +124,216 @@ function SignUp() {
         });
     };
     return (
-        <Box sx={{ p: 1, mt: 10, mb: 5 }} className={classes.root}>
-            <Container maxWidth="lg">
-                <Grid container>
-                    <Paper
-                        elevation={20}
-                        className={classes.Paper}
-                        sx={{ p: 100 }}
-                    >
-                        <Grid align="center">
-                            <Avatar className={classes.Avatar}>
-                                <LockIcon />
-                            </Avatar>
-                            <Typography variant="h4" className={classes.h4}>
-                                {' '}
-                                Sign Up
-                            </Typography>
-                            <Typography variant="caption1">
-                                Please fill this form
-                            </Typography>
-                        </Grid>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            {/* UserName Field */}
-                            <TextField
-                                className={classes.inputRoot}
-                                fullWidth
-                                inputProps={{
-                                    style: {
-                                        fontFamily: "'Baloo Da 2', cursive "
-                                    }
-                                }}
-                                InputLabelProps={{
-                                    style: {
-                                        color: colors.secondaryColor,
-                                        fontFamily: "'Baloo Da 2', cursive"
-                                    }
-                                }}
-                                label="First Name"
-                                margin="normal"
-                                variant="standard"
-                                placeholder="Enter Your UserName"
-                                name="firstName"
-                                inputRef={register({
-                                    required: 'First Name is Required'
-                                })}
-                                error={errors.firstName}
-                                helperText={errors.firstName?.message}
-                                type="text"
-                            />
-                            <TextField
-                                className={classes.inputRoot}
-                                fullWidth
-                                inputProps={{
-                                    style: {
-                                        fontFamily: "'Baloo Da 2', cursive "
-                                    }
-                                }}
-                                InputLabelProps={{
-                                    style: {
-                                        color: colors.secondaryColor,
-                                        fontFamily: "'Baloo Da 2', cursive"
-                                    }
-                                }}
-                                label="Last Name"
-                                margin="normal"
-                                variant="standard"
-                                placeholder="Enter Your UserName"
-                                name="lastName"
-                                inputRef={register({
-                                    required: 'Last Name is Required'
-                                })}
-                                error={errors.lastName}
-                                helperText={errors.lastName?.message}
-                                type="text"
-                            />
-
-                            {/* Email field */}
-                            <TextField
-                                className={classes.inputRoot}
-                                fullWidth
-                                inputProps={{
-                                    style: {
-                                        fontFamily: "'Baloo Da 2', cursive "
-                                    }
-                                }}
-                                InputLabelProps={{
-                                    style: {
-                                        color: colors.secondaryColor,
-                                        fontFamily: "'Baloo Da 2', cursive"
-                                    }
-                                }}
-                                variant="standard"
-                                margin="normal"
-                                label="Email"
-                                placeholder="name@domain.com"
-                                name="email"
-                                type="email"
-                                inputRef={register({
-                                    required: 'Email is Required'
-                                })}
-                                error={errors.email}
-                                helperText={errors.email?.message}
-                            />
-
-                            {/* Password Field */}
-                            <TextField
-                                className={classes.inputRoot}
-                                fullWidth
-                                label="Password"
-                                variant="standard"
-                                placeholder="Enter your Password"
-                                margin="normal"
-                                inputProps={{
-                                    style: {
-                                        fontFamily: "'Baloo Da 2', cursive "
-                                    }
-                                }}
-                                InputLabelProps={{
-                                    style: {
-                                        color: colors.secondaryColor,
-                                        fontFamily: "'Baloo Da 2', cursive"
-                                    }
-                                }}
-                                name="password"
-                                inputRef={register({
-                                    required: 'Password is Required'
-                                })}
-                                error={errors.password}
-                                helperText={errors.password?.message}
-                                type="password"
-                            />
-
-                            <TextField
-                                className={classes.inputRoot}
-                                fullWidth
-                                inputProps={{
-                                    style: {
-                                        fontFamily: "'Baloo Da 2', cursive "
-                                    }
-                                }}
-                                InputLabelProps={{
-                                    style: {
-                                        color: colors.secondaryColor,
-                                        fontFamily: "'Baloo Da 2', cursive"
-                                    }
-                                }}
-                                margin="normal"
-                                placeholder="Confirm Password"
-                                variant="standard"
-                                label="Confirm Password"
-                                name="confirmPassword"
-                                inputRef={register({
-                                    required: 'Confirm Password is required'
-                                })}
-                                error={errors.confirmPassword}
-                                helperText={errors.confirmPassword?.message}
-                                type="password"
-                            />
-                            <FormControl error={Boolean(errors.tnc)}>
-                                <FormControlLabel
-                                    control={
-                                        <Checkbox
-                                            name="tnc"
-                                            inputRef={register({
-                                                required:
-                                                    'Please Agree Our Terms And Condition'
-                                            })}
-                                        />
-                                    }
-                                    label="I accept terms and condition"
+        <div className={classes.root}>
+            <Box>
+                <Container maxWidth="lg">
+                    <Grid container>
+                        <Paper
+                            elevation={20}
+                            className={classes.Paper}
+                            sx={{ p: 100 }}
+                        >
+                            <Grid align="center">
+                                <Avatar className={classes.Avatar}>
+                                    <LockIcon />
+                                </Avatar>
+                                <Typography variant="h4" className={classes.h4}>
+                                    {' '}
+                                    Sign Up
+                                </Typography>
+                                <Typography variant="caption1">
+                                    Please fill this form
+                                </Typography>
+                            </Grid>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                {/* UserName Field */}
+                                <TextField
+                                    className={classes.inputRoot}
+                                    fullWidth
+                                    inputProps={{
+                                        style: {
+                                            fontFamily: "'Baloo Da 2', cursive "
+                                        }
+                                    }}
+                                    InputLabelProps={{
+                                        style: {
+                                            color: colors.secondaryColor,
+                                            fontFamily: "'Baloo Da 2', cursive"
+                                        }
+                                    }}
+                                    label="First Name"
+                                    margin="normal"
+                                    variant="standard"
+                                    placeholder="Enter Your UserName"
+                                    name="firstName"
+                                    inputRef={register({
+                                        required: 'First Name is Required'
+                                    })}
+                                    error={errors.firstName}
+                                    helperText={errors.firstName?.message}
+                                    type="text"
                                 />
-                                <FormHelperText>
-                                    {errors.tnc?.message}
-                                </FormHelperText>
-                            </FormControl>
+                                <TextField
+                                    className={classes.inputRoot}
+                                    fullWidth
+                                    inputProps={{
+                                        style: {
+                                            fontFamily: "'Baloo Da 2', cursive "
+                                        }
+                                    }}
+                                    InputLabelProps={{
+                                        style: {
+                                            color: colors.secondaryColor,
+                                            fontFamily: "'Baloo Da 2', cursive"
+                                        }
+                                    }}
+                                    label="Last Name"
+                                    margin="normal"
+                                    variant="standard"
+                                    placeholder="Enter Your UserName"
+                                    name="lastName"
+                                    inputRef={register({
+                                        required: 'Last Name is Required'
+                                    })}
+                                    error={errors.lastName}
+                                    helperText={errors.lastName?.message}
+                                    type="text"
+                                />
 
-                            <Button
-                                type="submit"
-                                className={classes.button}
-                                fullWidth
-                                variant="contained"
-                                color="primary"
-                            >
-                                Sign Up
-                            </Button>
-                        </form>
-                    </Paper>
-                </Grid>
+                                {/* Email field */}
+                                <TextField
+                                    className={classes.inputRoot}
+                                    fullWidth
+                                    inputProps={{
+                                        style: {
+                                            fontFamily: "'Baloo Da 2', cursive "
+                                        }
+                                    }}
+                                    InputLabelProps={{
+                                        style: {
+                                            color: colors.secondaryColor,
+                                            fontFamily: "'Baloo Da 2', cursive"
+                                        }
+                                    }}
+                                    variant="standard"
+                                    margin="normal"
+                                    label="Email"
+                                    placeholder="name@domain.com"
+                                    name="email"
+                                    type="email"
+                                    inputRef={register({
+                                        required: 'Email is Required'
+                                    })}
+                                    error={errors.email}
+                                    helperText={errors.email?.message}
+                                />
 
-                <Snackbar
-                    open={open}
-                    autoHideDuration={6000}
-                    onClose={handleClose}
-                    message={message}
-                    action={action}
-                    severity="success"
-                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                />
-            </Container>
-        </Box>
+                                {/* Password Field */}
+                                <TextField
+                                    className={classes.inputRoot}
+                                    fullWidth
+                                    label="Password"
+                                    variant="standard"
+                                    placeholder="Enter your Password"
+                                    margin="normal"
+                                    inputProps={{
+                                        style: {
+                                            fontFamily: "'Baloo Da 2', cursive "
+                                        }
+                                    }}
+                                    InputLabelProps={{
+                                        style: {
+                                            color: colors.secondaryColor,
+                                            fontFamily: "'Baloo Da 2', cursive"
+                                        }
+                                    }}
+                                    name="password"
+                                    inputRef={register({
+                                        required: 'Password is Required'
+                                    })}
+                                    error={errors.password}
+                                    helperText={errors.password?.message}
+                                    type="password"
+                                />
+
+                                <TextField
+                                    className={classes.inputRoot}
+                                    fullWidth
+                                    inputProps={{
+                                        style: {
+                                            fontFamily: "'Baloo Da 2', cursive "
+                                        }
+                                    }}
+                                    InputLabelProps={{
+                                        style: {
+                                            color: colors.secondaryColor,
+                                            fontFamily: "'Baloo Da 2', cursive"
+                                        }
+                                    }}
+                                    margin="normal"
+                                    placeholder="Confirm Password"
+                                    variant="standard"
+                                    label="Confirm Password"
+                                    name="confirmPassword"
+                                    inputRef={register({
+                                        required: 'Confirm Password is required'
+                                    })}
+                                    error={errors.confirmPassword}
+                                    helperText={errors.confirmPassword?.message}
+                                    type="password"
+                                />
+                                <FormControl error={Boolean(errors.tnc)}>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                name="tnc"
+                                                inputRef={register({
+                                                    required:
+                                                        'Please Agree Our Terms And Condition'
+                                                })}
+                                            />
+                                        }
+                                        label="I accept terms and condition"
+                                    />
+                                    <FormHelperText>
+                                        {errors.tnc?.message}
+                                    </FormHelperText>
+                                </FormControl>
+
+                                <Button
+                                    type="submit"
+                                    className={classes.button}
+                                    fullWidth
+                                    variant="contained"
+                                    color="primary"
+                                >
+                                    Sign Up
+                                </Button>
+                                <Typography>
+                                    Already Have an Account?
+                                    <Link
+                                        to="/login"
+                                        className={classes.LinkSignIn}
+                                    >
+                                        &nbsp;Log In
+                                    </Link>
+                                </Typography>
+                            </form>
+                        </Paper>
+                    </Grid>
+
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        message={message}
+                        action={action}
+                        severity="success"
+                        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    />
+                </Container>
+            </Box>
+        </div>
     );
 }
 
