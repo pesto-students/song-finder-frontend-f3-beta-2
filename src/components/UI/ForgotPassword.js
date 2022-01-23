@@ -25,10 +25,10 @@ const useStyles = makeStyles((theme) => ({
     },
     inputRoot: {
         '& .MuiInput-underline:after': {
-            borderBottom: colors.borderSecondary.borderBottom
+            borderBottom: colors.border.borderBottom
         },
         '& .MuiInput-underline:hover:before': {
-            borderBottom: colors.borderSecondary.borderBottombefore
+            borderBottom: colors.border.borderBottombefore
         }
     },
     Paper: {
@@ -37,9 +37,12 @@ const useStyles = makeStyles((theme) => ({
         margin: '20px auto'
     },
     button: {
-        backgroundColor: colors.primaryColor.color,
-        color: '#fff',
-        margin: '1rem 0'
+        backgroundColor: colors.secondaryColor,
+        color: colors.whiteColor,
+        margin: '1rem 0',
+        '&:hover': {
+            backgroundColor: colors.background.hoverButtonColor
+        }
     },
     h4: {
         color: colors.h4.textColor,
@@ -60,47 +63,46 @@ const useStyles = makeStyles((theme) => ({
 function ForgotPassword() {
     const classes = useStyles();
     return (
-        <div className={classes.root}>
-            <Box sx={{ position: 'relative', top: '30%' }}>
-                <Container maxWidth="lg">
-                    <Grid container>
-                        <Paper
-                            elevation={20}
-                            className={classes.Paper}
-                            sx={{ p: 100 }}
-                        >
-                            <Grid align="center">
-                                <Avatar className={classes.Avatar}>
-                                    <LockOpenIcon />
-                                </Avatar>
-                                <Typography variant="h4" className={classes.h4}>
-                                    {' '}
-                                    Forgot Passsword
-                                </Typography>
-                                <Typography variant="caption1">
-                                    Please fill this form
-                                </Typography>
-                            </Grid>
-                            <form>
-                                <TextField
-                                    className={classes.inputRoot}
-                                    fullWidth
-                                    inputProps={{
-                                        style: {
-                                            fontFamily: "'Baloo Da 2', cursive "
-                                        }
-                                    }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: '#fd1863',
-                                            fontFamily: "'Baloo Da 2', cursive"
-                                        }
-                                    }}
-                                    label="Email"
-                                    margin="normal"
-                                    variant="standard"
-                                    placeholder="Enter Your Registred Email"
-                                />
+        <Box sx={{ p: 1, mt: 15, mb: 30 }}>
+            <Container maxWidth="lg">
+                <Grid container>
+                    <Paper
+                        elevation={20}
+                        className={classes.Paper}
+                        sx={{ p: 100 }}
+                    >
+                        <Grid align="center">
+                            <Avatar className={classes.Avatar}>
+                                <LockOpenIcon />
+                            </Avatar>
+                            <Typography variant="h4" className={classes.h4}>
+                                {' '}
+                                Forgot Passsword
+                            </Typography>
+                            <Typography variant="caption1">
+                                Please fill this form
+                            </Typography>
+                        </Grid>
+                        <form>
+                            <TextField
+                                className={classes.inputRoot}
+                                fullWidth
+                                inputProps={{
+                                    style: {
+                                        fontFamily: "'Baloo Da 2', cursive "
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        color: colors.secondaryColor,
+                                        fontFamily: "'Baloo Da 2', cursive"
+                                    }
+                                }}
+                                label="Email"
+                                margin="normal"
+                                variant="standard"
+                                placeholder="Enter Your Registred Email"
+                            />
 
                                 <Button
                                     type="submit"
@@ -123,7 +125,6 @@ function ForgotPassword() {
                     </Grid>
                 </Container>
             </Box>
-        </div>
     );
 }
 

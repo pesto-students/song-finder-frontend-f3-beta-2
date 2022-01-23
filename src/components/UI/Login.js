@@ -6,30 +6,18 @@ import {
     Paper,
     Typography
 } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
 import LockIcon from '@mui/icons-material/Lock';
+import { LoadingButton } from '@mui/lab';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import axios from 'axios';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 import colors from '../../colors';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        height: `${window.screen.availHeight}px`,
-        backgroundImage:
-            "linear-gradient(to right bottom,  rgba(0, 0, 54, 0.90),rgba(253, 24, 99, 0.80)), url('https://i.imgur.com/K3wMWeK.png')",
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        marginTop: '0px',
-        [theme.breakpoints.down('sm')]: {
-            height: '100vh',
-            backgroundPosition: 'center center',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat'
-        }
-    },
+const useStyles = makeStyles(() => ({
     inputRoot: {
         '& .MuiInput-underline:after': {
             borderBottom: colors.border.borderBottom
@@ -44,13 +32,21 @@ const useStyles = makeStyles((theme) => ({
         margin: '20px auto'
     },
     button: {
-        backgroundColor: colors.background.primaryButton,
-        color: colors.fontColor.textColor,
+        backgroundColor: `${colors.secondaryColor} !important`,
+        color: colors.whiteColor,
         margin: '1rem 0',
         '&:hover': {
             backgroundColor: colors.background.hoverButtonColor
-        }
+        },
+        '& .Mui-disabled': {
+            color: '#fff !important'
+        },
+        '& .css-6y6m6y-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root.Mui-disabled':
+            {
+                color: '#fff !important'
+            }
     },
+
     h4: {
         color: colors.h4.textColor,
         fontWeight: '700'
@@ -68,111 +64,170 @@ const useStyles = makeStyles((theme) => ({
     LinkSignUp: {
         color: colors.Link.linkColor,
         textDecoration: 'none !important'
+    },
+    message: {
+        color: colors.primaryColor
     }
 }));
 
 function Login() {
     const classes = useStyles();
+    const navigate = useNavigate();
+    const { register, handleSubmit, errors } = useForm();
+    const baseURL = 'http://localhost:5000';
+    const [message, setmessage] = React.useState('');
+    const [loading, setloading] = React.useState(false);
+
+    const onSubmit = (data) => {
+        setloading(true);
+        axios.post(`${baseURL}/auth/login`, data).then((res) => {
+            console.log(res);
+            const Response = res.data;
+            console.log(typeof Response);
+            if (Response.success) {
+                setloading(false);
+                setmessage(Response.message);
+                localStorage.setItem('loggedin', 'true');
+                setTimeout(() => {
+                    navigate('/');
+                }, 2000);
+            }
+        });
+    };
     return (
-        <div className={classes.root}>
-            <Box sx={{ position: 'relative', top: '21%' }}>
-                <Container maxWidth="lg">
-                    <Grid container>
-                        <Paper
-                            elevation={20}
-                            className={classes.Paper}
-                            sx={{ p: 100 }}
-                        >
-                            <Grid align="center">
-                                <Avatar className={classes.Avatar}>
-                                    <LockIcon />
-                                </Avatar>
-                                <Typography variant="h4" className={classes.h4}>
-                                    {' '}
-                                    Login
-                                </Typography>
-                                <Typography variant="caption1">
-                                    Please fill this form
-                                </Typography>
-                            </Grid>
-                            <form>
-                                <TextField
-                                    className={classes.inputRoot}
-                                    fullWidth
-                                    inputProps={{
-                                        style: {
-                                            fontFamily: "'Baloo Da 2', cursive "
-                                        }
-                                    }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: '#000036',
-                                            fontFamily: "'Baloo Da 2', cursive"
-                                        }
-                                    }}
-                                    label="Name"
-                                    margin="normal"
-                                    variant="standard"
-                                    placeholder="Enter Your Name"
-                                />
-                                <TextField
-                                    className={classes.inputRoot}
-                                    fullWidth
-                                    label="Password"
-                                    variant="standard"
-                                    placeholder="Enter your Password"
-                                    margin="normal"
-                                    inputProps={{
-                                        style: {
-                                            fontFamily: "'Baloo Da 2', cursive "
-                                        }
-                                    }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: '#000036',
-                                            fontFamily: "'Baloo Da 2', cursive"
-                                        }
-                                    }}
-                                />
-                                <FormControlLabel
-                                    value="Remember Me"
-                                    control={<Checkbox />}
-                                    label="Remember Me"
-                                    labelPlacement="I accept Terms and Condition"
-                                />
-                                <Button
-                                    type="submit"
-                                    className={classes.button}
-                                    fullWidth
-                                    variant="contained"
-                                    color="secondary"
+        <Box sx={{ p: 1, mt: 10, mb: 18 }}>
+            <Container maxWidth="lg">
+                <Grid container>
+                    <Paper
+                        elevation={20}
+                        className={classes.Paper}
+                        sx={{ p: 100 }}
+                    >
+                        <Grid align="center">
+                            <Avatar className={classes.Avatar}>
+                                <LockIcon />
+                            </Avatar>
+                            <Typography variant="h4" className={classes.h4}>
+                                {' '}
+                                Login
+                            </Typography>
+                            <Typography variant="caption">
+                                Please fill this form
+                            </Typography>
+                            {loading ? null : (
+                                <Typography
+                                    variant="body2"
+                                    className={classes.message}
                                 >
-                                    Log In
-                                </Button>
-                                <Typography>
-                                    <Link
-                                        className={classes.Link}
-                                        to="/forgotPassword"
-                                    >
-                                        {' '}
-                                        Forgot Password?
-                                    </Link>
+                                    {message}
                                 </Typography>
-                                <Typography>
-                                    Don&apos;t you Have an Account?
-                                    <Link
-                                        to="/signup"
-                                        className={classes.LinkSignUp}
-                                    >
-                                        &nbsp;Sign Up
-                                    </Link>
-                                </Typography>
-                            </form>
-                        </Paper>
-                    </Grid>
-                </Container>
-            </Box>
-        </div>
+                            )}
+                        </Grid>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            <TextField
+                                className={classes.inputRoot}
+                                fullWidth
+                                inputProps={{
+                                    style: {
+                                        fontFamily: "'Baloo Da 2', cursive "
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        color: colors.secondaryColor,
+                                        fontFamily: "'Baloo Da 2', cursive"
+                                    }
+                                }}
+                                label="Email"
+                                margin="normal"
+                                variant="standard"
+                                placeholder="Enter Your Registered Email"
+                                name="email"
+                                inputRef={register({
+                                    required: 'Email Is Required'
+                                })}
+                                error={errors.email}
+                                helperText={errors.email?.message}
+                            />
+                            <TextField
+                                className={classes.inputRoot}
+                                fullWidth
+                                label="Password"
+                                variant="standard"
+                                placeholder="Enter your Password"
+                                margin="normal"
+                                inputProps={{
+                                    style: {
+                                        fontFamily: "'Baloo Da 2', cursive "
+                                    }
+                                }}
+                                InputLabelProps={{
+                                    style: {
+                                        color: colors.secondaryColor,
+                                        fontFamily: "'Baloo Da 2', cursive"
+                                    }
+                                }}
+                                name="password"
+                                inputRef={register({
+                                    required: 'Password Is Required'
+                                })}
+                                error={errors.password}
+                                helperText={errors.password?.message}
+                            />
+                            <FormControlLabel
+                                value=""
+                                control={
+                                    <Checkbox
+                                        name="RememberMe"
+                                        inputRef={register()}
+                                    />
+                                }
+                                label="Remember Me"
+                                labelPlacement="I accept Terms and Condition"
+                            />
+                            <LoadingButton
+                                loading={loading}
+                                type="submit"
+                                loadingPosition="start"
+                                variant="contained"
+                                color="secondary"
+                                fullWidth
+                                className={classes.button}
+                            >
+                                Log In
+                            </LoadingButton>
+                            {/* <Button
+                                type="submit"
+                                className={classes.button}
+                                fullWidth
+                                variant="contained"
+                                color="secondary"
+                            >
+                                Log In
+                            </Button> */}
+                            <Typography>
+                                <Link
+                                    className={classes.Link}
+                                    to="/forgotPassword"
+                                >
+                                    {' '}
+                                    Forgot Password?
+                                </Link>
+                            </Typography>
+                            <Typography>
+                                Don&apos;t you Have an Account?
+                                <Link
+                                    to="/signup"
+                                    className={classes.LinkSignUp}
+                                >
+                                    Sign Up
+                                </Link>
+                            </Typography>
+                        </form>
+                    </Paper>
+                </Grid>
+            </Container>
+        </Box>
     );
 }
 
