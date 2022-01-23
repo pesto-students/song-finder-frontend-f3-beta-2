@@ -32,13 +32,21 @@ const useStyles = makeStyles(() => ({
         margin: '20px auto'
     },
     button: {
-        backgroundColor: `${colors.primaryColor} !important`,
+        backgroundColor: `${colors.secondaryColor} !important`,
         color: colors.whiteColor,
         margin: '1rem 0',
         '&:hover': {
             backgroundColor: colors.background.hoverButtonColor
-        }
+        },
+        '& .Mui-disabled': {
+            color: '#fff !important'
+        },
+        '& .css-6y6m6y-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root.Mui-disabled':
+            {
+                color: '#fff !important'
+            }
     },
+
     h4: {
         color: colors.h4.textColor,
         fontWeight: '700'
@@ -69,17 +77,20 @@ function Login() {
     const baseURL = 'http://localhost:5000';
     const [message, setmessage] = React.useState('');
     const [loading, setloading] = React.useState(false);
+
     const onSubmit = (data) => {
+        setloading(true);
         axios.post(`${baseURL}/auth/login`, data).then((res) => {
+            console.log(res);
             const Response = res.data;
+            console.log(typeof Response);
             if (Response.success) {
-                setloading(true);
+                setloading(false);
                 setmessage(Response.message);
+                localStorage.setItem('loggedin', 'true');
                 setTimeout(() => {
                     navigate('/');
-                }, 6000);
-            } else {
-                setmessage(Response.message);
+                }, 2000);
             }
         });
     };
@@ -103,12 +114,14 @@ function Login() {
                             <Typography variant="caption">
                                 Please fill this form
                             </Typography>
-                            <Typography
-                                variant="body2"
-                                className={classes.message}
-                            >
-                                {message}
-                            </Typography>
+                            {loading ? null : (
+                                <Typography
+                                    variant="body2"
+                                    className={classes.message}
+                                >
+                                    {message}
+                                </Typography>
+                            )}
                         </Grid>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <TextField
