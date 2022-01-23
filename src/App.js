@@ -6,9 +6,11 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Footer from './components/UI/Footer';
 import ForgotPassword from './components/UI/ForgotPassword';
+import History from './components/UI/History';
 import LandingPage from './components/UI/LandingPage';
 import Login from './components/UI/Login';
 import Lyrics from './components/UI/Lyrics';
+import { MinPLayer } from './components/UI/MiniPlayer';
 import Navbar from './components/UI/Navbar';
 import Search from './components/UI/Search';
 import SignUp from './components/UI/SignUp';
@@ -31,11 +33,9 @@ function App() {
                 <Route path="signup" element={<SignUp />} />
                 <Route path="forgotPassword" element={<ForgotPassword />} />
                 <Route path="lyrics" element={<Lyrics />} />
-                <Route
-                    path="/video"
-                    element={<Video embedId="rokGy0huYEA" />}
-                />
+                <Route path="video" element={<Video />} />
                 <Route path="/search" element={<Search />} />
+                <Route path="history" element={<History />} />
             </Routes>
             <MinPLayer />
             <Footer />
