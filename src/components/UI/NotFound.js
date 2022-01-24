@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
 function NotFound() {
     const classes = useStyles();
     const location = useLocation();
-    console.log(location);
+
     return (
         <Box mt={15} mb={30}>
             <Container>
