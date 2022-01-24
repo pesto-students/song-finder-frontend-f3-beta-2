@@ -110,7 +110,8 @@ function MinPLayer({ currentAudio }) {
     if (
         location.pathname === '/login' ||
         location.pathname === '/signup' ||
-        location.pathname === '/forgotPassword'
+        location.pathname === '/forgotPassword' ||
+        location.pathname === '/reset'
     ) {
         return null;
     }
