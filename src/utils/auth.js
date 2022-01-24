@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const baseURL = 'https://api-immersis.herokuapp.com';
 
@@ -86,7 +86,4 @@ const Reset = ({ token, password, confirmPassword }) => {
     };
 };
 
-exports.IsLoggedIn = IsLoggedIn;
-exports.LogOut = LogOut;
-exports.Forgot = Forgot;
-exports.Reset = Reset;
+export { IsLoggedIn, LogOut, Forgot, Reset };
