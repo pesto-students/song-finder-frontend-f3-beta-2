@@ -1,10 +1,11 @@
 import { Grid, Typography } from '@material-ui/core';
-import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import React from 'react';
+import colors from '../../colors';
 
 const useStyles = makeStyles((theme) => ({
     footer: {
-        backgroundColor: '#000036',
+        backgroundColor: colors.secondaryColor,
         maxWidth: '100vw',
         padding: '3rem',
         marginTop: '3rem',
@@ -20,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     Heading: {
-        color: '#fd1863',
+        color: colors.primaryColor,
         fontSize: '2rem',
         [theme.breakpoints.down('md')]: {
             fontSize: '1rem'
         }
     },
     link: {
-        color: '#fff',
+        color: colors.whiteColor,
         fontSize: '1.5rem',
         wordWrap: 'break-word',
         [theme.breakpoints.down('md')]: {
