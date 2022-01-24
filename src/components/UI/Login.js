@@ -13,6 +13,7 @@ import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import React from 'react';
+import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import colors from '../../colors';
@@ -80,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none !important'
     },
     LinkSignUp: {
-        color: colors.Link.linkColor,
+        color: colors.primaryColor,
         textDecoration: 'none !important'
     },
     message: {
@@ -88,27 +89,33 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Login() {
+function Login({ loggedIn, dispatch }) {
     const classes = useStyles();
     const navigate = useNavigate();
     const { register, handleSubmit, errors } = useForm();
-    const baseURL = 'http://localhost:5000';
+    const baseURL = 'https://api-immersis.herokuapp.com';
     const [message, setmessage] = React.useState('');
     const [loading, setloading] = React.useState(false);
+
+    if (loggedIn) {
+        navigate('/');
+        return null;
+    }
 
     const onSubmit = (data) => {
         setloading(true);
         axios.post(`${baseURL}/auth/login`, data).then((res) => {
-            console.log(res);
             const Response = res.data;
-            console.log(typeof Response);
             if (Response.success) {
                 setloading(false);
                 setmessage(Response.message);
-                localStorage.setItem('loggedin', 'true');
+                dispatch({ type: 'LOG_IN' });
                 setTimeout(() => {
                     navigate('/');
                 }, 2000);
+            } else {
+                setloading(false);
+                setmessage(Response.message);
             }
         });
     };
@@ -186,6 +193,7 @@ function Login() {
                                             fontFamily: "'Baloo Da 2', cursive"
                                         }
                                     }}
+                                    type="password"
                                     name="password"
                                     inputRef={register({
                                         required: 'Password Is Required'
@@ -242,4 +250,10 @@ function Login() {
     );
 }
 
-export default Login;
+function mapStateToProps(state) {
+    return state.auth;
+}
+
+const ConnectedLogin = connect(mapStateToProps)(Login);
+
+export default ConnectedLogin;
