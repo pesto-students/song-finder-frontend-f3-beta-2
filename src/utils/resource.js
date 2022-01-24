@@ -85,4 +85,32 @@ const fetchLyrics = ({ title, artist }) => {
     };
 };
 
-export { fetchResult, fetchVideo, fetchAudio, fetchLyrics };
+const fetchSearches = () => {
+    return async (dispatch) => {
+        dispatch({ type: 'FETCH_SEARCH_REQUEST' });
+
+        const options = {
+            url: `${baseURL}/resource/searchHistory`,
+            method: 'GET'
+        };
+
+        try {
+            const resp = await axios(options);
+            if (resp.data.success) {
+                dispatch({
+                    type: 'FETCH_SEARCH_SUCCESS',
+                    payload: resp.data.searchHistory
+                });
+            } else {
+                dispatch({
+                    type: 'FETCH_SEARCH_ERROR',
+                    payload: resp.data.message
+                });
+            }
+        } catch (err) {
+            dispatch({ type: 'FETCH_SEARCH_ERROR', payload: err.message });
+        }
+    };
+};
+
+export { fetchResult, fetchVideo, fetchAudio, fetchLyrics, fetchSearches };
