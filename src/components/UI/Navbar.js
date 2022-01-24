@@ -316,7 +316,7 @@ function Navbar({ loggedIn, dispatch }) {
                                                 variant="text"
                                                 className={classes.SignInButton}
                                             >
-                                                Sign In
+                                                Sign Up
                                             </Button>
                                         </Link>
                                     </MenuItem>
