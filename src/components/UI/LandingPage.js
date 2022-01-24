@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         minHeight: '100vh',
         backgroundImage:
-            "linear-gradient(to right bottom,  rgba(0, 0, 54, 0.90),rgba(253, 24, 99, 0.80)), url('https://i.imgur.com/K3wMWeK.png')",
+            "linear-gradient(to right bottom,  rgba(0, 0, 54, 0.90),rgba(253, 24, 99, 0.80)), url('https://i.imgur.com/IfL1Z5e.png')",
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         marginTop: '0px',
