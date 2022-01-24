@@ -6,6 +6,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Footer from './components/UI/Footer';
 import ForgotPassword from './components/UI/ForgotPassword';
+import ResetPassword from './components/UI/ResetPassword';
 import History from './components/UI/History';
 import LandingPage from './components/UI/LandingPage';
 import Login from './components/UI/Login';
@@ -32,6 +33,7 @@ function App() {
                 <Route path="login" element={<Login />} />
                 <Route path="signup" element={<SignUp />} />
                 <Route path="forgotPassword" element={<ForgotPassword />} />
+                <Route path="reset" element={<ResetPassword />} />
                 <Route path="lyrics" element={<Lyrics />} />
                 <Route path="video" element={<Video />} />
                 <Route path="/search" element={<Search />} />
