@@ -1,21 +1,23 @@
 import {
-    CardHeader,
+    Box,
     Card,
-    Container,
-    Typography,
-    Grid,
-    Paper,
     CardActionArea,
+    CardContent,
+    CardHeader,
     CardMedia,
-    CardContent
+    Grid,
+    Typography
 } from '@material-ui/core';
-import React from 'react';
 import { makeStyles } from '@material-ui/styles';
+import React from 'react';
 import colors from '../../colors';
 
 const useStyles = makeStyles(() => ({
     title: {
         color: colors.primaryColor.color
+    },
+    card: {
+        boxShadow: `3px 3px 3px 3px ${colors.greyWhite}`
     }
 }));
 
@@ -23,23 +25,21 @@ function OurServiceCard() {
     const classes = useStyles();
 
     return (
-        <Container maxWidth="lg">
-            <Grid
-                direction="row"
-                justifyContent="space-evenly"
-                alignItems="center"
-                container
-                spacing={5}
-            >
-                <Grid>
-                    <Paper varaint="outlined" elevation={20}>
-                        <Card>
-                            <CardHeader
-                                title="Lyrics"
-                                className={classes.title}
-                                align="center"
-                            />
-                        </Card>
+        <Grid
+            container
+            direction="row"
+            justifyContent="space-evenly"
+            alignItems="center"
+            spacing={20}
+        >
+            <Grid spacing={10}>
+                <Box sx={{ my: 5, p: 2 }}>
+                    <Card className={classes.card}>
+                        <CardHeader
+                            title="Lyrics"
+                            className={classes.title}
+                            align="center"
+                        />
                         <CardActionArea>
                             <CardMedia
                                 component="img"
@@ -53,18 +53,23 @@ function OurServiceCard() {
                                 </Typography>
                             </CardContent>
                         </CardActionArea>
-                    </Paper>
-                </Grid>
-                <Grid>
-                    <Paper varaint="outlined" elevation={20}>
-                        <Card>
-                            <CardHeader
-                                title="Music"
-                                className={classes.title}
-                                align="center"
-                            />
-                        </Card>
-                        <CardActionArea>
+                    </Card>
+                </Box>
+            </Grid>
+            <Grid spacing={10}>
+                <Box
+                    sx={{
+                        my: 5,
+                        p: 2
+                    }}
+                >
+                    <Card className={classes.card}>
+                        <CardHeader
+                            title="Music"
+                            className={classes.title}
+                            align="center"
+                        />
+                        <CardActionArea sx={{ boxShadow: 3 }}>
                             <CardMedia
                                 component="img"
                                 image="https://i.imgur.com/sZ4r356.png"
@@ -77,17 +82,17 @@ function OurServiceCard() {
                                 </Typography>
                             </CardContent>
                         </CardActionArea>
-                    </Paper>
-                </Grid>
-                <Grid>
-                    <Paper varaint="outlined" elevation={20}>
-                        <Card>
-                            <CardHeader
-                                title="Videos"
-                                className={classes.title}
-                                align="center"
-                            />
-                        </Card>
+                    </Card>
+                </Box>
+            </Grid>
+            <Grid spacing={10}>
+                <Box sx={{ my: 3, p: 1 }}>
+                    <Card className={classes.card}>
+                        <CardHeader
+                            title="Videos"
+                            className={classes.title}
+                            align="center"
+                        />
                         <CardActionArea>
                             <CardMedia
                                 component="img"
@@ -101,10 +106,10 @@ function OurServiceCard() {
                                 </Typography>
                             </CardContent>
                         </CardActionArea>
-                    </Paper>
-                </Grid>
+                    </Card>
+                </Box>
             </Grid>
-        </Container>
+        </Grid>
     );
 }
 export default OurServiceCard;
