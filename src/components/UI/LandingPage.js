@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: '3rem',
         [theme.breakpoints.down('sm')]: {
             height: '100vh',
+            width: '100vw',
             backgroundPosition: 'center center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat'

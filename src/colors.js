@@ -26,12 +26,10 @@ const colors = {
     Avatar: {
         color: '#fd1863'
     },
-    primaryColor: {
-        color: 'rgba(253, 24, 99, 1)'
-    },
-    secondaryColor: {
-        color: 'rgba(0, 0, 54, 1)'
-    },
+    primaryColor: 'rgba(253, 24, 99, 1)',
+
+    secondaryColor: 'rgba(0, 0, 54, 1)',
+
     iconColor: {
         background: 'rgba(0, 0, 54, 1)',
         color: 'rgba(253, 24, 99, .8) '
@@ -43,9 +41,9 @@ const colors = {
     iconColorSecondary: {
         background: 'rgba(253, 24, 99, 1) !important'
     },
-    whiteColor: {
-        color: '#fff'
-    }
+    whiteColor: '#fff',
+    greyWhite: '#C4C4C4',
+    searchColor: '#909090'
 };
 
 export default colors;

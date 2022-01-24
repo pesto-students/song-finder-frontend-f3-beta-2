@@ -1,6 +1,6 @@
 import {
-    CircularProgress,
     Container,
+    CircularProgress,
     Grid,
     Paper,
     Typography
@@ -11,11 +11,11 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import React from 'react';
-import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { Reset } from '../../utils/auth';
 import colors from '../../colors';
-import { Forgot } from '../../utils/auth';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,6 +78,12 @@ const useStyles = makeStyles((theme) => ({
     msgError: {
         border: 'red solid 2px',
         borderRadius: '7px'
+    },
+    expired: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: '84px auto'
     }
 }));
 
@@ -99,18 +105,32 @@ function Error({ msg }) {
     );
 }
 
-function ForgotPassword({ loggedIn, forgot, dispatch }) {
+function ResetPassword({ loggedIn, reset, dispatch }) {
     const classes = useStyles();
     const navigate = useNavigate();
     const { register, handleSubmit, errors } = useForm();
+    const [params] = useSearchParams();
+    const expiry = params.get('expiry');
+    const token = params.get('token');
 
     if (loggedIn) {
         navigate('/');
         return null;
     }
 
-    const forgotSubmit = ({ email }) => {
-        dispatch(Forgot(email));
+    if (Number(expiry) < Date.now() || !token || !expiry) {
+        return (
+            <div className={classes.expired}>
+                <Typography>The Link has been expired</Typography>
+                <Link to="/forgotPassword" color="secondary">
+                    &nbsp;Generate Again
+                </Link>
+            </div>
+        );
+    }
+
+    const submitReset = (data) => {
+        dispatch(Reset({ ...data, token }));
     };
 
     return (
@@ -129,18 +149,50 @@ function ForgotPassword({ loggedIn, forgot, dispatch }) {
                                 </Avatar>
                                 <Typography variant="h4" className={classes.h4}>
                                     {' '}
-                                    Forgot Passsword
+                                    Reset Passsword
                                 </Typography>
                                 <Typography variant="caption">
                                     Please fill this form
                                 </Typography>
-                                {forgot.msg ? (
-                                    <Success msg={forgot.msg} />
-                                ) : forgot.error ? (
-                                    <Error msg={forgot.error} />
+                                {reset.msg ? (
+                                    <Success msg={reset.msg} />
+                                ) : reset.error ? (
+                                    <Error msg={reset.error} />
                                 ) : null}
                             </Grid>
-                            <form onSubmit={handleSubmit(forgotSubmit)}>
+                            <form onSubmit={handleSubmit(submitReset)}>
+                                <TextField
+                                    className={classes.inputRoot}
+                                    fullWidth
+                                    label="Password"
+                                    variant="standard"
+                                    placeholder="Enter your Password"
+                                    margin="normal"
+                                    inputProps={{
+                                        style: {
+                                            fontFamily: "'Baloo Da 2', cursive "
+                                        }
+                                    }}
+                                    InputLabelProps={{
+                                        style: {
+                                            color: colors.secondaryColor,
+                                            fontFamily: "'Baloo Da 2', cursive"
+                                        }
+                                    }}
+                                    name="password"
+                                    inputRef={register({
+                                        required: 'Password is Required',
+                                        minLength: {
+                                            value: 8,
+                                            message:
+                                                'Password must be equal or greater than 8 characters'
+                                        }
+                                    })}
+                                    error={errors.password}
+                                    helperText={errors.password?.message}
+                                    type="password"
+                                />
+
                                 <TextField
                                     className={classes.inputRoot}
                                     fullWidth
@@ -155,17 +207,17 @@ function ForgotPassword({ loggedIn, forgot, dispatch }) {
                                             fontFamily: "'Baloo Da 2', cursive"
                                         }
                                     }}
-                                    variant="standard"
                                     margin="normal"
-                                    label="Email"
-                                    placeholder="name@domain.com"
-                                    name="email"
-                                    type="email"
+                                    placeholder="Confirm Password"
+                                    variant="standard"
+                                    label="Confirm Password"
+                                    name="confirmPassword"
                                     inputRef={register({
-                                        required: 'Email is Required'
+                                        required: 'Confirm Password is required'
                                     })}
-                                    error={errors.email}
-                                    helperText={errors.email?.message}
+                                    error={errors.confirmPassword}
+                                    helperText={errors.confirmPassword?.message}
+                                    type="password"
                                 />
 
                                 <Button
@@ -175,20 +227,20 @@ function ForgotPassword({ loggedIn, forgot, dispatch }) {
                                     variant="contained"
                                     color="secondary"
                                 >
-                                    {forgot.loading ? (
+                                    {reset.loading ? (
                                         <CircularProgress
                                             color="secondary"
                                             size={25}
                                         />
                                     ) : (
-                                        <>Send</>
+                                        <>Reset</>
                                     )}
                                 </Button>
 
                                 <Typography>
-                                    Don&apos;t you Have an Account?
-                                    <Link to="/signup" className={classes.Link}>
-                                        &nbsp;Sign Up
+                                    Click the Link to Log In?
+                                    <Link to="/login" className={classes.Link}>
+                                        &nbsp;Log In
                                     </Link>
                                 </Typography>
                             </form>
@@ -201,9 +253,9 @@ function ForgotPassword({ loggedIn, forgot, dispatch }) {
 }
 
 function mapStateToProps(state) {
-    return { loggedIn: state.auth.loggedIn, forgot: state.forgot };
+    return { loggedIn: state.auth.loggedIn, reset: state.reset };
 }
 
-const ConnectedForgotPassword = connect(mapStateToProps)(ForgotPassword);
+const ConnectedResetPassword = connect(mapStateToProps)(ResetPassword);
 
-export default ConnectedForgotPassword;
+export default ConnectedResetPassword;

@@ -1,29 +1,37 @@
 import {
+    Button,
     Checkbox,
+    CircularProgress,
     Container,
     FormControlLabel,
     Grid,
     Paper,
     Typography
 } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
 import LockIcon from '@mui/icons-material/Lock';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import axios from 'axios';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 import colors from '../../colors';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         height: `${window.screen.availHeight}px`,
         backgroundImage:
             "linear-gradient(to right bottom,  rgba(0, 0, 54, 0.90),rgba(253, 24, 99, 0.80)), url('https://i.imgur.com/K3wMWeK.png')",
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
-        marginTop: '0px',
+        marginTop: '64px',
         [theme.breakpoints.down('sm')]: {
+            marginTop: '55px',
             height: '100vh',
             backgroundPosition: 'center center',
             backgroundSize: 'cover',
@@ -44,13 +52,21 @@ const useStyles = makeStyles((theme) => ({
         margin: '20px auto'
     },
     button: {
-        backgroundColor: colors.background.primaryButton,
-        color: colors.fontColor.textColor,
+        backgroundColor: `${colors.secondaryColor} !important`,
+        color: colors.whiteColor,
         margin: '1rem 0',
         '&:hover': {
             backgroundColor: colors.background.hoverButtonColor
-        }
+        },
+        '& .Mui-disabled': {
+            color: '#fff !important'
+        },
+        '& .css-6y6m6y-MuiButtonBase-root-MuiButton-root-MuiLoadingButton-root.Mui-disabled':
+            {
+                color: '#fff !important'
+            }
     },
+
     h4: {
         color: colors.h4.textColor,
         fontWeight: '700'
@@ -66,16 +82,52 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: 'none !important'
     },
     LinkSignUp: {
-        color: colors.Link.linkColor,
+        color: colors.primaryColor,
         textDecoration: 'none !important'
+    },
+    message: {
+        color: colors.primaryColor
     }
 }));
 
-function Login() {
+function Login({ loggedIn, dispatch }) {
     const classes = useStyles();
+    const navigate = useNavigate();
+    const { register, handleSubmit, errors } = useForm();
+    const baseURL = 'https://api-immersis.herokuapp.com';
+    const [message, setmessage] = React.useState('');
+    const [loading, setloading] = React.useState(false);
+
+    if (loggedIn) {
+        navigate('/');
+        return null;
+    }
+
+    const onSubmit = (data) => {
+        setloading(true);
+        axios
+            .post(`${baseURL}/auth/login`, data)
+            .then((res) => {
+                const Response = res.data;
+                setloading(false);
+                if (Response.success) {
+                    setmessage(Response.message);
+                    dispatch({ type: 'LOG_IN' });
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 2000);
+                } else {
+                    setmessage(Response.message);
+                }
+            })
+            .catch((err) => {
+                setloading(false);
+                setmessage(err.message);
+            });
+    };
     return (
         <div className={classes.root}>
-            <Box sx={{ position: 'relative', top: '21%' }}>
+            <Box>
                 <Container maxWidth="lg">
                     <Grid container>
                         <Paper
@@ -91,11 +143,19 @@ function Login() {
                                     {' '}
                                     Login
                                 </Typography>
-                                <Typography variant="caption1">
+                                <Typography variant="caption">
                                     Please fill this form
                                 </Typography>
+                                {loading ? null : (
+                                    <Typography
+                                        variant="body2"
+                                        className={classes.message}
+                                    >
+                                        {message}
+                                    </Typography>
+                                )}
                             </Grid>
-                            <form>
+                            <form onSubmit={handleSubmit(onSubmit)}>
                                 <TextField
                                     className={classes.inputRoot}
                                     fullWidth
@@ -106,14 +166,20 @@ function Login() {
                                     }}
                                     InputLabelProps={{
                                         style: {
-                                            color: '#000036',
+                                            color: colors.secondaryColor,
                                             fontFamily: "'Baloo Da 2', cursive"
                                         }
                                     }}
-                                    label="Name"
+                                    label="Email"
                                     margin="normal"
                                     variant="standard"
-                                    placeholder="Enter Your Name"
+                                    placeholder="Enter Your Registered Email"
+                                    name="email"
+                                    inputRef={register({
+                                        required: 'Email Is Required'
+                                    })}
+                                    error={errors.email}
+                                    helperText={errors.email?.message}
                                 />
                                 <TextField
                                     className={classes.inputRoot}
@@ -129,14 +195,26 @@ function Login() {
                                     }}
                                     InputLabelProps={{
                                         style: {
-                                            color: '#000036',
+                                            color: colors.secondaryColor,
                                             fontFamily: "'Baloo Da 2', cursive"
                                         }
                                     }}
+                                    type="password"
+                                    name="password"
+                                    inputRef={register({
+                                        required: 'Password Is Required'
+                                    })}
+                                    error={errors.password}
+                                    helperText={errors.password?.message}
                                 />
                                 <FormControlLabel
-                                    value="Remember Me"
-                                    control={<Checkbox />}
+                                    value=""
+                                    control={
+                                        <Checkbox
+                                            name="RememberMe"
+                                            inputRef={register()}
+                                        />
+                                    }
                                     label="Remember Me"
                                     labelPlacement="I accept Terms and Condition"
                                 />
@@ -147,7 +225,14 @@ function Login() {
                                     variant="contained"
                                     color="secondary"
                                 >
-                                    Log In
+                                    {loading ? (
+                                        <CircularProgress
+                                            color="secondary"
+                                            size={25}
+                                        />
+                                    ) : (
+                                        <>Log In</>
+                                    )}
                                 </Button>
                                 <Typography>
                                     <Link
@@ -176,4 +261,10 @@ function Login() {
     );
 }
 
-export default Login;
+function mapStateToProps(state) {
+    return state.auth;
+}
+
+const ConnectedLogin = connect(mapStateToProps)(Login);
+
+export default ConnectedLogin;
