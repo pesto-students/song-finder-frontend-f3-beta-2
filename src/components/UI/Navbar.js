@@ -7,9 +7,10 @@ import Avatar from '@mui/material/Avatar';
 import Fade from '@mui/material/Fade';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { LogOut, IsLoggedIn } from '../../utils/auth';
 import { fetchResult } from '../../utils/resource';
 import logo from '../../assets/logo.png';
 import colors from '../../colors';
@@ -119,13 +120,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Navbar({ dispatch }) {
+function Navbar({ loggedIn, dispatch }) {
     const classes = useStyles();
     const navigate = useNavigate();
     const location = useLocation();
     const [input, setInput] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+
+    useEffect(() => dispatch(IsLoggedIn()), []);
 
     const search = (e) => {
         e.preventDefault();
@@ -134,21 +137,21 @@ function Navbar({ dispatch }) {
         navigate({ pathname: 'search', search: `?q=${input}` });
     };
     const handleClick = (event) => {
-        console.log(anchorEl);
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
     };
     const logOut = () => {
-        localStorage.clear();
+        dispatch(LogOut());
         navigate('/login');
     };
 
     if (
         location.pathname === '/login' ||
         location.pathname === '/signup' ||
-        location.pathname === '/forgotPassword'
+        location.pathname === '/forgotPassword' ||
+        location.pathname === '/reset'
     ) {
         return (
             <AppBar>
@@ -194,7 +197,7 @@ function Navbar({ dispatch }) {
                         </form>
                     </div>
 
-                    {localStorage.getItem('loggedin') === 'true' ? (
+                    {loggedIn ? (
                         <>
                             <Button
                                 id="fade-button"
@@ -328,7 +331,7 @@ function Navbar({ dispatch }) {
 }
 
 function mapStateToProps(state) {
-    return { state };
+    return state.auth;
 }
 
 const ConnectedNavbar = connect(mapStateToProps)(Navbar);

@@ -18,6 +18,7 @@ import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import axios from 'axios';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import colors from '../../colors';
@@ -70,17 +71,22 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: `${colors.primaryColor} !important`
     },
     LinkSignIn: {
-        color: colors.Link.linkColor,
+        color: colors.primaryColor,
         textDecoration: 'none !important'
     }
 }));
 
-function SignUp() {
+function SignUp({ loggedIn, dispatch }) {
     const classes = useStyles();
     const { register, handleSubmit, errors } = useForm();
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState('');
     const navigate = useNavigate();
+
+    if (loggedIn) {
+        navigate('/');
+        return null;
+    }
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -104,22 +110,20 @@ function SignUp() {
             </IconButton>
         </>
     );
-    const baseURL = 'http://localhost:5000/auth';
+    const baseURL = 'https://api-immersis.herokuapp.com';
     const onSubmit = (data) => {
         axios.post(baseURL, data).then((res) => {
             const Response = res.data;
             if (Response.success) {
+                dispatch({ type: 'LOG_IN' });
                 setOpen(true);
                 setMessage(Response.message);
                 setTimeout(() => {
-                    navigate('/login');
-                }, 6000);
+                    navigate('/');
+                }, 2000);
             } else {
                 setOpen(true);
                 setMessage(Response.message);
-                setTimeout(() => {
-                    navigate('/login');
-                }, 6000);
             }
         });
     };
@@ -141,7 +145,7 @@ function SignUp() {
                                     {' '}
                                     Sign Up
                                 </Typography>
-                                <Typography variant="caption1">
+                                <Typography variant="caption">
                                     Please fill this form
                                 </Typography>
                             </Grid>
@@ -249,7 +253,12 @@ function SignUp() {
                                     }}
                                     name="password"
                                     inputRef={register({
-                                        required: 'Password is Required'
+                                        required: 'Password is Required',
+                                        minLength: {
+                                            value: 8,
+                                            message:
+                                                'Password must be equal or greater than 8 characters'
+                                        }
                                     })}
                                     error={errors.password}
                                     helperText={errors.password?.message}
@@ -337,4 +346,10 @@ function SignUp() {
     );
 }
 
-export default SignUp;
+function mapStateToProps(state) {
+    return state.auth;
+}
+
+const ConnectedSignUp = connect(mapStateToProps)(SignUp);
+
+export default ConnectedSignUp;
