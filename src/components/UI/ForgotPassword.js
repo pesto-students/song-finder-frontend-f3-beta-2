@@ -1,12 +1,21 @@
-import { Container, Grid, Paper, Typography } from '@material-ui/core';
+import {
+    CircularProgress,
+    Container,
+    Grid,
+    Paper,
+    Typography
+} from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import colors from '../../colors';
+import { Forgot } from '../../utils/auth';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,13 +68,51 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: "'Baloo Da 2', cursive !important"
     },
     Link: {
-        color: colors.Link.linkColor,
+        color: colors.primaryColor,
         textDecoration: 'none !important'
+    },
+    msgSuccess: {
+        border: 'green solid 2px',
+        borderRadius: '7px'
+    },
+    msgError: {
+        border: 'red solid 2px',
+        borderRadius: '7px'
     }
 }));
 
-function ForgotPassword() {
+function Success({ msg }) {
     const classes = useStyles();
+    return (
+        <div className={classes.msgSuccess}>
+            <Typography>{msg}</Typography>
+        </div>
+    );
+}
+
+function Error({ msg }) {
+    const classes = useStyles();
+    return (
+        <div className={classes.msgError}>
+            <Typography>{msg}</Typography>
+        </div>
+    );
+}
+
+function ForgotPassword({ loggedIn, forgot, dispatch }) {
+    const classes = useStyles();
+    const navigate = useNavigate();
+    const { register, handleSubmit, errors } = useForm();
+
+    if (loggedIn) {
+        navigate('/');
+        return null;
+    }
+
+    const forgotSubmit = ({ email }) => {
+        dispatch(Forgot(email));
+    };
+
     return (
         <div className={classes.root}>
             <Box>
@@ -84,11 +131,16 @@ function ForgotPassword() {
                                     {' '}
                                     Forgot Passsword
                                 </Typography>
-                                <Typography variant="caption1">
+                                <Typography variant="caption">
                                     Please fill this form
                                 </Typography>
+                                {forgot.msg ? (
+                                    <Success msg={forgot.msg} />
+                                ) : forgot.error ? (
+                                    <Error msg={forgot.error} />
+                                ) : null}
                             </Grid>
-                            <form>
+                            <form onSubmit={handleSubmit(forgotSubmit)}>
                                 <TextField
                                     className={classes.inputRoot}
                                     fullWidth
@@ -103,10 +155,17 @@ function ForgotPassword() {
                                             fontFamily: "'Baloo Da 2', cursive"
                                         }
                                     }}
-                                    label="Email"
-                                    margin="normal"
                                     variant="standard"
-                                    placeholder="Enter Your Registred Email"
+                                    margin="normal"
+                                    label="Email"
+                                    placeholder="name@domain.com"
+                                    name="email"
+                                    type="email"
+                                    inputRef={register({
+                                        required: 'Email is Required'
+                                    })}
+                                    error={errors.email}
+                                    helperText={errors.email?.message}
                                 />
 
                                 <Button
@@ -116,7 +175,14 @@ function ForgotPassword() {
                                     variant="contained"
                                     color="secondary"
                                 >
-                                    Send
+                                    {forgot.loading ? (
+                                        <CircularProgress
+                                            color="secondary"
+                                            size={25}
+                                        />
+                                    ) : (
+                                        <>Send</>
+                                    )}
                                 </Button>
 
                                 <Typography>
@@ -134,4 +200,10 @@ function ForgotPassword() {
     );
 }
 
-export default ForgotPassword;
+function mapStateToProps(state) {
+    return { loggedIn: state.auth.loggedIn, forgot: state.forgot };
+}
+
+const ConnectedForgotPassword = connect(mapStateToProps)(ForgotPassword);
+
+export default ConnectedForgotPassword;
