@@ -44,6 +44,7 @@
         "object-curly-newline": "off",
         "react/jsx-wrap-multilines": "off",
         "react/prop-types": "off",
-        "no-nested-ternary": "off"
+        "no-nested-ternary": "off",
+        "array-callback-return": "off"
     }
 }
