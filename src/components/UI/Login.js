@@ -1,5 +1,7 @@
 import {
+    Button,
     Checkbox,
+    CircularProgress,
     Container,
     FormControlLabel,
     Grid,
@@ -8,7 +10,6 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import LockIcon from '@mui/icons-material/Lock';
-import { LoadingButton } from '@mui/lab';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
@@ -104,20 +105,25 @@ function Login({ loggedIn, dispatch }) {
 
     const onSubmit = (data) => {
         setloading(true);
-        axios.post(`${baseURL}/auth/login`, data).then((res) => {
-            const Response = res.data;
-            if (Response.success) {
+        axios
+            .post(`${baseURL}/auth/login`, data)
+            .then((res) => {
+                const Response = res.data;
                 setloading(false);
-                setmessage(Response.message);
-                dispatch({ type: 'LOG_IN' });
-                setTimeout(() => {
-                    navigate('/');
-                }, 2000);
-            } else {
+                if (Response.success) {
+                    setmessage(Response.message);
+                    dispatch({ type: 'LOG_IN' });
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 2000);
+                } else {
+                    setmessage(Response.message);
+                }
+            })
+            .catch((err) => {
                 setloading(false);
-                setmessage(Response.message);
-            }
-        });
+                setmessage(err.message);
+            });
     };
     return (
         <div className={classes.root}>
@@ -212,17 +218,22 @@ function Login({ loggedIn, dispatch }) {
                                     label="Remember Me"
                                     labelPlacement="I accept Terms and Condition"
                                 />
-                                <LoadingButton
-                                    loading={loading}
+                                <Button
                                     type="submit"
-                                    loadingPosition="start"
+                                    className={classes.button}
+                                    fullWidth
                                     variant="contained"
                                     color="secondary"
-                                    fullWidth
-                                    className={classes.button}
                                 >
-                                    Log In
-                                </LoadingButton>
+                                    {loading ? (
+                                        <CircularProgress
+                                            color="secondary"
+                                            size={25}
+                                        />
+                                    ) : (
+                                        <>Log In</>
+                                    )}
+                                </Button>
                                 <Typography>
                                     <Link
                                         className={classes.Link}

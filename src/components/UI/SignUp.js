@@ -1,5 +1,6 @@
 import {
     Checkbox,
+    CircularProgress,
     Container,
     FormControlLabel,
     FormHelperText,
@@ -9,13 +10,10 @@ import {
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
-import CloseIcon from '@mui/icons-material/Close';
 import LockIcon from '@mui/icons-material/Lock';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import FormControl from '@mui/material/FormControl';
-import IconButton from '@mui/material/IconButton';
-import Snackbar from '@mui/material/Snackbar';
 import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -73,14 +71,17 @@ const useStyles = makeStyles((theme) => ({
     LinkSignIn: {
         color: colors.primaryColor,
         textDecoration: 'none !important'
+    },
+    message: {
+        color: colors.primaryColor
     }
 }));
 
 function SignUp({ loggedIn, dispatch }) {
     const classes = useStyles();
     const { register, handleSubmit, errors } = useForm();
-    const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState('');
+    const [loading, setloading] = React.useState(false);
     const navigate = useNavigate();
 
     if (loggedIn) {
@@ -88,44 +89,28 @@ function SignUp({ loggedIn, dispatch }) {
         return null;
     }
 
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
-        setOpen(false);
-    };
-    const action = (
-        <>
-            <Button color="secondary" size="small" onClick={handleClose}>
-                UNDO
-            </Button>
-            <IconButton
-                size="small"
-                aria-label="close"
-                color="inherit"
-                onClick={handleClose}
-            >
-                <CloseIcon fontSize="small" />
-            </IconButton>
-        </>
-    );
     const baseURL = 'https://api-immersis.herokuapp.com';
     const onSubmit = (data) => {
-        axios.post(baseURL, data).then((res) => {
-            const Response = res.data;
-            if (Response.success) {
-                dispatch({ type: 'LOG_IN' });
-                setOpen(true);
-                setMessage(Response.message);
-                setTimeout(() => {
-                    navigate('/');
-                }, 2000);
-            } else {
-                setOpen(true);
-                setMessage(Response.message);
-            }
-        });
+        setloading(true);
+        axios
+            .post(`${baseURL}/auth`, data)
+            .then((res) => {
+                const Response = res.data;
+                setloading(false);
+                if (Response.success) {
+                    dispatch({ type: 'LOG_IN' });
+                    setMessage(Response.message);
+                    setTimeout(() => {
+                        navigate('/');
+                    }, 2000);
+                } else {
+                    setMessage(Response.message);
+                }
+            })
+            .catch((err) => {
+                setloading(false);
+                setMessage(err.message);
+            });
     };
     return (
         <div className={classes.root}>
@@ -148,6 +133,14 @@ function SignUp({ loggedIn, dispatch }) {
                                 <Typography variant="caption">
                                     Please fill this form
                                 </Typography>
+                                {loading ? null : (
+                                    <Typography
+                                        variant="body2"
+                                        className={classes.message}
+                                    >
+                                        {message}
+                                    </Typography>
+                                )}
                             </Grid>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 {/* UserName Field */}
@@ -314,9 +307,16 @@ function SignUp({ loggedIn, dispatch }) {
                                     className={classes.button}
                                     fullWidth
                                     variant="contained"
-                                    color="primary"
+                                    color="secondary"
                                 >
-                                    Sign Up
+                                    {loading ? (
+                                        <CircularProgress
+                                            color="secondary"
+                                            size={25}
+                                        />
+                                    ) : (
+                                        <>Sign Up</>
+                                    )}
                                 </Button>
                                 <Typography>
                                     Already Have an Account?
@@ -330,16 +330,6 @@ function SignUp({ loggedIn, dispatch }) {
                             </form>
                         </Paper>
                     </Grid>
-
-                    <Snackbar
-                        open={open}
-                        autoHideDuration={6000}
-                        onClose={handleClose}
-                        message={message}
-                        action={action}
-                        severity="success"
-                        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                    />
                 </Container>
             </Box>
         </div>
