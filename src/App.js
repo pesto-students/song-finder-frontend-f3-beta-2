@@ -1,7 +1,6 @@
 // import './App.css';
 import { createTheme } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
-import axios from 'axios';
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Footer from './components/UI/Footer';
@@ -17,7 +16,6 @@ import Search from './components/UI/Search';
 import SignUp from './components/UI/SignUp';
 import Video from './components/UI/Video';
 
-axios.defaults.withCredentials = true;
 function App() {
     const font = "'Baloo Bhaijaan 2', cursive;";
     const theme = createTheme({
