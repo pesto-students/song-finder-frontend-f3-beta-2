@@ -25,7 +25,7 @@ describe('=> Test Navbar', () => {
     );
 
     test('Logo', async () => {
-        const logo = screen.getByRole(/img/);
-        expect(logo).toBeInTheDocument();
+        const logo = screen.getAllByRole(/img/);
+        expect(logo.length).toBe(2);
     });
 });
