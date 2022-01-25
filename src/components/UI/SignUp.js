@@ -96,6 +96,7 @@ function SignUp({ loggedIn, dispatch }) {
             .post(`${baseURL}/auth`, data)
             .then((res) => {
                 const Response = res.data;
+                document.cookie = `token=${Response.token}; secure=true`;
                 setloading(false);
                 if (Response.success) {
                     dispatch({ type: 'LOG_IN' });

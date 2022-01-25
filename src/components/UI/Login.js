@@ -94,7 +94,7 @@ function Login({ loggedIn, dispatch }) {
     const classes = useStyles();
     const navigate = useNavigate();
     const { register, handleSubmit, errors } = useForm();
-    const baseURL = 'https://api-immersis.herokuapp.com';
+    const baseURL = 'https://immersis.netlify.app';
     const [message, setmessage] = React.useState('');
     const [loading, setloading] = React.useState(false);
 
@@ -109,6 +109,7 @@ function Login({ loggedIn, dispatch }) {
             .post(`${baseURL}/auth/login`, data)
             .then((res) => {
                 const Response = res.data;
+                document.cookie = `token=${Response.token}; secure=true`;
                 setloading(false);
                 if (Response.success) {
                     setmessage(Response.message);
