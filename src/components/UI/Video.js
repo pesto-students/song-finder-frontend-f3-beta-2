@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
     // style for Mobile Responsive
     videResponsive: {
         overFlow: 'hidden',
-        paddingBottom: ' 56.25%',
+        paddingBottom: ' 90.25%',
         position: 'relative',
         height: 0,
         '& iframe': {
@@ -45,14 +45,16 @@ const useStyles = makeStyles(() => ({
         color: 'red'
     },
     ta: {
-        textAlign: 'center'
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
     }
 }));
 
 function Loading() {
     const classes = useStyles();
     return (
-        <Container maxWidth="md">
+        <Container maxWidth="md" sx={{ textAlign: 'center' }}>
             {localStorage.getItem('recent') ? (
                 <Link
                     to={`/search?q=${localStorage.getItem('recent')}`}
@@ -69,40 +71,38 @@ function Loading() {
             <div className={classes.ta}>
                 <Skeleton width="30%" />
                 <Skeleton width="10%" />
-                <div className={classes.videResponsive}>
-                    <Skeleton
-                        variant="rectangular"
-                        height="78vh"
-                        width="67vw"
-                    />
-                    <CardActions>
-                        <Grid
-                            container
-                            direction="row"
-                            justifyContent="center"
-                            alignItems="flex-start"
-                        >
-                            <Grid item>
-                                <Tooltip>
-                                    <Skeleton
-                                        variant="circular"
-                                        height={40}
-                                        width={40}
-                                    />
-                                </Tooltip>
-                            </Grid>
-                            <Grid item>
-                                <Tooltip>
-                                    <Skeleton
-                                        variant="circular"
-                                        height={40}
-                                        width={40}
-                                    />
-                                </Tooltip>
-                            </Grid>
+                <Skeleton
+                    variant="rectangular"
+                    height={window.screen.height / 2}
+                    width={window.screen.width / 1.3}
+                />
+                <CardActions>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="flex-start"
+                    >
+                        <Grid item>
+                            <Tooltip>
+                                <Skeleton
+                                    variant="circular"
+                                    height={40}
+                                    width={40}
+                                />
+                            </Tooltip>
                         </Grid>
-                    </CardActions>
-                </div>
+                        <Grid item>
+                            <Tooltip>
+                                <Skeleton
+                                    variant="circular"
+                                    height={40}
+                                    width={40}
+                                />
+                            </Tooltip>
+                        </Grid>
+                    </Grid>
+                </CardActions>
             </div>
         </Container>
     );
@@ -126,7 +126,7 @@ function VideoFrame({ videoId, artist, trig, audioTrigger, titleName = '' }) {
                     </div>
                 </Link>
             ) : null}
-            <div className={classes.ta}>
+            <div>
                 <Card>
                     <CardHeader title={titleName} subheader={artist} />
                 </Card>
