@@ -171,6 +171,11 @@ function Navbar({ loggedIn, dispatch }) {
                             src={logo}
                             alt="Immersis Logo"
                         />
+                        <img
+                            className={classes.logoSmall}
+                            src={logoSmall}
+                            alt="Immersis Logo"
+                        />
                     </Link>
                 </Toolbar>
             </AppBar>
