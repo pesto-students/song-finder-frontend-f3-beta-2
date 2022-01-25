@@ -11,11 +11,14 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CopyAllIcon from '@mui/icons-material/CopyAll';
+import CloseIcon from '@mui/icons-material/Close';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import SwitchVideoTwoToneIcon from '@mui/icons-material/SwitchVideoTwoTone';
 import { CardHeader, Skeleton, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
@@ -24,7 +27,10 @@ import { fetchLyrics, fetchAudio } from '../../utils/resource';
 const useStyles = makeStyles(() => ({
     // style for Mobile Responsive
     linkDiv: {
-        color: 'red'
+        display: 'flex',
+        alignItems: 'center',
+        color: 'red',
+        marginBottom: 10
     },
     resultLink: {
         color: 'red'
@@ -44,7 +50,10 @@ function Loading() {
                     className={classes.resultLink}
                 >
                     <div className={classes.linkDiv}>
-                        <Typography>Back to Results</Typography>
+                        <ArrowBackIcon />
+                        <Typography sx={{ display: 'inline-block' }}>
+                            Back to Search Results
+                        </Typography>
                     </div>
                 </Link>
             ) : null}
@@ -103,6 +112,7 @@ function SongLyrics({
     lyrics,
     trig,
     audioTrigger,
+    copyLyrics,
     titleName = ''
 }) {
     const classes = useStyles();
@@ -115,7 +125,10 @@ function SongLyrics({
                     className={classes.resultLink}
                 >
                     <div className={classes.linkDiv}>
-                        <Typography>Back to Results</Typography>
+                        <ArrowBackIcon />
+                        <Typography sx={{ display: 'inline-block' }}>
+                            Back to Search Results
+                        </Typography>
                     </div>
                 </Link>
             ) : null}
@@ -128,7 +141,7 @@ function SongLyrics({
                             </Avatar>
                         }
                         action={
-                            <IconButton>
+                            <IconButton onClick={copyLyrics}>
                                 <CopyAllIcon />
                             </IconButton>
                         }
@@ -187,6 +200,7 @@ function SongLyrics({
 function Lyrics({ lyricsResult, dispatch }) {
     const classes = useStyles();
     const [params] = useSearchParams();
+    const [open, setOpen] = React.useState(false);
     const navigate = useNavigate();
 
     const titleName = params.get('title');
@@ -202,6 +216,29 @@ function Lyrics({ lyricsResult, dispatch }) {
             search: `?title=${titleName}&artist=${artist}`
         });
     }
+
+    const copyLyrics = () => {
+        navigator.clipboard.writeText(lyricsResult.obj.lyrics);
+        setOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+    const action = (
+        <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+        >
+            <CloseIcon fontSize="small" />
+        </IconButton>
+    );
 
     if (titleName && artist) {
         useEffect(
@@ -235,9 +272,19 @@ function Lyrics({ lyricsResult, dispatch }) {
                             lyrics={lyricsResult.obj.lyrics}
                             trig={{ trigger }}
                             audioTrigger={audioTrigger}
+                            copyLyrics={copyLyrics}
                         />
                     )}
                 </Grid>
+                <Snackbar
+                    open={open}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                    message="Lyrics Copied!"
+                    action={action}
+                    severity="success"
+                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                />
             </Container>
         </Box>
     );
