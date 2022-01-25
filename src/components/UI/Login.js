@@ -94,7 +94,7 @@ function Login({ loggedIn, dispatch }) {
     const classes = useStyles();
     const navigate = useNavigate();
     const { register, handleSubmit, errors } = useForm();
-    const baseURL = 'https://immersis.netlify.app';
+    const baseURL = 'https://api-immersis.herokuapp.com';
     const [message, setmessage] = React.useState('');
     const [loading, setloading] = React.useState(false);
 

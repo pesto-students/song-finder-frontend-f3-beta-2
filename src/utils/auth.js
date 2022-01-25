@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'https://immersis.netlify.app';
+const baseURL = 'https://api-immersis.herokuapp.com';
 
 const IsLoggedIn = () => {
     return async (dispatch) => {
@@ -18,17 +18,10 @@ const IsLoggedIn = () => {
 };
 
 const LogOut = () => {
-    return async (dispatch) => {
-        const options = {
-            url: `${baseURL}/auth/logout`,
-            method: 'GET'
-        };
-        try {
-            await axios(options);
-            dispatch({ type: 'LOG_OUT' });
-        } catch (err) {
-            console.log(err.message);
-        }
+    return (dispatch) => {
+        document.cookie =
+            'token=; secure=true; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        dispatch({ type: 'LOG_OUT' });
     };
 };
 
