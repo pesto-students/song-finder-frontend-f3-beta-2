@@ -8,6 +8,7 @@ import {
     Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import ReceiptTwoToneIcon from '@mui/icons-material/ReceiptTwoTone';
 import { Skeleton } from '@mui/material';
@@ -35,7 +36,10 @@ const useStyles = makeStyles(() => ({
         }
     },
     linkDiv: {
-        color: 'red'
+        display: 'flex',
+        alignItems: 'center',
+        color: 'red',
+        marginBottom: 10
     },
     resultLink: {
         color: 'red'
@@ -55,7 +59,10 @@ function Loading() {
                     className={classes.resultLink}
                 >
                     <div className={classes.linkDiv}>
-                        <Typography>Back to Results</Typography>
+                        <ArrowBackIcon />
+                        <Typography sx={{ display: 'inline-block' }}>
+                            Back to Search Results
+                        </Typography>
                     </div>
                 </Link>
             ) : null}
@@ -112,7 +119,10 @@ function VideoFrame({ videoId, artist, trig, audioTrigger, titleName = '' }) {
                     className={classes.resultLink}
                 >
                     <div className={classes.linkDiv}>
-                        <Typography>Back to Results</Typography>
+                        <ArrowBackIcon />
+                        <Typography sx={{ display: 'inline-block' }}>
+                            Back to Search Results
+                        </Typography>
                     </div>
                 </Link>
             ) : null}
