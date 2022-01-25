@@ -18,7 +18,11 @@ const IsLoggedIn = () => {
 };
 
 const LogOut = () => {
-    return (dispatch) => {
+    return async (dispatch) => {
+        await axios({
+            url: `${baseURL}/auth/logout`,
+            method: 'GET'
+        });
         document.cookie =
             'token=; secure=true; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         dispatch({ type: 'LOG_OUT' });
