@@ -33,6 +33,9 @@ const useStyles = makeStyles(() => ({
             backgroundColor: colors.iconHoverColor.background,
             color: colors.iconHoverColor.color
         }
+    },
+    results: {
+        width: '80vw'
     }
 }));
 
@@ -57,7 +60,7 @@ function Results(props) {
     const classes = useStyles();
 
     return (
-        <Grid item sm={3}>
+        <Grid item sm={4} lg={3} className={classes.results}>
             <Card>
                 <CardActionArea id={id} name="video" onClick={trigger}>
                     <CardMedia component="img" image={image} height="150" />
