@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'https://api-immersis.herokuapp.com';
+const baseURL = 'https://immersis.netlify.app';
 
 const IsLoggedIn = () => {
     return async (dispatch) => {
