@@ -21,3 +21,5 @@ jobs:
       run: npm install
     - name: Test Lint
       run: npm run lint
+    - name: Unit Test
+      run: npm test -- --watchAll=false
