@@ -10,15 +10,18 @@ import {
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
+import CloseIcon from '@mui/icons-material/Close';
 import LockIcon from '@mui/icons-material/Lock';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
 import axios from 'axios';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 import colors from '../../colors';
 
 const useStyles = makeStyles((theme) => ({
@@ -71,15 +74,13 @@ const useStyles = makeStyles((theme) => ({
     LinkSignIn: {
         color: colors.primaryColor,
         textDecoration: 'none !important'
-    },
-    message: {
-        color: colors.primaryColor
     }
 }));
 
 function SignUp({ loggedIn, dispatch }) {
     const classes = useStyles();
     const { register, handleSubmit, errors } = useForm();
+    const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState('');
     const [loading, setloading] = React.useState(false);
     const navigate = useNavigate();
@@ -89,6 +90,24 @@ function SignUp({ loggedIn, dispatch }) {
         return null;
     }
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+    const action = (
+        <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+        >
+            <CloseIcon fontSize="small" />
+        </IconButton>
+    );
+
     const baseURL = 'https://api-immersis.herokuapp.com';
     const onSubmit = (data) => {
         setloading(true);
@@ -96,21 +115,24 @@ function SignUp({ loggedIn, dispatch }) {
             .post(`${baseURL}/auth`, data)
             .then((res) => {
                 const Response = res.data;
-                document.cookie = `token=${Response.token}; secure=true`;
                 setloading(false);
                 if (Response.success) {
+                    document.cookie = `token=${Response.token}; secure=true`;
                     dispatch({ type: 'LOG_IN' });
                     setMessage(Response.message);
+                    setOpen(true);
                     setTimeout(() => {
                         navigate('/');
                     }, 2000);
                 } else {
                     setMessage(Response.message);
+                    setOpen(true);
                 }
             })
             .catch((err) => {
                 setloading(false);
                 setMessage(err.message);
+                setOpen(true);
             });
     };
     return (
@@ -134,14 +156,6 @@ function SignUp({ loggedIn, dispatch }) {
                                 <Typography variant="caption">
                                     Please fill this form
                                 </Typography>
-                                {loading ? null : (
-                                    <Typography
-                                        variant="body2"
-                                        className={classes.message}
-                                    >
-                                        {message}
-                                    </Typography>
-                                )}
                             </Grid>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 {/* UserName Field */}
@@ -331,6 +345,15 @@ function SignUp({ loggedIn, dispatch }) {
                             </form>
                         </Paper>
                     </Grid>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={3000}
+                        onClose={handleClose}
+                        message={message}
+                        action={action}
+                        severity="success"
+                        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    />
                 </Container>
             </Box>
         </div>
