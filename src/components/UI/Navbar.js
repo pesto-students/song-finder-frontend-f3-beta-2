@@ -13,20 +13,29 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { LogOut, IsLoggedIn } from '../../utils/auth';
 import { fetchResult } from '../../utils/resource';
 import logo from '../../assets/logo.png';
+import logoSmall from '../../assets/logo_small.png';
 import colors from '../../colors';
 
 const useStyles = makeStyles((theme) => ({
     logo: {
-        display: 'block',
-
         [theme.breakpoints.up('sm')]: {
+            display: 'block',
             width: '12rem',
             height: '3rem',
             margin: '0.1rem',
             padding: '0.3rem'
         },
         [theme.breakpoints.down('sm')]: {
-            width: '6rem',
+            display: 'none'
+        }
+    },
+    logoSmall: {
+        [theme.breakpoints.up('sm')]: {
+            display: 'none'
+        },
+        [theme.breakpoints.down('sm')]: {
+            display: 'block',
+            width: '4rem',
             height: '2.1rem',
             margin: '0'
         }
@@ -176,6 +185,11 @@ function Navbar({ loggedIn, dispatch }) {
                         <img
                             className={classes.logo}
                             src={logo}
+                            alt="Immersis Logo"
+                        />
+                        <img
+                            className={classes.logoSmall}
+                            src={logoSmall}
                             alt="Immersis Logo"
                         />
                     </Link>

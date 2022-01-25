@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: '0px',
         marginBottom: '3rem',
         [theme.breakpoints.down('sm')]: {
-            height: '100vh',
+            height: `${window.screen.availHeight}px`,
             width: '100vw',
             backgroundPosition: 'center center',
             backgroundSize: 'cover',
