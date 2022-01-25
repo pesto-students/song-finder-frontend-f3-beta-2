@@ -1,21 +1,24 @@
 import {
-    Container,
     CircularProgress,
+    Container,
     Grid,
     Paper,
     Typography
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
+import CloseIcon from '@mui/icons-material/Close';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { Reset } from '../../utils/auth';
 import colors from '../../colors';
+import { Reset } from '../../utils/auth';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -71,14 +74,6 @@ const useStyles = makeStyles((theme) => ({
         color: colors.primaryColor,
         textDecoration: 'none !important'
     },
-    msgSuccess: {
-        border: 'green solid 2px',
-        borderRadius: '7px'
-    },
-    msgError: {
-        border: 'red solid 2px',
-        borderRadius: '7px'
-    },
     expired: {
         display: 'flex',
         justifyContent: 'center',
@@ -87,27 +82,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Success({ msg }) {
-    const classes = useStyles();
-    return (
-        <div className={classes.msgSuccess}>
-            <Typography>{msg}</Typography>
-        </div>
-    );
-}
-
-function Error({ msg }) {
-    const classes = useStyles();
-    return (
-        <div className={classes.msgError}>
-            <Typography>{msg}</Typography>
-        </div>
-    );
-}
-
 function ResetPassword({ loggedIn, reset, dispatch }) {
     const classes = useStyles();
     const navigate = useNavigate();
+    const [open, setOpen] = React.useState(false);
     const { register, handleSubmit, errors } = useForm();
     const [params] = useSearchParams();
     const expiry = params.get('expiry');
@@ -129,8 +107,27 @@ function ResetPassword({ loggedIn, reset, dispatch }) {
         );
     }
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+    const action = (
+        <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+        >
+            <CloseIcon fontSize="small" />
+        </IconButton>
+    );
+
     const submitReset = (data) => {
         dispatch(Reset({ ...data, token }));
+        setOpen(true);
     };
 
     return (
@@ -154,11 +151,6 @@ function ResetPassword({ loggedIn, reset, dispatch }) {
                                 <Typography variant="caption">
                                     Please fill this form
                                 </Typography>
-                                {reset.msg ? (
-                                    <Success msg={reset.msg} />
-                                ) : reset.error ? (
-                                    <Error msg={reset.error} />
-                                ) : null}
                             </Grid>
                             <form onSubmit={handleSubmit(submitReset)}>
                                 <TextField
@@ -246,6 +238,20 @@ function ResetPassword({ loggedIn, reset, dispatch }) {
                             </form>
                         </Paper>
                     </Grid>
+                    {reset.msg || reset.error ? (
+                        <Snackbar
+                            open={open}
+                            autoHideDuration={3000}
+                            onClose={handleClose}
+                            message={reset.msg || reset.error}
+                            action={action}
+                            severity="success"
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right'
+                            }}
+                        />
+                    ) : null}
                 </Container>
             </Box>
         </div>

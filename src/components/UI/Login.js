@@ -9,13 +9,16 @@ import {
     Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import CloseIcon from '@mui/icons-material/Close';
 import LockIcon from '@mui/icons-material/Lock';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
 import axios from 'axios';
 import React from 'react';
-import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import colors from '../../colors';
 
@@ -84,9 +87,6 @@ const useStyles = makeStyles((theme) => ({
     LinkSignUp: {
         color: colors.primaryColor,
         textDecoration: 'none !important'
-    },
-    message: {
-        color: colors.primaryColor
     }
 }));
 
@@ -94,6 +94,7 @@ function Login({ loggedIn, dispatch }) {
     const classes = useStyles();
     const navigate = useNavigate();
     const { register, handleSubmit, errors } = useForm();
+    const [open, setOpen] = React.useState(false);
     const baseURL = 'https://api-immersis.herokuapp.com';
     const [message, setmessage] = React.useState('');
     const [loading, setloading] = React.useState(false);
@@ -103,27 +104,48 @@ function Login({ loggedIn, dispatch }) {
         return null;
     }
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+    const action = (
+        <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+        >
+            <CloseIcon fontSize="small" />
+        </IconButton>
+    );
+
     const onSubmit = (data) => {
         setloading(true);
         axios
             .post(`${baseURL}/auth/login`, data)
             .then((res) => {
                 const Response = res.data;
-                document.cookie = `token=${Response.token}; secure=true`;
                 setloading(false);
                 if (Response.success) {
+                    document.cookie = `token=${Response.token}; secure=true`;
                     setmessage(Response.message);
+                    setOpen(true);
                     dispatch({ type: 'LOG_IN' });
                     setTimeout(() => {
                         navigate('/');
                     }, 2000);
                 } else {
                     setmessage(Response.message);
+                    setOpen(true);
                 }
             })
             .catch((err) => {
                 setloading(false);
                 setmessage(err.message);
+                setOpen(true);
             });
     };
     return (
@@ -147,14 +169,6 @@ function Login({ loggedIn, dispatch }) {
                                 <Typography variant="caption">
                                     Please fill this form
                                 </Typography>
-                                {loading ? null : (
-                                    <Typography
-                                        variant="body2"
-                                        className={classes.message}
-                                    >
-                                        {message}
-                                    </Typography>
-                                )}
                             </Grid>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <TextField
@@ -256,6 +270,15 @@ function Login({ loggedIn, dispatch }) {
                             </form>
                         </Paper>
                     </Grid>
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={3000}
+                        onClose={handleClose}
+                        message={message}
+                        action={action}
+                        severity="success"
+                        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    />
                 </Container>
             </Box>
         </div>

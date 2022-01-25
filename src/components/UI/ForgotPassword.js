@@ -7,9 +7,12 @@ import {
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/styles';
+import CloseIcon from '@mui/icons-material/Close';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Box, TextField } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
@@ -70,38 +73,13 @@ const useStyles = makeStyles((theme) => ({
     Link: {
         color: colors.primaryColor,
         textDecoration: 'none !important'
-    },
-    msgSuccess: {
-        border: 'green solid 2px',
-        borderRadius: '7px'
-    },
-    msgError: {
-        border: 'red solid 2px',
-        borderRadius: '7px'
     }
 }));
-
-function Success({ msg }) {
-    const classes = useStyles();
-    return (
-        <div className={classes.msgSuccess}>
-            <Typography>{msg}</Typography>
-        </div>
-    );
-}
-
-function Error({ msg }) {
-    const classes = useStyles();
-    return (
-        <div className={classes.msgError}>
-            <Typography>{msg}</Typography>
-        </div>
-    );
-}
 
 function ForgotPassword({ loggedIn, forgot, dispatch }) {
     const classes = useStyles();
     const navigate = useNavigate();
+    const [open, setOpen] = React.useState(false);
     const { register, handleSubmit, errors } = useForm();
 
     if (loggedIn) {
@@ -109,8 +87,27 @@ function ForgotPassword({ loggedIn, forgot, dispatch }) {
         return null;
     }
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+    const action = (
+        <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+        >
+            <CloseIcon fontSize="small" />
+        </IconButton>
+    );
+
     const forgotSubmit = ({ email }) => {
         dispatch(Forgot(email));
+        setOpen(true);
     };
 
     return (
@@ -134,11 +131,6 @@ function ForgotPassword({ loggedIn, forgot, dispatch }) {
                                 <Typography variant="caption">
                                     Please fill this form
                                 </Typography>
-                                {forgot.msg ? (
-                                    <Success msg={forgot.msg} />
-                                ) : forgot.error ? (
-                                    <Error msg={forgot.error} />
-                                ) : null}
                             </Grid>
                             <form onSubmit={handleSubmit(forgotSubmit)}>
                                 <TextField
@@ -194,6 +186,20 @@ function ForgotPassword({ loggedIn, forgot, dispatch }) {
                             </form>
                         </Paper>
                     </Grid>
+                    {forgot.msg || forgot.msg ? (
+                        <Snackbar
+                            open={open}
+                            autoHideDuration={3000}
+                            onClose={handleClose}
+                            message={forgot.msg || forgot.error}
+                            action={action}
+                            severity="success"
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right'
+                            }}
+                        />
+                    ) : null}
                 </Container>
             </Box>
         </div>
