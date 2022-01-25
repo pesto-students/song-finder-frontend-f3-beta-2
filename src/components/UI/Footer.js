@@ -8,13 +8,13 @@ const useStyles = makeStyles((theme) => ({
     footer: {
         backgroundColor: colors.secondaryColor,
         maxWidth: '100vw',
-        padding: '3rem',
+        padding: '3rem 3rem 20vh',
         marginTop: '3rem',
         direction: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
         [theme.breakpoints.down('md')]: {
-            padding: '1rem',
+            padding: '1rem 1rem 15vh',
             marginTop: '1rem',
             direction: 'row',
             justifyContent: 'space-evenly',
