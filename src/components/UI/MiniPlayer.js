@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     playerWrapper: {
-        height: 65,
+        height: 85,
         [theme.breakpoints.down('sm')]: {
             height: 100
         }
