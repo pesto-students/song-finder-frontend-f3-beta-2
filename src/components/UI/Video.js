@@ -18,6 +18,7 @@ import React, { useEffect } from 'react';
 import ReactPlayer from 'react-player/youtube';
 import { connect } from 'react-redux';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import colors from '../../colors';
 import { fetchVideo, fetchAudio } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
@@ -33,6 +34,15 @@ const useStyles = makeStyles(() => ({
             height: '100%',
             width: '100%',
             position: 'absolute'
+        }
+    },
+    icon: {
+        backgroundColor: colors.iconColor.background,
+        color: colors.iconColor.color,
+        margin: '.5rem !important',
+        '&:hover': {
+            backgroundColor: colors.iconHoverColor.background,
+            color: colors.iconHoverColor.color
         }
     },
     linkDiv: {
@@ -147,12 +157,20 @@ function VideoFrame({ videoId, artist, trig, audioTrigger, titleName = '' }) {
                     >
                         <Grid item>
                             <Tooltip title="Audio" arrow>
-                                <IconButton name="music" onClick={audioTrigger}>
+                                <IconButton
+                                    name="music"
+                                    onClick={audioTrigger}
+                                    className={classes.icon}
+                                >
                                     <MusicNoteIcon />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Lyrics" arrow>
-                                <IconButton name="lyrics" onClick={trigger}>
+                                <IconButton
+                                    name="lyrics"
+                                    onClick={trigger}
+                                    className={classes.icon}
+                                >
                                     <ReceiptTwoToneIcon />
                                 </IconButton>
                             </Tooltip>
