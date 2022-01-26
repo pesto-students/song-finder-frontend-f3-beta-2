@@ -22,6 +22,7 @@ import Snackbar from '@mui/material/Snackbar';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import colors from '../../colors';
 import { fetchLyrics, fetchAudio } from '../../utils/resource';
 
 const useStyles = makeStyles(() => ({
@@ -31,6 +32,15 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
         color: 'red',
         marginBottom: 10
+    },
+    icon: {
+        backgroundColor: colors.iconColor.background,
+        color: colors.iconColor.color,
+        margin: '.5rem !important',
+        '&:hover': {
+            backgroundColor: colors.iconHoverColor.background,
+            color: colors.iconHoverColor.color
+        }
     },
     resultLink: {
         color: 'red'
@@ -180,12 +190,20 @@ function SongLyrics({
                     >
                         <Grid item>
                             <Tooltip title="Video" arrow>
-                                <IconButton name="video" onClick={trigger}>
+                                <IconButton
+                                    name="video"
+                                    onClick={trigger}
+                                    className={classes.icon}
+                                >
                                     <SwitchVideoTwoToneIcon />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Audio" arrow>
-                                <IconButton name="music" onClick={audioTrigger}>
+                                <IconButton
+                                    name="music"
+                                    onClick={audioTrigger}
+                                    className={classes.icon}
+                                >
                                     <MusicNoteIcon />
                                 </IconButton>
                             </Tooltip>
