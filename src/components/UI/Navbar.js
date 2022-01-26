@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
     searchForm: {
         width: '50vw',
-        marginLeft: '18%'
+        marginLeft: '20%'
     },
     iconSubmit: {
         backgroundColor: '#A0A0A0',
@@ -284,7 +284,7 @@ function Navbar({ loggedIn, dispatch }) {
                                         variant="text"
                                         className={classes.SignInButton}
                                     >
-                                        Sign In
+                                        Sign Up
                                     </Button>
                                 </Link>
                             </div>
