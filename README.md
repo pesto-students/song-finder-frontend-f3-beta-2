@@ -1,72 +1,187 @@
-# Immersis Frontend
+# README
 
-# Getting Started with Create React App
+# **Immersis**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## **Table of Contents**
 
-## Available Scripts
+1.  [About The
+    Project](#about-the-project)
 
-In the project directory, you can run:
+2.  [Getting
+    Started](#getting-started)
 
-### `npm start`
+    1.  [Prerequisites](#Prerequisites)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    2.  [Installation](#installation)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+3.  [Tech
+    Stack](#tech-stack)
 
-### `npm test`
+4.  [Tools and
+    Integration](#tools)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+5.  [Resources](#resources)
 
-### `npm run build`
+6.  [Developers](#developers)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+7.  [Working & UI
+    Screens](#working--ui-screens)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## **About The Project**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Immersis is a one stop platform for all the audiophiles out there, where you can find your music, videos and lyrics; all in one place. It provides rich user experience, hassle free music searching, music in all forms, ease of access.
 
-### `npm run eject`
+## **Live Link**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Immersis App Link:
+<https://immersis.netlify.app>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## **Getting Started**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+To get a local copy up and running follow these simple steps.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### **Prerequisites**
 
-## Learn More
+This is an example of how you need to use the application
+and how to install them.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+-   node
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+> Go to https://nodejs.org/en/download and download your suitable LTS package.
 
-### Code Splitting
+### **Installation**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1.  Clone the repos backend & frontend
 
-### Analyzing the Bundle Size
+> git clone https://github.com/pesto-students/song-finder-backend-f3-beta-2/tree/master
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+> git clone https://github.com/pesto-students/song-finder-frontend-f3-beta-2/tree/master
 
-### Making a Progressive Web App
+2.  Install NPM packages in both
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+    > npm install
 
-### Advanced Configuration
+3.  Add the .env file in the root for backend app.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+> GENIUS_TOKEN="Genius_Developers_Token" (Get it from https://docs.genius.com)
 
-### Deployment
+> MONGO_URI="mongo_URL"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+> JWT_SECRET="jwt_secret_key"
 
-### `npm run build` fails to minify
+> EMAIL_ID="sender_email_id"
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> EMAIL_PASSWORD="sender_email_password"
+
+4.  Run the backend server
+
+> npm run dev
+
+5.  Run the frontend app
+
+> npm start
+
+### **Tech Stack**
+
+-   [React.js](https://reactjs.org/)
+
+-   [Redux](https://redux.js.org/)
+
+-   [Node.js](https://nodejs.org/en/)
+
+-   [MongoDB](https://www.mongodb.com/)
+
+### **Servers**
+
+-   [Heroku](http://heroku.com/)
+
+-   [Netlify](https://www.netlify.com/)
+
+### **Tools**
+
+-   [Figma](https://figma.com/)
+
+-   [Draw.io](https://app.diagrams.net/)
+
+-   [Github](https://github.com/)
+
+### **Source Code Repo**
+
+-   Front End Source Repo -
+    <https://github.com/pesto-students/song-finder-frontend-f3-beta-2/tree/master>
+
+-   Back End Source Repo -
+    <https://github.com/pesto-students/song-finder-backend-f3-beta-2/tree/master>
+
+## **Developers**
+
+-   Mehedi Mondal
+
+-   Ubair Noor
+
+## **Mentor**
+
+-   Harshit Kedia
+
+## **UI Screens**
+
+### Landing Page
+
+![](https://github.com/pesto-students/song-finder-frontend-f3-beta-2/blob/readme/images/Home_1.png)
+
+This is the Landing page of our application. You can navigate to the
+below mentioned links from the homepage.
+
+1. Home (Landing page)
+
+2. Search
+
+3. Login
+
+4. Signup
+
+![](https://github.com/pesto-students/song-finder-frontend-f3-beta-2/blob/readme/images/Home_2.png)
+
+We have added the music player that will float at bottom of the page all the time so that you can enjoy music at your fingertip. This will be available if you have a song previuosly played in memory or play from search results page.
+
+### Search Results Page
+
+![](https://github.com/pesto-students/song-finder-frontend-f3-beta-2/blob/readme/images/Search.png)
+
+You can search from the search bar that is available across most of the pages and that will land you to this page. Choose between Music, Video or Lyrics from this page.
+
+### Video Page
+
+![](https://github.com/pesto-students/song-finder-frontend-f3-beta-2/blob/readme/images/Video.png)
+
+You can watch the youtube music video of the picked search result here.
+
+### Lyrics Page
+
+![](https://github.com/pesto-students/song-finder-frontend-f3-beta-2/blob/readme/images/Lyrics.png)
+
+You can surf the lyrics of the picked search result here.
+
+### Login Page
+
+![](https://github.com/pesto-students/song-finder-frontend-f3-beta-2/blob/readme/images/Login.png)
+
+You can login from this page.
+
+### Signup Page
+
+![](https://github.com/pesto-students/song-finder-frontend-f3-beta-2/blob/readme/images/Signup.png)
+
+You can Register/Signup from this page.
+
+### Forgot Password Page
+
+![](https://github.com/pesto-students/song-finder-frontend-f3-beta-2/blob/readme/images/Forgot.png)
+
+You can reset your password from here and the next reset password page that you get from the Email.
+
+### Search History Page
+
+![](https://github.com/pesto-students/song-finder-frontend-f3-beta-2/blob/readme/images/History.png)
+
+You can check your search history from here if you are logged in.
