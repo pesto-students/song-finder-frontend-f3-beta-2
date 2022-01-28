@@ -53,7 +53,7 @@ const useStyles = makeStyles(() => ({
 function Loading() {
     const classes = useStyles();
     return (
-        <Grid item xs={8} md={8} lg={8}>
+        <Grid item xs={12} sm={10} lg={8}>
             {localStorage.getItem('recent') ? (
                 <Link
                     to={`/search?q=${localStorage.getItem('recent')}`}
@@ -128,7 +128,7 @@ function SongLyrics({
     const classes = useStyles();
     const { trigger } = trig;
     return (
-        <Grid item xs={8} md={8} lg={8}>
+        <Grid item xs={12} sm={10} lg={8}>
             {localStorage.getItem('recent') ? (
                 <Link
                     to={`/search?q=${localStorage.getItem('recent')}`}
