@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@material-ui/core';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import React from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
@@ -52,6 +52,19 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('md')]: {
             fontSize: '.4rem'
         }
+    },
+    href: {
+        textDecoration: 'none',
+        '& h6:hover': {
+            color: colors.primaryColor
+        }
+    },
+    mail: {
+        textDecoration: 'none',
+        color: 'inherit',
+        '&:hover': {
+            color: colors.primaryColor
+        }
     }
 }));
 
@@ -103,20 +116,24 @@ function Footer({ currentAudio }) {
                         </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography
-                            className={classes.link}
-                            variant="subtitle1"
-                        >
-                            Privacy and Policy
-                        </Typography>
+                        <Link to="/privacypolicy" className={classes.href}>
+                            <Typography
+                                className={classes.link}
+                                variant="subtitle1"
+                            >
+                                Privacy and Policy
+                            </Typography>
+                        </Link>
                     </Grid>
                     <Grid item>
-                        <Typography
-                            className={classes.link}
-                            variant="subtitle1"
-                        >
-                            Terms & Condition
-                        </Typography>
+                        <Link to="/termscondition" className={classes.href}>
+                            <Typography
+                                className={classes.link}
+                                variant="subtitle1"
+                            >
+                                Terms & Condition
+                            </Typography>
+                        </Link>
                     </Grid>
                     <Grid item>
                         <Typography
@@ -140,7 +157,13 @@ function Footer({ currentAudio }) {
                             className={classes.link}
                             variant="subtitle1"
                         >
-                            Email: info@immmersis.com
+                            Email:{' '}
+                            <a
+                                href="mailto:officialimmersis@gmail.com"
+                                className={classes.mail}
+                            >
+                                officialimmersis@gmail.com
+                            </a>
                         </Typography>
                     </Grid>
                     <Grid item>

@@ -13,8 +13,10 @@ import Login from './components/UI/Login';
 import Lyrics from './components/UI/Lyrics';
 import { MinPLayer } from './components/UI/MiniPlayer';
 import Navbar from './components/UI/Navbar';
+import PrivacyPolicy from './components/UI/PrivacyPolicy';
 import Search from './components/UI/Search';
 import SignUp from './components/UI/SignUp';
+import TermsCondition from './components/UI/TermsCondition';
 import Video from './components/UI/Video';
 
 axios.defaults.withCredentials = true;
@@ -35,8 +37,10 @@ function App() {
                 <Route path="forgotPassword" element={<ForgotPassword />} />
                 <Route path="reset" element={<ResetPassword />} />
                 <Route path="lyrics" element={<Lyrics />} />
+                <Route path="privacypolicy" element={<PrivacyPolicy />} />
+                <Route path="termscondition" element={<TermsCondition />} />
                 <Route path="video" element={<Video />} />
-                <Route path="/search" element={<Search />} />
+                <Route path="search" element={<Search />} />
                 <Route path="history" element={<History />} />
             </Routes>
             <MinPLayer />
