@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             padding: '15%'
         }
+    },
+    midHead: {
+        textAlign: 'center'
     }
 }));
 
@@ -14,9 +17,9 @@ function TermsCondition() {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <h2>
-                <strong>Terms and Conditions</strong>
-            </h2>
+            <div className={classes.midHead}>
+                <h1>Terms & Conditions</h1>
+            </div>
 
             <p>Welcome to Immersis!</p>
 

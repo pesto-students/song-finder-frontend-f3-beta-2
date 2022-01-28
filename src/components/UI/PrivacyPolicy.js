@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             padding: '15%'
         }
+    },
+    midHead: {
+        textAlign: 'center'
     }
 }));
 
@@ -14,7 +17,9 @@ function PrivacyPolicy() {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <h1>Privacy Policy for Immersis</h1>
+            <div className={classes.midHead}>
+                <h1>Privacy Policy</h1>
+            </div>
 
             <p>
                 At Immersis, accessible from https://immersis.netlify.app/, one
