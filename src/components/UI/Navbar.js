@@ -9,7 +9,12 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+    Link,
+    useLocation,
+    useNavigate,
+    useSearchParams
+} from 'react-router-dom';
 import { LogOut, IsLoggedIn } from '../../utils/auth';
 import { fetchResult } from '../../utils/resource';
 import logo from '../../assets/logo.png';
@@ -133,10 +138,17 @@ function Navbar({ loggedIn, dispatch }) {
     const classes = useStyles();
     const navigate = useNavigate();
     const location = useLocation();
+    const [params] = useSearchParams();
     const [input, setInput] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
+    useEffect(() => {
+        if (location.pathname === '/search') {
+            const q = params.get('q');
+            setInput(q);
+        }
+    }, []);
     useEffect(() => dispatch(IsLoggedIn()), []);
 
     const search = (e) => {
@@ -205,6 +217,7 @@ function Navbar({ loggedIn, dispatch }) {
                                 placeholder="Search..."
                                 onChange={(e) => setInput(e.target.value)}
                                 className={classes.bar}
+                                value={input}
                             />
                             <Button
                                 type="submit"
