@@ -87,20 +87,22 @@ function Audio({ url }) {
 
 function Error({ msg }) {
     const classes = useStyles();
-    <Paper
-        sx={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            zIndex: 5
-        }}
-        className={classes.playerWrapper}
-    >
-        <BottomNavigation sx={{ justifyContent: 'center' }}>
-            <div className={classes.errorMsg}>{msg}</div>
-        </BottomNavigation>
-    </Paper>;
+    return (
+        <Paper
+            sx={{
+                position: 'fixed',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                zIndex: 5
+            }}
+            className={classes.playerWrapper}
+        >
+            <BottomNavigation sx={{ justifyContent: 'center' }}>
+                <div className={classes.errorMsg}>{msg}</div>
+            </BottomNavigation>
+        </Paper>
+    );
 }
 
 function MinPLayer({ currentAudio }) {
@@ -119,6 +121,7 @@ function MinPLayer({ currentAudio }) {
     if (currentAudio.loading) {
         elm = <Loading />;
     } else if (currentAudio.error) {
+        console.log(currentAudio);
         elm = <Error msg={currentAudio.error} />;
     } else if (currentAudio.url) {
         elm = <Audio url={currentAudio.url} />;
