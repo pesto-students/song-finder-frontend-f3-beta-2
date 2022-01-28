@@ -85,7 +85,7 @@ function History({ loggedIn, allSearches, dispatch }) {
     }
 
     return (
-        <Box mt={15} mb={30}>
+        <Box mt={15} sx={{ minHeight: '100vh' }}>
             <Container maxWidth="lg">
                 <Grid container spacing={4}>
                     {elm}
