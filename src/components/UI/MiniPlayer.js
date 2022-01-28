@@ -59,7 +59,7 @@ function Loading() {
     );
 }
 
-function Audio() {
+function Audio({ url }) {
     const classes = useStyles();
     return (
         <Paper
@@ -78,14 +78,14 @@ function Audio() {
                     playing
                     height={110}
                     width="100vw"
-                    url={localStorage.getItem('audio')}
+                    url={url}
                 />
             </BottomNavigation>
         </Paper>
     );
 }
 
-function Error() {
+function Error({ msg }) {
     const classes = useStyles();
     <Paper
         sx={{
@@ -97,8 +97,8 @@ function Error() {
         }}
         className={classes.playerWrapper}
     >
-        <BottomNavigation sx={{ justifyContent: 'start' }}>
-            <div className={classes.errorMsg}>Error</div>
+        <BottomNavigation sx={{ justifyContent: 'center' }}>
+            <div className={classes.errorMsg}>{msg}</div>
         </BottomNavigation>
     </Paper>;
 }
@@ -119,9 +119,9 @@ function MinPLayer({ currentAudio }) {
     if (currentAudio.loading) {
         elm = <Loading />;
     } else if (currentAudio.error) {
-        elm = <Error />;
-    } else if (localStorage.getItem('audio')) {
-        elm = <Audio />;
+        elm = <Error msg={currentAudio.error} />;
+    } else if (currentAudio.url) {
+        elm = <Audio url={currentAudio.url} />;
     } else {
         elm = null;
     }

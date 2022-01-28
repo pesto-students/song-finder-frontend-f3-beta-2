@@ -1,11 +1,28 @@
 import { Grid, Typography } from '@material-ui/core';
 import { useLocation } from 'react-router-dom';
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/styles';
 import colors from '../../colors';
 
 const useStyles = makeStyles((theme) => ({
     footer: {
+        backgroundColor: colors.secondaryColor,
+        maxWidth: '100vw',
+        padding: '3rem 3rem',
+        marginTop: '3rem',
+        direction: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        [theme.breakpoints.down('md')]: {
+            padding: '1rem 1rem',
+            marginTop: '1rem',
+            direction: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center'
+        }
+    },
+    footerExtend: {
         backgroundColor: colors.secondaryColor,
         maxWidth: '100vw',
         padding: '3rem 3rem 20vh',
@@ -38,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Footer() {
+function Footer({ currentAudio }) {
     const classes = useStyles();
     const location = useLocation();
 
@@ -51,7 +68,14 @@ function Footer() {
         return null;
     }
     return (
-        <Grid container className={classes.footer}>
+        <Grid
+            container
+            className={
+                currentAudio.url || currentAudio.error
+                    ? classes.footerExtend
+                    : classes.footer
+            }
+        >
             <Grid item spacing={10}>
                 <Grid container direction="column">
                     <Grid item>
@@ -141,4 +165,10 @@ function Footer() {
     );
 }
 
-export default Footer;
+function mapStateToProps(state) {
+    return { currentAudio: state.audio };
+}
+
+const ConnectedFooter = connect(mapStateToProps)(Footer);
+
+export default ConnectedFooter;
