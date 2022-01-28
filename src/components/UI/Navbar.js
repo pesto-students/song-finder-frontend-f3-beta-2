@@ -122,13 +122,18 @@ const useStyles = makeStyles((theme) => ({
     },
     searchForm: {
         width: '50vw',
-        marginLeft: '20%'
+        marginLeft: '20%',
+        [theme.breakpoints.down('sm')]: {
+            marginLeft: '10%'
+        }
     },
     iconSubmit: {
-        backgroundColor: '#A0A0A0',
+        backgroundColor: 'hsl(11deg 80% 45%)',
+        color: '#fff',
         borderRadius: 0,
         '&:hover': {
-            backgroundColor: '#A0A0A0',
+            backgroundColor: 'hsl(11deg 80% 45%)',
+            color: '#fff',
             borderRadius: 0
         }
     }
