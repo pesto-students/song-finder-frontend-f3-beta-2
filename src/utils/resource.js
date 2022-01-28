@@ -11,12 +11,19 @@ const fetchResult = (query) => {
         };
         try {
             const resp = await axios(options);
-            dispatch({
-                type: 'FETCH_RESULT_SUCCESS',
-                payload: resp.data.results
-            });
+            if (resp.data.data) {
+                dispatch({
+                    type: 'FETCH_RESULT_SUCCESS',
+                    payload: resp.data.data
+                });
+            } else {
+                dispatch({
+                    type: 'FETCH_RESULT_FAILED',
+                    payload: 'No matching results found!'
+                });
+            }
         } catch (error) {
-            dispatch({ type: 'FETCH_RESULT_FAILED', error: error.message });
+            dispatch({ type: 'FETCH_RESULT_FAILED', payload: error.message });
         }
     };
 };
@@ -32,10 +39,17 @@ const fetchVideo = (query) => {
 
         try {
             const resp = await axios(options);
-            dispatch({
-                type: 'FETCH_VIDEO_SUCCESS',
-                payload: resp.data.videoId.videoId
-            });
+            if (resp.data.data) {
+                dispatch({
+                    type: 'FETCH_VIDEO_SUCCESS',
+                    payload: resp.data.data.videoId
+                });
+            } else {
+                dispatch({
+                    type: 'FETCH_VIDEO_ERROR',
+                    payload: 'No matching video found!'
+                });
+            }
         } catch (err) {
             dispatch({ type: 'FETCH_VIDEO_ERROR', payload: err.message });
         }
@@ -53,11 +67,17 @@ const fetchAudio = ({ title, artist }) => {
 
         try {
             const resp = await axios(options);
-            localStorage.setItem('audio', resp.data.url);
-            dispatch({
-                type: 'FETCH_AUDIO_SUCCESS',
-                payload: resp.data.url
-            });
+            if (resp.data.data) {
+                dispatch({
+                    type: 'FETCH_AUDIO_SUCCESS',
+                    payload: resp.data.data.url
+                });
+            } else {
+                dispatch({
+                    type: 'FETCH_AUDIO_ERROR',
+                    payload: 'No matching audio found'
+                });
+            }
         } catch (err) {
             dispatch({ type: 'FETCH_AUDIO_ERROR', payload: err.message });
         }
@@ -75,10 +95,17 @@ const fetchLyrics = ({ title, artist }) => {
 
         try {
             const resp = await axios(options);
-            dispatch({
-                type: 'FETCH_LYRICS_SUCCESS',
-                payload: resp.data
-            });
+            if (resp.data.data) {
+                dispatch({
+                    type: 'FETCH_LYRICS_SUCCESS',
+                    payload: resp.data.data
+                });
+            } else {
+                dispatch({
+                    type: 'FETCH_LYRICS_ERROR',
+                    payload: 'No matching lyrics found!'
+                });
+            }
         } catch (err) {
             dispatch({ type: 'FETCH_LYRICS_ERROR', payload: err.message });
         }
